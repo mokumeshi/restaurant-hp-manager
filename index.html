@@ -97,6 +97,12 @@
     </style>
     <script>
         window.onerror = function(message, source, lineno, colno, error) {
+            // Ignore specific internal errors that are not relevant to the user
+            if (message && message.includes && message.includes('USER REQUESTED IMMEDIATE FORCE STOP')) {
+                console.warn('Ignored user force stop error');
+                return true; // Prevent default handling
+            }
+            
             const errorDisplay = document.getElementById('error-display');
             if (errorDisplay) {
                 errorDisplay.style.display = 'block';
