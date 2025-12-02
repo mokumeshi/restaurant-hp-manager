@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>とんちゃん焼肉の武屋 - 名古屋市北区の本格ホルモン焼肉</title>
+    <!-- Google Fonts: 高級感のある明朝体と可読性の高いゴシック体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho+B1:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* =========================================
+           ベース設定 & 変数
+           ========================================= */
+        :root {
+            --bg-color: #050505;
+            --card-bg: rgba(20, 20, 20, 0.7);
+            --text-main: #e0e0e0;
+            --text-muted: #888888;
+            
+            /* 高級感のあるゴールド */
+            --gold: #c5a059;
+            --gold-light: #e6c888;
+            --gold-gradient: linear-gradient(135deg, #c5a059 0%, #f3dca6 50%, #c5a059 100%);
+            
+            /* 焼肉の炎イメージ */
+            --fire: #9e1b1b;
+            --fire-glow: #ff4d4d;
+
+            --font-mincho: 'Shippori Mincho B1', serif;
+            --font-gothic: 'Noto Sans JP', sans-serif;
+            
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-gothic);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            /* 背景に微妙なノイズを加えて奥行きを出す */
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJnoiPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjY1IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2cpIiBvcGFjaXR5PSIwLjAzIi8+PC9zdmc+');
+        }
+
+        /* スクロールバーのカスタマイズ */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold);
+        }
+
+        /* 共通タイポグラフィ */
+        h1, h2, h3, .logo {
+            font-family: var(--font-mincho);
+            letter-spacing: 0.1em;
+        }
+
+        /* =========================================
+           ナビゲーション
+           ========================================= */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            transition: var(--transition);
+            mix-blend-mode: exclusion; /* 背景とブレンド */
+        }
+
+        nav.scrolled {
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(15px);
+            padding: 1rem 5%;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+            mix-blend-mode: normal;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .reserve-btn-nav {
+            border: 1px solid var(--gold);
+            padding: 0.5rem 1.5rem;
+            border-radius: 0; /* 角張ったデザインに変更 */
+            transition: var(--transition);
+        }
+        
+        .reserve-btn-nav:hover {
+            background: var(--gold);
+            color: #000;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* =========================================
+           ヒーローセクション
+           ========================================= */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 煙のような背景エフェクト */
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(30,30,30,1) 0%, rgba(5,5,5,1) 60%);
+            animation: pulseBg 10s infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes pulseBg {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+            /* 縦書きレイアウトのための調整 */
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            justify-content: center;
+            gap: 4rem;
+        }
+
+        /* 縦書きタイトル */
+        .hero h1 {
+            writing-mode: vertical-rl;
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: 0.2em;
+            color: transparent;
+            /* 金箔のようなグラデーション */
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(197, 160, 89, 0.3));
+            animation: fadeInRight 1.5s ease-out;
+            margin: 0;
+            height: 400px; /* 高さ確保 */
+            position: relative; /* 擬似要素の配置基準 */
+        }
+
+        /* 赤い落款（印鑑）風デザイン */
+        .hero h1::after {
+            content: '名物';
+            writing-mode: horizontal-tb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 0.9rem; /* 少し小さくして収まりよくする */
+            background: var(--fire);
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-family: var(--font-mincho);
+            box-shadow: 0 0 15px var(--fire);
+            white-space: nowrap; /* 改行を防ぐ */
+            letter-spacing: 0; /* 文字間隔リセット */
+            line-height: 1;
+        }
+
+        .hero-text-group {
+            text-align: left;
+            animation: fadeInLeft 1.5s ease-out 0.3s backwards;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-mincho);
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            display: block;
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 10px;
+            width: fit-content;
+        }
+
+        .hero-description {
+            font-size: 1rem;
+            color: #ccc;
+            max-width: 400px;
+            margin-bottom: 3rem;
+            line-height: 2;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        /* ボタンデザインの刷新 */
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-family: var(--font-gothic);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.1);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(197, 160, 89, 0.3);
+            transform: translateY(-3px);
+            color: #fff;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary {
+            color: #fff;
+            border-bottom: 1px solid #fff;
+            padding: 1rem 0;
+        }
+        
+        .btn-secondary:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        /* =========================================
+           セクション共通
+           ========================================= */
+        section {
+            padding: 8rem 5%;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        /* =========================================
+           こだわり (About)
+           ========================================= */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            filter: grayscale(30%) contrast(1.1);
+            transition: var(--transition);
+        }
+
+        .about-image::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--gold);
+            z-index: -1;
+        }
+
+        .about-content h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+            color: #ccc;
+        }
+
+        /* =========================================
+           メニュー (Menu)
+           ========================================= */
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .category-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.2rem;
+            font-family: var(--font-mincho);
+            cursor: pointer;
+            padding-bottom: 0.5rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .category-btn.active, .category-btn:hover {
+            color: var(--gold);
+        }
+
+        .category-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-item {
+            background: var(--card-bg);
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .menu-item h4 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .menu-price {
+            font-family: var(--font-mincho);
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .menu-desc {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* おすすめバッジ */
+        .menu-item.recommended::before {
+            content: 'おすすめ';
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            background: var(--fire);
+            color: #fff;
+            padding: 5px 30px;
+            font-size: 0.8rem;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        /* =========================================
+           アクセス (Access)
+           ========================================= */
+        .access-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--card-bg);
+        }
+
+        .access-info {
+            padding: 4rem;
+        }
+
+        .info-row {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 2rem;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .info-label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: grayscale(100%) invert(92%) contrast(83%); /* 地図をダークモード風に */
+        }
+
+        /* =========================================
+           フッター
+           ========================================= */
+        footer {
+            background: #000;
+            padding: 4rem 5% 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-logo {
+            font-size: 2.5rem;
+            font-family: var(--font-mincho);
+            color: #fff;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .copyright {
+            color: #555;
+            font-size: 0.8rem;
+        }
+
+        /* =========================================
+           アニメーション
+           ========================================= */
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* =========================================
+           レスポンシブ対応
+           ========================================= */
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .hero h1 {
+                writing-mode: horizontal-tb;
+                height: auto;
+                font-size: 3.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .hero h1::after {
+                top: -15px;
+                right: -10px;
+                width: 50px;
+                height: 50px;
+                font-size: 0.8rem;
+            }
+
+            .hero-text-group {
+                text-align: center;
+            }
+
+            .hero-subtitle {
+                margin: 0 auto 1.5rem;
+            }
+
+            .btn-group {
+                justify-content: center;
+            }
+
+            .about-grid, .access-container {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none; /* モバイルメニュー実装時は変更 */
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .access-info {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ナビゲーション -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">武屋</a>
+            <ul class="nav-links">
+                <li><a href="#about">こだわり</a></li>
+                <li><a href="#menu">お品書き</a></li>
+                <li><a href="#access">店舗情報</a></li>
+                <li><a href="#" class="reserve-btn-nav">ご予約</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ヒーローセクション -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>とんちゃん</h1>
+            <div class="hero-text-group">
+                <span class="hero-subtitle">名古屋市北区の隠れ家</span>
+                <p class="hero-description">
+                    鮮度抜群の朝挽きホルモンと、秘伝の味噌ダレ。<br>
+                    炭火で香ばしく焼き上げる、至福のひととき。<br>
+                    本物の味を、落ち着いた空間で。
+                </p>
+                <div class="btn-group">
+                    <a href="#menu" class="btn btn-primary">お品書きを見る <i class="fas fa-arrow-right"></i></a>
+                    <a href="#access" class="btn btn-secondary">店舗情報</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- こだわりセクション -->
+    <section id="about">
+        <div class="section-title">
+            <h2>武屋のこだわり</h2>
+            <p>OUR PASSION</p>
+        </div>
+        <div class="about-grid">
+            <div class="about-image">
+                <!-- プレースホルダー画像：実際には店舗の画像を使用 -->
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="炭火焼肉のイメージ">
+            </div>
+            <div class="about-content">
+                <h3>鮮度への執念と、<br>秘伝の味付け。</h3>
+                <p>
+                    当店の一番のこだわりは、何と言っても「鮮度」。<br>
+                    毎朝市場から直送される朝挽きのホルモンは、臭みが全くなく、プリプリとした食感と濃厚な旨味が特徴です。
+                </p>
+                <p>
+                    そして、その素材の良さを最大限に引き出すのが、創業以来継ぎ足し守り続けてきた「秘伝の味噌ダレ」。<br>
+                    数種類の味噌とスパイスを独自にブレンドし、深みのあるコクとキレのある後味を実現しました。
+                </p>
+                <p>
+                    炭火の遠赤外線効果で、外はカリッと、中はジューシーに。<br>
+                    口に入れた瞬間に広がる香ばしさと旨味を、ぜひご堪能ください。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- メニューセクション -->
+    <section id="menu" style="background-color: #0a0a0a;">
+        <div class="section-title">
+            <h2>お品書き</h2>
+            <p>MENU</p>
+        </div>
+
+        <div class="menu-categories">
+            <button class="category-btn active">名物ホルモン</button>
+            <button class="category-btn">厳選赤身</button>
+            <button class="category-btn">一品料理</button>
+        </div>
+
+        <div class="menu-grid">
+            <div class="menu-item recommended">
+                <h4>名物 とんちゃん（味噌）</h4>
+                <span class="menu-price">¥480</span>
+                <p class="menu-desc">鮮度抜群の豚ホルモン。秘伝の味噌ダレとの相性は抜群。まずはこれから。</p>
+            </div>
+            <div class="menu-item">
+                <h4>牛ホルモン（脂付）</h4>
+                <span class="menu-price">¥780</span>
+                <p class="menu-desc">甘みのある脂が口の中でとろけます。コラーゲンたっぷり。</p>
+            </div>
+            <div class="menu-item">
+                <h4>上ミノ</h4>
+                <span class="menu-price">¥980</span>
+                <p class="menu-desc">第一胃袋。コリコリとした独特の食感がクセになります。</p>
+            </div>
+            <div class="menu-item recommended">
+                <h4>和牛カルビ</h4>
+                <span class="menu-price">¥1,280</span>
+                <p class="menu-desc">A5ランク黒毛和牛を使用。きめ細やかなサシが入った極上の逸品。</p>
+            </div>
+            <div class="menu-item">
+                <h4>厚切り牛タン</h4>
+                <span class="menu-price">¥1,480</span>
+                <p class="menu-desc">贅沢に厚切りにしたタン元。柔らかさと歯ごたえのバランスが絶妙。</p>
+            </div>
+            <div class="menu-item">
+                <h4>武屋サラダ</h4>
+                <span class="menu-price">¥680</span>
+                <p class="menu-desc">韓国海苔と特製ドレッシングで和えた、焼肉の箸休めに最適なサラダ。</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 4rem;">
+            <a href="#" class="btn btn-primary">全てのメニューを見る</a>
+        </div>
+    </section>
+
+    <!-- アクセスセクション -->
+    <section id="access">
+        <div class="section-title">
+            <h2>店舗情報</h2>
+            <p>ACCESS & INFO</p>
+        </div>
+        <div class="access-container">
+            <div class="access-info">
+                <div class="info-row">
+                    <span class="info-label">店名</span>
+                    <span class="info-value">とんちゃん焼肉の武屋</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">住所</span>
+                    <span class="info-value">〒462-0844<br>愛知県名古屋市北区清水5-9-12</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">電話番号</span>
+                    <span class="info-value">052-917-2929</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">営業時間</span>
+                    <span class="info-value">17:00 - 24:00 (L.O. 23:00)<br>定休日：水曜日</span>
+                </div>
+                <div style="margin-top: 2rem;">
+                    <a href="tel:0529172929" class="btn btn-primary" style="width: 100%;">電話で予約する</a>
+                </div>
+            </div>
+            <div class="map-container">
+                <!-- Google Maps Embed -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3260.867866765866!2d136.9134563152452!3d35.18483698031303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6003711911111111%3A0x1111111111111111!2z44CSNDYyLTA4NDQg5oSb55-l55yM5ZCN5Y-k5bGL5biC5YyX5Yy65riF5rC077yV5LiB55uu77yZ4oiS77yR77yS!5e0!3m2!1sja!2sjp!4v1620000000000!5m2!1sja!2sjp" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer>
+        <div class="footer-logo">武屋</div>
+        <ul class="footer-links">
+            <li><a href="#">ホーム</a></li>
+            <li><a href="#about">こだわり</a></li>
+            <li><a href="#menu">メニュー</a></li>
+            <li><a href="#access">店舗情報</a></li>
+            <li><a href="#">プライバシーポリシー</a></li>
+        </ul>
+        <p class="copyright">&copy; 2023 Tontyan Yakiniku TAKEYA. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // スクロール時のナビゲーション変化
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // スムーズスクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
