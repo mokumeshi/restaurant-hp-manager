@@ -224,11 +224,7 @@
             const [deployStatus, setDeployStatus] = useState(null); // null, 'success', 'error'
             const [deployUrl, setDeployUrl] = useState("");
 
-            // useEffect(() => {
-            //     if (window.lucide) {
-            //         window.lucide.createIcons();
-            //     }
-            // }, [step, generationMode]);
+            // useEffect for icons removed as we use React components now
 
             const handleInputChange = (key, value) => {
                 setFormData(prev => ({ ...prev, [key]: value }));
