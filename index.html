@@ -242,9 +242,21 @@
                 
                 try {
                     // GitHub設定
-                    const REPO_OWNER = 'okinawaojii-crypto';
+                    const REPO_OWNER = 'mokumeshi';
                     const REPO_NAME = 'restaurant-hp-manager';
-                    const GITHUB_TOKEN = prompt('GitHub Personal Access Token を入力してください:');
+                    
+                    // ローカルストレージからトークンを取得
+                    let GITHUB_TOKEN = localStorage.getItem('github_token');
+                    
+                    if (!GITHUB_TOKEN) {
+                        // トークンがない場合は入力を求める
+                        GITHUB_TOKEN = prompt('GitHub Personal Access Token を入力してください:\n\n※一度入力すると、このブラウザに保存されます');
+                        
+                        if (GITHUB_TOKEN) {
+                            // トークンをローカルストレージに保存
+                            localStorage.setItem('github_token', GITHUB_TOKEN);
+                        }
+                    }
                     
                     if (!GITHUB_TOKEN) {
                         throw new Error('トークンが入力されませんでした');
@@ -277,11 +289,16 @@
                     
                     if (!response.ok) {
                         const errorData = await response.json();
+                        // トークンが無効な場合はローカルストレージから削除
+                        if (response.status === 401 || response.status === 403) {
+                            localStorage.removeItem('github_token');
+                            throw new Error('トークンが無効です。再度入力してください。');
+                        }
                         throw new Error(errorData.message || 'GitHub APIエラー');
                     }
                     
                     // 成功
-                    const publicUrl = `https://${REPO_OWNER}.github.io/${REPO_NAME}/${autoName}/`;
+                    const publicUrl = `https://mokumeshi.tokyo/${autoName}/`;
                     setGeneratedUrl(publicUrl);
                     alert(`🎉 公開成功！\n\n数分後に以下のURLでアクセスできます：\n${publicUrl}\n\n※GitHub Pagesの反映に2〜3分かかる場合があります`);
                     
