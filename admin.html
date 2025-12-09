@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理画面 | 飲食店HP管理システム</title>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Babel Standalone -->
+    <script src="https://unpkg.com/@babel/standalone@7.23.5/babel.min.js"></script>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // アイコンコンポーネント
+        const Icon = ({ name, className = "" }) => <i className={`${name} ${className}`}></i>;
+
+        const List = (props) => <Icon name="fas fa-list" {...props} />;
+        const Edit = (props) => <Icon name="fas fa-edit" {...props} />;
+        const Trash = (props) => <Icon name="fas fa-trash" {...props} />;
+        const Search = (props) => <Icon name="fas fa-search" {...props} />;
+        const ExternalLink = (props) => <Icon name="fas fa-external-link-alt" {...props} />;
+        const Loader = (props) => <Icon name="fas fa-spinner fa-spin" {...props} />;
+        const Home = (props) => <Icon name="fas fa-home" {...props} />;
+        const Save = (props) => <Icon name="fas fa-save" {...props} />;
+        const Times = (props) => <Icon name="fas fa-times" {...props} />;
+
+        // GitHub設定
+        const REPO_OWNER = 'mokumeshi';
+        const REPO_NAME = 'restaurant-hp-manager';
+        const BRANCH = 'main';
+
+        const AdminApp = () => {
+            const [restaurants, setRestaurants] = useState([]);
+            const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+            const [loading, setLoading] = useState(false);
+            const [searchQuery, setSearchQuery] = useState('');
+            const [editingRestaurant, setEditingRestaurant] = useState(null);
+            const [editHtml, setEditHtml] = useState('');
+            const [githubToken, setGithubToken] = useState('');
+
+            // トークン取得
+            useEffect(() => {
+                const token = localStorage.getItem('github_token');
+                if (token) {
+                    setGithubToken(token);
+                    fetchRestaurants(token);
+                } else {
+                    const inputToken = prompt('GitHub Personal Access Token を入力してください:');
+                    if (inputToken) {
+                        localStorage.setItem('github_token', inputToken);
+                        setGithubToken(inputToken);
+                        fetchRestaurants(inputToken);
+                    }
+                }
+            }, []);
+
+            // レストラン一覧取得
+            const fetchRestaurants = async (token) => {
+                setLoading(true);
+                try {
+                    const response = await fetch(
+                        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/`,
+                        {
+                            headers: { 'Authorization': `token ${token}` }
+                        }
+                    );
+
+                    if (!response.ok) {
+                        throw new Error('GitHub APIエラー');
+                    }
+
+                    const data = await response.json();
+                    const restaurantFolders = data.filter(item =>
+                        item.type === 'dir' && item.name.startsWith('restaurant-')
+                    );
+
+                    // 各フォルダの詳細情報を取得
+                    const detailedRestaurants = await Promise.all(
+                        restaurantFolders.map(async (folder) => {
+                            try {
+                                const htmlResponse = await fetch(
+                                    `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${folder.name}/index.html`,
+                                    {
+                                        headers: { 'Authorization': `token ${token}` }
+                                    }
+                                );
+                                const htmlData = await htmlResponse.json();
+                                return {
+                                    name: folder.name,
+                                    url: `https://mokumeshi.tokyo/${folder.name}/`,
+                                    sha: htmlData.sha,
+                                    size: htmlData.size,
+                                    timestamp: parseInt(folder.name.replace('restaurant-', ''))
+                                };
+                            } catch (error) {
+                                console.error(`Error fetching ${folder.name}:`, error);
+                                return null;
+                            }
+                        })
+                    );
+
+                    const validRestaurants = detailedRestaurants.filter(r => r !== null);
+                    validRestaurants.sort((a, b) => b.timestamp - a.timestamp);
+                    setRestaurants(validRestaurants);
+                    setFilteredRestaurants(validRestaurants);
+                } catch (error) {
+                    console.error('取得エラー:', error);
+                    alert('レストラン一覧の取得に失敗しました: ' + error.message);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            // 検索
+            useEffect(() => {
+                if (searchQuery.trim() === '') {
+                    setFilteredRestaurants(restaurants);
+                } else {
+                    const filtered = restaurants.filter(r =>
+                        r.name.toLowerCase().includes(searchQuery.toLowerCase())
+                    );
+                    setFilteredRestaurants(filtered);
+                }
+            }, [searchQuery, restaurants]);
+
+            // 編集開始
+            const handleEdit = async (restaurant) => {
+                setLoading(true);
+                try {
+                    const response = await fetch(
+                        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${restaurant.name}/index.html`,
+                        {
+                            headers: { 'Authorization': `token ${githubToken}` }
+                        }
+                    );
+                    const data = await response.json();
+                    const htmlContent = atob(data.content);
+                    setEditHtml(htmlContent);
+                    setEditingRestaurant({ ...restaurant, sha: data.sha });
+                } catch (error) {
+                    alert('HTMLの読み込みに失敗しました: ' + error.message);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            // 編集保存
+            const handleSaveEdit = async () => {
+                if (!editingRestaurant || !editHtml.trim()) {
+                    alert('HTMLコードを入力してください');
+                    return;
+                }
+
+                if (!confirm('変更を保存しますか？')) {
+                    return;
+                }
+
+                setLoading(true);
+                try {
+                    const content = btoa(unescape(encodeURIComponent(editHtml)));
+                    const response = await fetch(
+                        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${editingRestaurant.name}/index.html`,
+                        {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `token ${githubToken}`,
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                message: `update: ${editingRestaurant.name}`,
+                                content: content,
+                                sha: editingRestaurant.sha,
+                                branch: BRANCH
+                            })
+                        }
+                    );
+
+                    if (!response.ok) {
+                        throw new Error('更新に失敗しました');
+                    }
+
+                    alert('✅ 更新成功！数分後に反映されます。');
+                    setEditingRestaurant(null);
+                    setEditHtml('');
+                    fetchRestaurants(githubToken);
+                } catch (error) {
+                    alert('更新エラー: ' + error.message);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            // 削除
+            const handleDelete = async (restaurant) => {
+                if (!confirm(`本当に「${restaurant.name}」を削除しますか？\n\nこの操作は取り消せません。`)) {
+                    return;
+                }
+
+                setLoading(true);
+                try {
+                    const response = await fetch(
+                        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${restaurant.name}/index.html`,
+                        {
+                            method: 'DELETE',
+                            headers: {
+                                'Authorization': `token ${githubToken}`,
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                message: `delete: ${restaurant.name}`,
+                                sha: restaurant.sha,
+                                branch: BRANCH
+                            })
+                        }
+                    );
+
+                    if (!response.ok) {
+                        throw new Error('削除に失敗しました');
+                    }
+
+                    alert('✅ 削除成功！');
+                    fetchRestaurants(githubToken);
+                } catch (error) {
+                    alert('削除エラー: ' + error.message);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    {/* Header */}
+                    <header className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+                        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+                            <div className="flex items-center gap-2">
+                                <List className="text-gray-800 w-6 h-6" />
+                                <h1 className="text-xl font-bold tracking-tight text-gray-900">管理画面</h1>
+                            </div>
+                            <a href="/" className="flex items-center gap-2 text-indigo-600 hover:text-indigo-700">
+                                <Home className="w-5 h-5" />
+                                <span>ホームに戻る</span>
+                            </a>
+                        </div>
+                    </header>
+
+                    <div className="container mx-auto px-6 py-8">
+                        {/* 編集モード */}
+                        {editingRestaurant ? (
+                            <div className="card">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h2 className="text-2xl font-bold text-gray-800">編集: {editingRestaurant.name}</h2>
+                                    <button
+                                        onClick={() => {
+                                            setEditingRestaurant(null);
+                                            setEditHtml('');
+                                        }}
+                                        className="btn bg-gray-500 text-white hover:bg-gray-600 flex items-center gap-2"
+                                    >
+                                        <Times className="w-5 h-5" />
+                                        キャンセル
+                                    </button>
+                                </div>
+                                <textarea
+                                    className="input-field font-mono text-sm"
+                                    value={editHtml}
+                                    onChange={(e) => setEditHtml(e.target.value)}
+                                    style={{ minHeight: '500px', fontFamily: 'monospace' }}
+                                />
+                                <div className="flex justify-end gap-4 mt-4">
+                                    <button
+                                        onClick={handleSaveEdit}
+                                        disabled={loading}
+                                        className="btn btn-primary flex items-center gap-2"
+                                    >
+                                        <Save className="w-5 h-5" />
+                                        保存
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <>
+                                {/* 検索バー */}
+                                <div className="card">
+                                    <div className="flex items-center gap-3">
+                                        <Search className="w-5 h-5 text-gray-400" />
+                                        <input
+                                            type="text"
+                                            className="input-field"
+                                            placeholder="レストラン名で検索..."
+                                            value={searchQuery}
+                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* 一覧 */}
+                                <div className="card">
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                                        公開済みホームページ ({filteredRestaurants.length}件)
+                                    </h2>
+
+                                    {loading ? (
+                                        <div className="flex justify-center py-12">
+                                            <Loader className="w-12 h-12 text-indigo-600" />
+                                        </div>
+                                    ) : filteredRestaurants.length === 0 ? (
+                                        <p className="text-gray-500 text-center py-8">公開済みのホームページがありません</p>
+                                    ) : (
+                                        <div className="space-y-4">
+                                            {filteredRestaurants.map((restaurant) => (
+                                                <div key={restaurant.name} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                                    <div className="flex justify-between items-start">
+                                                        <div className="flex-1">
+                                                            <h3 className="text-lg font-bold text-gray-900">{restaurant.name}</h3>
+                                                            <p className="text-sm text-gray-500 mt-1">
+                                                                作成日時: {new Date(restaurant.timestamp).toLocaleString('ja-JP')}
+                                                            </p>
+                                                            <a
+                                                                href={restaurant.url}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 mt-2"
+                                                            >
+                                                                <ExternalLink className="w-4 h-4" />
+                                                                {restaurant.url}
+                                                            </a>
+                                                        </div>
+                                                        <div className="flex gap-2">
+                                                            <button
+                                                                onClick={() => handleEdit(restaurant)}
+                                                                className="btn bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-2"
+                                                            >
+                                                                <Edit className="w-4 h-4" />
+                                                                編集
+                                                            </button>
+                                                            <button
+                                                                onClick={() => handleDelete(restaurant)}
+                                                                className="btn btn-danger flex items-center gap-2"
+                                                            >
+                                                                <Trash className="w-4 h-4" />
+                                                                削除
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<AdminApp />);
+    </script>
+</body>
+
+</html>
