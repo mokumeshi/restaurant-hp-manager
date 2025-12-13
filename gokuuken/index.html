@@ -1,586 +1,597 @@
 <!DOCTYPE html>
-<html lang="ja" class="scroll-smooth">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ごくう軒 | GOKUU.KEN - Since 1979</title>
-    <meta name="description" content="埼玉・三郷の町中華「ごくう軒」。創業昭和54年、深夜3時まで営業する魂の一杯。">
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Antique+Soft&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
+    <title>ごくうらーめん | 三郷の町中華</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Config -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'brand-black': '#080808',
-                        'brand-dark': '#121212',
-                        'brand-red': '#8B0000',
-                        'brand-gold': '#C5A059',
-                        'brand-gray': '#888888',
-                    },
-                    fontFamily: {
-                        sans: ['"Noto Sans JP"', 'sans-serif'],
-                        serif: ['"Zen Antique Soft"', 'serif'],
-                    },
-                    animation: {
-                        'marquee': 'marquee 40s linear infinite',
-                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                    },
-                    keyframes: {
-                        marquee: {
-                            '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-50%)' },
-                        },
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Reggae+One&family=Yuji+Syuku&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet">
     <style>
-        /* Base & Reset */
+        /* --- ごくう特別仕様スタイル（黒背景Ver） --- */
+        :root {
+            --gokuu-red: #E60012;       /* 鮮やかな赤 */
+            --gokuu-dark-red: #B71C1C;  /* 濃い赤 */
+            --gokuu-yellow: #FFD700;    /* 黄色 */
+            --gokuu-black: #121212;     /* 黒（背景） */
+            --gokuu-charcoal: #1E1E1E;  /* 炭色（セクション背景） */
+            --gokuu-text: #F5F5F5;      /* 白（本文） */
+            --gokuu-wood: #5D4037;      /* 木目色 */
+            --uber-green: #06C167;      /* Uber Eats Green */
+        }
+        
         body {
-            background-color: #080808;
-            color: #f0f0f0;
-            overflow-x: hidden;
+            background-color: var(--gokuu-black);
+            color: var(--gokuu-text);
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            /* 背景：黒いうろこ模様のテクスチャで中華鍋の肌感を演出 */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+                url("https://www.transparenttextures.com/patterns/black-scales.png");
+        }
+
+        .font-fude {
+            font-family: 'Yuji Syuku', serif;
+        }
+        .font-force {
+            font-family: 'Reggae One', cursive;
+        }
+
+        /* 壁の短冊メニュー風（黒背景とのコントラスト用） */
+        .menu-strip {
+            background-color: #FFF8DC; /* 短冊はクリーム色で視認性確保 */
+            color: #000;
+            border: 2px solid #d4c5a0;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            font-family: 'Yuji Syuku', serif;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            height: 340px; 
+            width: 88px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0.5rem;
+            transition: transform 0.2s;
+            position: relative;
+            margin: 0.5rem;
             cursor: default;
         }
-        /* Selection Color */
-        ::selection {
-            background: #8B0000;
-            color: #fff;
-        }
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #080808;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #8B0000;
-        }
-        /* Noise Texture (Film Grain Effect) */
-        .noise-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 50;
-            opacity: 0.04;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-        /* Navigation Glass Effect */
-        nav {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        nav.scrolled {
-            background: rgba(8, 8, 8, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 1rem !important;
-            padding-bottom: 1rem !important;
-        }
-        /* Hero Text Reveal Animation */
-        .reveal-text {
-            overflow: hidden;
-            display: block;
-        }
-        .reveal-text span {
-            display: block;
-            transform: translateY(110%);
-            animation: textReveal 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
-        }
-        @keyframes textReveal {
-            to { transform: translateY(0); }
-        }
-        /* Hover Line Effect for Links */
-        .hover-line {
-            position: relative;
-            text-decoration: none;
-        }
-        .hover-line::after {
+        .menu-strip::before {
             content: '';
             position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -2px;
-            left: 0;
-            background-color: #C5A059;
-            transition: width 0.3s ease;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background-color: #333;
+            border-radius: 50%;
+            box-shadow: 0 1px 0 rgba(255,255,255,0.3);
         }
-        .hover-line:hover::after {
-            width: 100%;
-        }
-        /* Menu Card Hover Effect */
-        .menu-card {
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease;
-        }
-        .menu-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            background-color: rgba(255,255,255,0.03);
+        .menu-strip:hover {
+            transform: scale(1.05) rotate(1deg);
             z-index: 10;
+            border-color: var(--gokuu-red);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
         }
-        /* Dim siblings on hover */
-        .menu-grid:hover .menu-card:not(:hover) {
-            opacity: 0.4;
-            filter: blur(1px);
-            transform: scale(0.98);
+
+        .menu-name {
+            font-size: 1.25rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
         }
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .marquee-container {
-                display: none;
-            }
+        
+        .menu-price-container {
+            writing-mode: horizontal-tb;
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid #d4c5a0;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .menu-price {
+            font-family: 'Reggae One', cursive;
+            font-size: 1.3rem;
+            color: var(--gokuu-red);
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        /* ラーメンどんぶり模様（雷文） */
+        .raimon-strip {
+            height: 20px;
+            width: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='20' viewBox='0 0 40 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h10v5H5v10h5v5H0V0zm10 0h10v5H15v10h5v5H10V0zm10 0h10v5H25v10h5v5H20V0zm10 0h10v5H35v10h5v5H30V0z' fill='%23FFD700' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-color: var(--gokuu-charcoal);
+            border-top: 1px solid var(--gokuu-yellow);
+            border-bottom: 1px solid var(--gokuu-yellow);
+        }
+        
+        @keyframes steam {
+          0% { opacity: 0; transform: translateY(0) scale(1); }
+          50% { opacity: 0.6; transform: translateY(-20px) scale(1.2); }
+          100% { opacity: 0; transform: translateY(-40px) scale(1.5); }
+        }
+        .steam {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            filter: blur(10px);
+            animation: steam 3s infinite ease-out;
+            pointer-events: none;
+        }
+
+        /* 黒背景用のテキスト装飾 */
+        .text-outline-black {
+            text-shadow: 
+                2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        }
+        .text-glow-gold {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        /* ロゴのキラキラアニメーション */
+        @keyframes shimmer {
+            0% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FF6B00; }
+            50% { text-shadow: 0 0 10px #FF6B00, 0 0 20px #FF6B00, 0 0 30px #FFD700; }
+            100% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FF6B00; }
+        }
+        .logo-shimmer {
+            animation: shimmer 2s ease-in-out infinite;
+            color: #FF6B00 !important;
+        }
+        
+        /* カスタムスクロールバー */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888; 
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; 
         }
     </style>
 </head>
-<body class="antialiased">
-    <!-- Noise Texture Layer -->
-    <div class="noise-overlay"></div>
-    <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-[100] py-6 px-6 md:px-12 flex justify-between items-center mix-blend-difference text-white">
-        <div class="flex items-center gap-4 cursor-pointer group" onclick="window.scrollTo(0,0)">
-            <div class="relative w-12 h-12 flex items-center justify-center border border-white/20 rounded-full group-hover:border-brand-gold transition-colors duration-500 bg-brand-black/50 backdrop-blur-sm">
-                <span class="font-serif text-2xl text-brand-gold pt-1">極</span>
-            </div>
-            <div class="hidden md:block">
-                <h1 class="text-lg font-bold tracking-[0.2em] font-serif">GOKUU.KEN</h1>
-                <p class="text-[9px] tracking-[0.4em] text-gray-400 uppercase">Since 1979</p>
-            </div>
-        </div>
-        <!-- Desktop Menu -->
-        <div class="hidden md:flex items-center gap-10 text-xs font-bold tracking-[0.2em]">
-            <a href="#concept" class="hover-line text-gray-300 hover:text-white transition-colors">CONCEPT</a>
-            <a href="#menu" class="hover-line text-gray-300 hover:text-white transition-colors">MENU</a>
-            <a href="#access" class="hover-line text-gray-300 hover:text-white transition-colors">ACCESS</a>
-            <button onclick="openTakeoutModal()" class="flex items-center gap-2 px-6 py-3 border border-brand-red text-brand-red hover:bg-brand-red hover:text-white transition-all duration-300 rounded-sm">
-                <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-                TAKEOUT
-            </button>
-        </div>
-        <!-- Mobile Menu Toggle -->
-        <button id="menu-toggle" class="md:hidden text-white hover:text-brand-gold transition-colors z-[101]">
-            <i data-lucide="menu" class="w-8 h-8"></i>
-        </button>
-    </nav>
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 bg-brand-black z-[90] flex flex-col items-center justify-center space-y-8 transition-transform duration-500 translate-x-full">
-        <a href="#concept" class="text-4xl font-serif font-bold text-white hover:text-brand-red transition-colors mobile-link">CONCEPT</a>
-        <a href="#menu" class="text-4xl font-serif font-bold text-white hover:text-brand-red transition-colors mobile-link">MENU</a>
-        <a href="#access" class="text-4xl font-serif font-bold text-white hover:text-brand-red transition-colors mobile-link">ACCESS</a>
-        <button onclick="openTakeoutModal(); document.getElementById('menu-toggle').click();" class="mt-8 text-xl font-bold text-brand-red border-b-2 border-brand-red pb-1 tracking-widest">
-            TAKEOUT ORDER
-        </button>
-    </div>
-    <!-- Hero Section -->
-    <section class="relative min-h-screen w-full flex flex-col md:flex-row overflow-hidden">
-        <!-- Left Content (Text) - PC: 55%, Mobile: 100% -->
-        <div class="w-full md:w-[55%] relative z-10 flex flex-col justify-center px-6 md:px-20 lg:px-32 pt-32 pb-20 bg-brand-black">
-            <div class="reveal-text mb-8">
-                <span class="text-brand-gold text-xs md:text-sm tracking-[0.4em] font-medium border-l-2 border-brand-gold pl-4" style="animation-delay: 0.1s">
-                    SAITAMA / MISATO
-                </span>
-            </div>
-            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-10 text-white">
-                <div class="reveal-text"><span style="animation-delay: 0.2s">深夜</span></div>
-                <div class="reveal-text"><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-red-600" style="animation-delay: 0.3s">三時</span><span style="animation-delay: 0.3s">ノ</span></div>
-                <div class="reveal-text"><span style="animation-delay: 0.4s">熱狂。</span></div>
-            </h1>
-            <p class="text-gray-400 text-sm md:text-base leading-loose max-w-md mb-12 tracking-wide font-light reveal-text">
-                <span style="animation-delay: 0.6s">
-                創業昭和54年。<br>
-                親子三代で鍋を振るう、路地裏の灯火。<br>
-                飲み明かした夜の〆に、魂を震わす一杯を。
-                </span>
-            </p>
-            <div class="reveal-text">
-                <span style="animation-delay: 0.8s">
-                    <a href="#menu" class="group inline-flex items-center gap-4 text-white text-sm tracking-[0.2em] border-b border-white/20 pb-2 hover:border-brand-gold hover:text-brand-gold transition-all duration-300">
-                        VIEW MENU <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-2 transition-transform"></i>
-                    </a>
-                </span>
-            </div>
-            <!-- Decorative Marquee Text (Background) -->
-            <div class="marquee-container absolute bottom-0 left-0 w-full overflow-hidden opacity-[0.03] pointer-events-none select-none">
-                <div class="whitespace-nowrap animate-marquee text-[8rem] font-black leading-none text-white font-serif">
-                    MACHICHUKA GOKUU-KEN SINCE 1979 RAMEN GYOZA SOUL-FOOD &nbsp; MACHICHUKA GOKUU-KEN SINCE 1979 RAMEN GYOZA SOUL-FOOD
-                </div>
-            </div>
-        </div>
-        <!-- Right Content (Image) - PC: 45%, Mobile: Hidden/Background -->
-        <div class="w-full md:w-[45%] h-[50vh] md:h-screen relative bg-[#111]">
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1512132411229-c30391241dd8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')] bg-cover bg-center opacity-60 md:opacity-80 mix-blend-luminosity hover:mix-blend-normal transition-all duration-1000"></div>
-            <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-brand-black via-transparent to-transparent"></div>
-            <!-- Scroll Indicator -->
-            <div class="absolute bottom-10 right-10 md:left-10 text-white flex flex-col items-center gap-4 z-20 mix-blend-difference">
-                <span class="text-[10px] tracking-[0.3em] vertical-text">SCROLL DOWN</span>
-                <div class="w-[1px] h-16 bg-white/50 relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1/2 bg-white animate-[marquee_1.5s_linear_infinite]" style="animation-direction: normal;"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Info Strip -->
-    <div class="border-y border-white/5 bg-brand-dark relative z-20">
-        <div class="container mx-auto px-6 py-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/5">
-                <div class="group cursor-default">
-                    <p class="text-[10px] text-brand-red tracking-[0.2em] mb-2 font-bold">OPEN</p>
-                    <p class="text-xl md:text-2xl font-serif text-white group-hover:text-brand-gold transition-colors">17:00 - 03:00</p>
-                </div>
-                <div class="group cursor-default">
-                    <p class="text-[10px] text-brand-red tracking-[0.2em] mb-2 font-bold">PARKING</p>
-                    <p class="text-xl md:text-2xl font-serif text-white group-hover:text-brand-gold transition-colors">AVAILABLE</p>
-                </div>
-                <div class="group cursor-default">
-                    <p class="text-[10px] text-brand-red tracking-[0.2em] mb-2 font-bold">SMOKING</p>
-                    <p class="text-xl md:text-2xl font-serif text-white group-hover:text-brand-gold transition-colors">21:00 ~ OK</p>
-                </div>
-                <div class="group cursor-default">
-                    <p class="text-[10px] text-brand-red tracking-[0.2em] mb-2 font-bold">PAYMENT</p>
-                    <p class="text-xl md:text-2xl font-serif text-white group-hover:text-brand-gold transition-colors">CASH ONLY</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Concept Section -->
-    <section id="concept" class="py-24 md:py-40 bg-brand-black relative overflow-hidden">
-        <div class="container mx-auto px-6 md:px-12 relative z-10">
-            <div class="flex flex-col md:flex-row items-center gap-16 md:gap-24">
-                <!-- Image Composition -->
-                <div class="w-full md:w-1/2 relative group">
-                    <div class="absolute -inset-4 border border-brand-red/20 rounded-sm transform translate-x-4 translate-y-4 transition-transform duration-700 group-hover:translate-x-2 group-hover:translate-y-2"></div>
-                    <div class="relative overflow-hidden aspect-[3/4]">
-                        <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
-                             alt="Wok Cooking" 
-                             class="object-cover w-full h-full transform transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0">
-                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
-                    </div>
-                    <div class="absolute -bottom-8 -left-8 bg-brand-dark p-8 border border-white/10 shadow-2xl hidden md:block">
-                        <p class="font-serif text-4xl text-brand-gold">61<span class="text-xs text-gray-500 ml-2 tracking-widest">SEATS</span></p>
-                    </div>
-                </div>
-                <!-- Text Content -->
-                <div class="w-full md:w-1/2">
-                    <div class="flex items-center gap-4 mb-10">
-                        <div class="h-[1px] w-12 bg-brand-red"></div>
-                        <span class="text-brand-red tracking-[0.3em] text-xs font-bold">PHILOSOPHY</span>
-                    </div>
-                    <h2 class="text-3xl md:text-5xl font-serif font-bold leading-tight mb-12 text-white">
-                        飾らない。<br>
-                        ただ、<span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-red-600">旨い</span>だけ。
-                    </h2>
-                    <div class="space-y-8 text-gray-400 leading-loose text-justify font-light">
-                        <p>
-                            「ごくう軒」に洒落た盛り付けは必要ない。
-                            必要なのは、強火で煽られた中華鍋の音、立ち昇る湯気、そして胃袋を直撃する圧倒的なボリュームだ。
-                        </p>
-                        <p>
-                            1979年の創業から継ぎ足されたタレと、変わらない情熱。
-                            深夜3時。仕事帰りの疲れた体に染み渡るラーメンは、もはや三郷のインフラと言っても過言ではない。
-                        </p>
-                    </div>
-                    <div class="mt-16 grid grid-cols-2 gap-8 border-t border-white/10 pt-8">
-                        <div>
-                            <p class="text-3xl font-serif text-white">40<span class="text-sm text-brand-red ml-1">YEARS</span></p>
-                            <p class="text-[10px] text-gray-600 tracking-widest mt-1">ESTABLISHED</p>
-                        </div>
-                        <div>
-                            <p class="text-3xl font-serif text-white">100<span class="text-sm text-brand-red ml-1">+</span></p>
-                            <p class="text-[10px] text-gray-600 tracking-widest mt-1">MENU ITEMS</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Menu Section -->
-    <section id="menu" class="py-24 bg-[#050505] relative">
-        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-brand-dark to-transparent opacity-50 pointer-events-none"></div>
-        <div class="container mx-auto px-6 md:px-12 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-white/10 pb-8">
-                <div>
-                    <h2 class="text-4xl md:text-6xl font-serif font-bold mb-4 text-white">お品書き</h2>
-                    <p class="text-gray-500 text-xs tracking-[0.3em]">SIGNATURE DISHES</p>
-                </div>
-                <div class="mt-8 md:mt-0">
-                    <div id="menu-tabs" class="flex flex-wrap gap-2">
-                    </div>
-                </div>
-            </div>
-            <!-- Menu Grid -->
-            <div id="menu-grid" class="menu-grid grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 min-h-[400px]">
-            </div>
-            <div class="mt-24 text-center">
-                <a href="https://tabelog.com/saitama/A1102/A110205/11009097/" target="_blank" class="group inline-flex items-center gap-3 text-gray-500 hover:text-white transition-colors text-xs tracking-[0.2em] border-b border-white/10 hover:border-white pb-2">
-                    VIEW FULL MENU ON TABELOG <i data-lucide="external-link" class="w-3 h-3 group-hover:-translate-y-1 transition-transform"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-    <!-- Access Section -->
-    <section id="access" class="h-[70vh] min-h-[500px] relative flex flex-col md:flex-row bg-brand-black">
-        <!-- Info Panel -->
-        <div class="w-full md:w-1/3 bg-brand-dark p-10 md:p-16 flex flex-col justify-center border-r border-white/5 relative z-10">
-            <h2 class="text-3xl font-serif font-bold mb-12 text-white">店舗情報</h2>
-            <div class="space-y-10">
-                <div class="group">
-                    <p class="text-brand-gray text-[10px] tracking-[0.2em] mb-2 uppercase">Address</p>
-                    <p class="text-lg text-white font-medium">埼玉県三郷市早稲田1-5-8</p>
-                    <p class="text-sm text-gray-500 mt-2">JR武蔵野線「三郷駅」北口 徒歩2分</p>
-                </div>
-                <div class="group">
-                    <p class="text-brand-gray text-[10px] tracking-[0.2em] mb-2 uppercase">Tel (Reservation N/A)</p>
-                    <p class="text-3xl font-serif text-white group-hover:text-brand-gold transition-colors">048-958-4886</p>
-                    <p class="text-xs text-gray-600 mt-2">※ご予約は承っておりません</p>
-                </div>
-            </div>
-        </div>
-        <!-- Map -->
-        <div class="w-full md:w-2/3 relative filter grayscale contrast-125 brightness-75 hover:grayscale-0 hover:brightness-100 transition-all duration-700">
-             <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.346853754897!2d139.88448831526315!3d35.84050598015733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601890f5a5a5a5a5%3A0x123456789abcdef!2z44GU44GP44GG44KJ44O844KB44Kz!5e0!3m2!1sja!2sjp!4v1620000000000!5m2!1sja!2sjp" 
-                width="100%" 
-                height="100%" 
-                style="border:0;" 
-                allowFullScreen="" 
-                loading="lazy"
-                class="w-full h-full"
-            ></iframe>
-            <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-brand-dark to-transparent pointer-events-none"></div>
-        </div>
-    </section>
-    <!-- Footer -->
-    <footer class="bg-black py-20 border-t border-white/5">
-        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-end gap-10">
-            <div>
-                <h2 class="text-3xl font-serif font-bold text-white mb-4">GOKUU.KEN</h2>
-                <div class="flex gap-6 text-gray-600 text-xs tracking-widest uppercase">
-                    <a href="#" class="hover:text-white transition-colors">Instagram</a>
-                    <a href="#" class="hover:text-white transition-colors">Facebook</a>
-                    <a href="#" class="hover:text-white transition-colors">Tabelog</a>
-                </div>
-            </div>
-            <p class="text-gray-700 text-[10px] tracking-[0.2em]">© GOKUU-KEN. GENUINE MACHICHUKA STYLE.</p>
-        </div>
-    </footer>
-    <!-- Takeout Modal -->
-    <div id="takeout-modal" class="fixed inset-0 z-[200] hidden">
-        <div class="absolute inset-0 bg-black/90 backdrop-blur-md transition-opacity opacity-0" id="takeout-backdrop" onclick="closeTakeoutModal()"></div>
-        <div class="absolute inset-y-0 right-0 w-full md:w-[500px] bg-[#111] border-l border-white/10 transform transition-transform translate-x-full duration-500 flex flex-col shadow-2xl" id="takeout-panel">
-            <div class="p-8 border-b border-white/10 flex justify-between items-center bg-[#111] z-10">
-                <h2 class="text-xl font-serif font-bold text-white tracking-widest">TAKEOUT ORDER</h2>
-                <button onclick="closeTakeoutModal()" class="text-gray-500 hover:text-white transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
-            </div>
-            <div class="flex-1 overflow-y-auto p-8 space-y-10">
-                <div id="takeout-menu-list" class="space-y-8"></div>
-                <div class="pt-8 border-t border-white/10">
-                    <div class="flex justify-between items-end mb-6">
-                        <span class="text-gray-500 text-xs tracking-widest">TOTAL (TAX INCL.)</span>
-                        <span class="text-3xl font-serif font-bold text-brand-gold" id="takeout-total">¥0</span>
-                    </div>
-                    <button onclick="alert('デモ：注文を送信しました')" class="w-full bg-brand-red py-4 text-white font-bold tracking-[0.2em] hover:bg-red-800 transition-colors">
-                        CONFIRM ORDER
-                    </button>
-                    <p class="text-[10px] text-gray-600 text-center mt-4">※実際の注文は行われません</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Scripts -->
-    <script>
-        // Init Icons
-        lucide.createIcons();
-        // Data
-        const menuCategories = [
-            { id: 'popular', label: '名物・人気' },
-            { id: 'noodles', label: '麺類' },
-            { id: 'rice', label: '飯・定食' },
-            { id: 'single', label: '一品・点心' },
-        ];
-        const menuData = {
-            popular: [
-                { name: "ごくうラーメン", price: 950, desc: "看板メニュー。炒めた豚肉と野菜に特製とろみ餡。", tag: "名物", isHot: true },
-                { name: "三郷ラーメン", price: 950, desc: "旨辛・小辛・中辛・大辛。ニラと卵が絡む情熱の一杯。", tag: "辛旨", isHot: true },
-                { name: "半チャンラーメン", price: 1000, desc: "ラーメン＋半チャーハン。圧倒的ボリューム。", tag: "最強", isHot: false },
-                { name: "ニンニク韮餃子", price: 480, desc: "パリッ、モチッ、ジュワッ。自家製。", tag: "手包", isHot: false },
-                { name: "スタミナ炒め", price: 950, desc: "特製モツ炒め。ビールのお供に最適。", tag: "酒肴", isHot: true },
-                { name: "スパチュー", price: "ASK", desc: "常連だけが知る、魔法の特製サワー。", tag: "噂" },
-            ],
-            noodles: [
-                { name: "ラーメン", price: 650, desc: "創業以来変わらぬ醤油スープ。" },
-                { name: "タンメン", price: 800, desc: "野菜の甘みと塩のキレ。" },
-                { name: "みそラーメン", price: 800, desc: "コク深い味噌が染み渡る。" },
-                { name: "肉糸麺", price: 950, desc: "細切り豚肉入り醤油麺。" },
-                { name: "坦々麺（味噌）", price: 900, desc: "濃厚な味噌ベースの坦々麺。" },
-                { name: "トマトのラーメン", price: 850, desc: "トマトの酸味と旨味が融合。" },
-            ],
-            rice: [
-                { name: "チャーハン", price: 750, desc: "強火で煽った王道チャーハン。" },
-                { name: "中華丼", price: 850, desc: "野菜たっぷりの餡掛け。" },
-                { name: "焼肉定食", price: 950, desc: "白飯泥棒の異名を持つ人気定食。" },
-                { name: "麻婆定食", price: 850, desc: "ピリ辛麻婆をご飯と共に。" },
-                { name: "生姜焼き定食", price: 950, desc: "甘さ控えめタレの大人の味。" },
-            ],
-            single: [
-                { name: "餃子", price: 400, desc: "スタンダードながら奥深い味。" },
-                { name: "レバニラ炒め", price: 950, desc: "臭みなし、旨味のみ。最強つまみ。", isHot: true },
-                { name: "四川麻婆豆腐", price: 950, desc: "本格的な辛さと痺れ。", isHot: true },
-                { name: "エビのチリソース", price: 1300, desc: "プリプリ海老をピリ辛ソースで。" },
-                { name: "鳥皮にんにく", price: 500, desc: "香ばしさとニンニクのパンチ。" },
-            ],
-        };
-        let activeTab = 'popular';
-        let takeoutOrder = {};
-        // UI Helpers
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) navbar.classList.add('scrolled');
-            else navbar.classList.remove('scrolled');
-        });
-        // Mobile Menu
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-        let isMenuOpen = false;
-        function toggleMenu() {
-            isMenuOpen = !isMenuOpen;
-            if (isMenuOpen) {
-                mobileMenu.classList.remove('translate-x-full');
-            } else {
-                mobileMenu.classList.add('translate-x-full');
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- アイコン ---
+        const IconPhone = ({size=24, className=""}) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        );
+        const IconMapPin = ({size=24, className=""}) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        );
+        const IconClock = ({size=24, className=""}) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        );
+        const IconUtensils = ({size=24, className=""}) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path><path d="M7 2v20"></path><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path></svg>
+        );
+        const IconBeer = ({size=24, className=""}) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M17 11h1a3 3 0 0 1 0 6h-1"></path><path d="M9 12v6"></path><path d="M13 12v6"></path><path d="M14 7.5c-1 0-1.44.5-3 .5s-2-.5-3-.5-1.72.5-2.5.5a2.5 2.5 0 0 1 0-5c.78 0 1.57.5 2.5.5S9.44 2 11 2s2 1.5 3 1.5 1.72-.5 2.5-.5a2.5 2.5 0 0 1 0 5c-.78 0-1.5-.5-2.5-.5Z"></path><path d="M5 8v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8"></path></svg>
+        );
+        const IconAlertTriangle = ({size=24, className=""}) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        );
+        const IconBike = ({size=24, className=""}) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>
+        );
+
+        // --- データ定義 ---
+        const pickupMenu = [
+            {
+                name: "ごくうラーメン",
+                price: "1,155円",
+                catch: "不動の看板メニュー",
+                desc: "醤油ベースに甘辛焼肉がどっさり。ニンニクの効いた特製ダレがスープに溶け込み、クセになる旨さ。",
+                img: "image/gokuu-ramen.jpg",
+                tag: "名物"
+            },
+            {
+                name: "焼肉定食",
+                price: "1,155円",
+                catch: "満腹保証のNo.1定食",
+                desc: "甘辛ダレ×山盛り肉野菜。ご飯が止まらない、コスパ抜群の最強定食。働く人のエネルギー源。",
+                img: "https://images.unsplash.com/photo-1552590635-27c2c2128abf?auto=format&fit=crop&q=80&w=800",
+                tag: "一番人気"
+            },
+            {
+                name: "チャーハン",
+                price: "935円",
+                catch: "ニンニク香るパラふわ食感",
+                desc: "「かなりヤバイ」ボリューム感。ニンニクがガツンと効いた、あと引く味わい。居酒屋利用の〆にも。",
+                img: "image/chahan.jpg",
+                tag: "伝説"
             }
-        }
-        menuToggle.addEventListener('click', toggleMenu);
-        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
-        // Render Tabs
-        function renderTabs() {
-            const container = document.getElementById('menu-tabs');
-            container.innerHTML = menuCategories.map(cat => `
-                <button 
-                    onclick="switchTab('${cat.id}')"
-                    class="px-6 py-2 text-xs font-bold tracking-[0.1em] transition-all duration-300 border border-transparent hover:border-brand-gold ${activeTab === cat.id ? 'text-brand-gold border-brand-gold' : 'text-gray-500 hover:text-white'}"
-                >
-                    ${cat.label}
-                </button>
-            `).join('');
-        }
-        // Render Menu
-        function renderMenu() {
-            const container = document.getElementById('menu-grid');
-            const items = menuData[activeTab];
-            container.innerHTML = items.map((item, index) => `
-                <div class="menu-card p-8 border border-white/5 bg-white/[0.02] animate-fade-in-up flex justify-between gap-4 group" style="animation-delay: ${index * 50}ms">
-                    <div>
-                        <div class="flex items-center gap-3 mb-2">
-                            <h3 class="text-lg font-bold text-white group-hover:text-brand-gold transition-colors">${item.name}</h3>
-                            ${item.tag ? `<span class="text-[9px] bg-brand-red text-white px-2 py-0.5 tracking-wider">${item.tag}</span>` : ''}
+        ];
+
+        // カテゴリー分けしたメニューデータ
+        const categorizedMenu = [
+            {
+                category: "麺類",
+                items: [
+                    { name: "ラーメン", price: "770" },
+                    { name: "味噌ラーメン", price: "990" },
+                    { name: "タンメン", price: "880" },
+                    { name: "もやしそば", price: "880" },
+                    { name: "岩塩ラーメン", price: "990" },
+                    { name: "ワンタンメン", price: "935" },
+                    { name: "五目そば", price: "990" },
+                    { name: "マーボー麺", price: "990" },
+                    { name: "みそバター", price: "1,155" },
+                    { name: "チャーシュー", price: "1,155" },
+                    { name: "焼きそば", price: "880" },
+                    { name: "カタ焼きそば", price: "935" },
+                ]
+            },
+            {
+                category: "飯類・定食",
+                items: [
+                    { name: "チャーハン", price: "935" },
+                    { name: "中華丼", price: "1,045" },
+                    { name: "天津丼", price: "1,045" },
+                    { name: "スタミナ定食", price: "1,155" },
+                    { name: "レバニラ定食", price: "1,155" },
+                    { name: "肉野菜定食", price: "1,155" },
+                ]
+            },
+            {
+                category: "一品料理",
+                items: [
+                    { name: "ぎょうざ", price: "550" },
+                    { name: "春巻", price: "550" },
+                    { name: "もつ唐", price: "650" },
+                    { name: "ユーリンチー", price: "550" },
+                    { name: "野菜炒め", price: "770" },
+                    { name: "麻婆豆腐", price: "880" },
+                ]
+            },
+            {
+                category: "お飲み物",
+                items: [
+                    { name: "スパチュー", price: "539" },
+                    { name: "生ビール", price: "539" },
+                    { name: "レモンサワー", price: "495" },
+                    { name: "ウーロンハイ", price: "495" },
+                ]
+            }
+        ];
+
+        const App = () => {
+            const [steams, setSteams] = useState([]);
+            // Uber EatsのURL定義
+            const uberUrl = "https://www.ubereats.com/jp/store/%E3%81%93%E3%81%8F%E3%81%86%E3%82%89%E3%83%BC%E3%82%81%E3%82%93-gokuuramen/fDAqam6nUqaF12hjuci1cg?srsltid=AfmBOopV3c59ma9FkG5ufFcwSFfkLrDOQX-CXQCjRi5ZUtwPK7E1kzzC";
+            
+            // Google Maps 経路案内用のURL定義 (destinationに店舗住所を指定)
+            const mapNavUrl = "https://www.google.com/maps/dir/?api=1&destination=埼玉県三郷市早稲田1-5-8+ごくうらーめん";
+
+            useEffect(() => {
+                const interval = setInterval(() => {
+                    setSteams(prev => [...prev.slice(-4), Date.now()]);
+                }, 800);
+                return () => clearInterval(interval);
+            }, []);
+
+            return (
+                <div className="min-h-screen pb-20 md:pb-0 overflow-x-hidden text-[var(--gokuu-text)]">
+                    
+                    {/* --- ヘッダー --- */}
+                    <header className="fixed top-0 w-full z-50">
+                        {/* 暖簾をかける棒（看板部分） */}
+                        <div className="bg-[var(--gokuu-black)] text-white p-3 shadow-lg border-b-2 border-[var(--gokuu-red)]">
+                            <div className="container mx-auto flex justify-between items-center px-4">
+                                <div className="flex items-center gap-4">
+                                    <div className="bg-white text-[var(--gokuu-red)] font-fude px-3 py-1 text-sm md:text-base rounded border border-black shadow-sm transform -rotate-2 font-bold">三郷</div>
+                                    <h1 className="font-fude text-3xl md:text-5xl tracking-tight font-bold drop-shadow-md logo-shimmer">
+                                        ごくう<span className="text-xl md:text-2xl ml-1 text-white" style={{animation: 'none', color: 'white'}}>らーめん</span>
+                                    </h1>
+                                </div>
+                                <div className="hidden md:flex gap-4 font-bold text-sm text-white items-center">
+                                    <a href="#menu" className="hover:text-[var(--gokuu-yellow)] transition flex items-center gap-1"><IconUtensils size={18}/> お品書き</a>
+                                    <a href="#access" className="hover:text-[var(--gokuu-yellow)] transition flex items-center gap-1"><IconMapPin size={18}/> 店舗情報</a>
+                                    {/* PC用 Uber Eatsボタン */}
+                                    <a href={uberUrl} target="_blank" rel="noopener noreferrer" className="bg-[var(--uber-green)] hover:bg-green-600 text-white px-3 py-1 rounded-full flex items-center gap-1 transition shadow-md border border-white/20">
+                                        <IconBike size={16}/> Uber Eats
+                                    </a>
+                                    <span className="bg-[var(--gokuu-yellow)] text-black px-4 py-1 rounded-full flex items-center gap-1 shadow-md ml-2">
+                                        <IconClock size={16}/> 翌3:00まで営業
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                        <p class="text-gray-500 text-sm font-light leading-relaxed">${item.desc}</p>
+                        {/* 赤い暖簾 */}
+                        <div className="flex w-full h-16 md:h-20">
+                            {[...Array(10)].map((_, i) => (
+                                <div key={i} className="flex-1 bg-[var(--gokuu-red)] rounded-b-lg mx-1 shadow-md border-b-4 border-[var(--gokuu-dark-red)] relative group">
+                                    <div className="hidden group-hover:block absolute bottom-2 w-full text-center text-white text-xs font-bold opacity-80">味</div>
+                                </div>
+                            ))}
+                        </div>
+                    </header>
+
+                    {/* --- ヒーローセクション --- */}
+                    <section className="relative mt-32 md:mt-40 pt-10 pb-20 md:py-24 overflow-hidden">
+                        <div className="container mx-auto px-4 relative z-10 text-center">
+                            
+                            <div className="mb-8 inline-block">
+                                <div className="text-[var(--gokuu-yellow)] font-bold text-lg md:text-xl mb-2 tracking-widest border-b-2 border-[var(--gokuu-yellow)] inline-block pb-1">
+                                    昭和五十四年創業
+                                </div>
+                                <h2 className="font-fude text-5xl md:text-7xl text-[var(--gokuu-red)] text-outline-black leading-tight drop-shadow-lg text-glow-gold">
+                                    三郷の<br/>
+                                    <span className="text-white text-6xl md:text-8xl">町中華</span>
+                                </h2>
+                            </div>
+
+                            <div className="relative w-64 h-64 md:w-80 md:h-80 mx-auto mb-8">
+                                <div className="absolute inset-0 bg-[var(--gokuu-red)] rounded-full blur-[30px] opacity-20"></div>
+                                <img 
+                                    src="image/hero.jpg" 
+                                    alt="ごくうらーめんで食事を楽しむお客様" 
+                                    className="w-full h-full object-cover rounded-full border-8 border-[var(--gokuu-yellow)] shadow-2xl relative z-10"
+                                />
+                                {steams.map(id => (
+                                    <div key={id} className="steam" style={{left: '50%', top: '20%'}}></div>
+                                ))}
+                            </div>
+
+                            <p className="font-bold text-xl md:text-2xl text-white mb-8 bg-black/60 inline-block px-8 py-3 rounded-full border border-[var(--gokuu-red)] shadow-lg">
+                                腹が減ったら、<span className="text-[var(--gokuu-yellow)] font-force text-3xl mx-2">ごくう</span>へ来い。
+                            </p>
+
+                            <div className="flex flex-col md:flex-row justify-center gap-4">
+                                <a href="#pickup" className="bg-[var(--gokuu-red)] hover:bg-[var(--gokuu-dark-red)] text-white font-force text-xl py-4 px-10 rounded shadow-lg border-2 border-white transition transform hover:translate-y-1 active:shadow-none flex items-center justify-center gap-2">
+                                    <IconUtensils size={24} /> メニュー
+                                </a>
+                                {/* HeroセクションのUber Eatsボタン */}
+                                <a href={uberUrl} target="_blank" rel="noopener noreferrer" className="bg-[var(--uber-green)] hover:bg-green-700 text-white font-force text-xl py-4 px-10 rounded shadow-lg border-2 border-white transition transform hover:translate-y-1 active:shadow-none flex items-center justify-center gap-2">
+                                    <IconBike size={24}/> Uber Eats
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="raimon-strip"></div>
+
+                    {/* --- 3大名物 --- */}
+                    <section id="pickup" className="py-20 bg-[var(--gokuu-charcoal)] relative">
+                        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: 'radial-gradient(circle, #333 1px, transparent 1px)', backgroundSize: '30px 30px'}}></div>
+
+                        <div className="container mx-auto px-4">
+                            <h2 className="text-center font-fude text-4xl md:text-5xl mb-12 flex items-center justify-center gap-4 text-white">
+                                <span className="text-[var(--gokuu-yellow)]">★</span>
+                                迷ったらコレ！
+                                <span className="text-[var(--gokuu-yellow)]">★</span>
+                            </h2>
+
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                                {pickupMenu.map((item, index) => (
+                                    <div key={index} className="bg-white border-4 border-black p-2 shadow-[8px_8px_0_rgba(200,0,0,0.5)] transform rotate-1 hover:rotate-0 transition duration-300 relative">
+                                        <div className="absolute -top-4 -left-4 bg-[var(--gokuu-red)] text-white font-force text-xl px-4 py-2 border-2 border-black shadow-md z-20">
+                                            {item.tag}
+                                        </div>
+
+                                        <div className="border-2 border-black p-4 h-full bg-[#fff]">
+                                            <div className="h-48 overflow-hidden border-2 border-black mb-4 relative">
+                                                <img src={item.img} alt={item.name} className="w-full h-full object-cover hover:scale-110 transition duration-500"/>
+                                                <div className="absolute bottom-0 right-0 bg-[var(--gokuu-yellow)] text-black font-black px-3 py-1 border-t-2 border-l-2 border-black text-2xl">
+                                                    {item.price}
+                                                </div>
+                                            </div>
+                                            <h3 className="font-fude text-3xl mb-2 font-bold border-b-4 border-[var(--gokuu-red)] inline-block text-black">{item.name}</h3>
+                                            <p className="font-bold text-[var(--gokuu-red)] text-lg mb-2">「{item.catch}」</p>
+                                            <p className="font-medium text-sm leading-relaxed text-gray-800">
+                                                {item.desc}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            
+                            <div className="mt-12 text-center">
+                                <div className="inline-block bg-[var(--gokuu-yellow)] text-black p-4 font-bold text-lg border-4 border-black shadow-md transform -rotate-1">
+                                    <span className="flex items-center gap-2">
+                                        <IconAlertTriangle className="text-[var(--gokuu-red)]"/> 注意：大盛りはボリュームにご注意ください
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="raimon-strip"></div>
+
+                    {/* --- 壁メニュー（短冊）セクション --- */}
+                    <section id="menu" className="py-20 bg-[#2C2C2C] relative shadow-inner">
+                        <div className="container mx-auto px-4">
+                            <div className="text-center mb-12 text-[#FFF8DC]">
+                                <h2 className="font-fude text-4xl mb-2">お品書き</h2>
+                                <p className="text-sm opacity-90">壁一面のメニューから選ぶ、これぞ町中華の醍醐味。</p>
+                            </div>
+
+                            <div className="bg-[#1A1A1A] p-4 md:p-8 border-8 border-[#333] shadow-2xl relative overflow-hidden">
+                                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+
+                                <div className="space-y-12">
+                                    {categorizedMenu.map((cat, catIndex) => (
+                                        <div key={catIndex}>
+                                            <h3 className="font-fude text-2xl text-[var(--gokuu-yellow)] mb-6 border-b border-gray-700 pb-2 inline-block px-4">
+                                                {cat.category}
+                                            </h3>
+                                            <div className="flex flex-wrap justify-center gap-4">
+                                                {cat.items.map((item, index) => (
+                                                    <div key={index} className="menu-strip">
+                                                        {/* 商品名 */}
+                                                        <span className="menu-name">{item.name}</span>
+                                                        {/* 価格（横書きコンテナ） */}
+                                                        <div className="menu-price-container">
+                                                            <span className="menu-price">
+                                                                {item.price}<span className="text-sm text-black ml-1">円</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            
+                            <div className="mt-20 mb-8 text-center relative z-10">
+                                <div className="inline-block relative group">
+                                    {/* 背景の赤い光漏れ効果 */}
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-full bg-[var(--gokuu-red)] opacity-30 blur-2xl rounded-full pointer-events-none"></div>
+                                    
+                                    {/* 背景の看板ベース */}
+                                    <div className="absolute inset-0 bg-[#330000] border border-black transform -rotate-1 shadow-2xl rounded"></div>
+                                    
+                                    {/* メインのキャッチコピー枠 */}
+                                    <div className="relative bg-[#1a1a1a] border-y-4 border-[var(--gokuu-yellow)] px-6 py-8 transform rotate-1 shadow-[0_10px_20px_rgba(0,0,0,0.8)] max-w-4xl mx-auto">
+                                        
+                                        {/* テクスチャオーバーレイ */}
+                                        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] pointer-events-none"></div>
+
+                                        <p className="font-fude text-2xl md:text-3xl leading-relaxed text-white tracking-wider text-center relative z-10">
+                                            {/* インラインブロック化して自然な改行を促す */}
+                                            <span className="text-[var(--gokuu-yellow)] inline-flex items-center justify-center gap-2 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] whitespace-nowrap mx-1 align-middle">
+                                                <IconBeer size={32} className="text-white animate-bounce mb-1" />
+                                                <span className="border-b-2 border-[var(--gokuu-red)] pb-1">名物「スパチュー」</span>
+                                            </span>
+                                            <span className="inline-block drop-shadow-md mx-1 align-middle">
+                                                片手に餃子をつまむのが
+                                                <span className="text-4xl md:text-5xl ml-2 font-force text-[var(--gokuu-red)] text-outline-black transform -rotate-2 inline-block align-middle">三郷流！</span>
+                                            </span>
+                                        </p>
+
+                                        {/* 四隅の装飾（ビス） */}
+                                        <div className="absolute top-3 left-3 w-3 h-3 rounded-full bg-gradient-to-br from-[#ffd700] to-[#b8860b] shadow-inner border border-black"></div>
+                                        <div className="absolute top-3 right-3 w-3 h-3 rounded-full bg-gradient-to-br from-[#ffd700] to-[#b8860b] shadow-inner border border-black"></div>
+                                        <div className="absolute bottom-3 left-3 w-3 h-3 rounded-full bg-gradient-to-br from-[#ffd700] to-[#b8860b] shadow-inner border border-black"></div>
+                                        <div className="absolute bottom-3 right-3 w-3 h-3 rounded-full bg-gradient-to-br from-[#ffd700] to-[#b8860b] shadow-inner border border-black"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* --- 店舗情報 --- */}
+                    <section id="access" className="py-20 bg-black relative overflow-hidden">
+                        <div className="container mx-auto px-4 relative z-10">
+                            <div className="border-4 border-[var(--gokuu-red)] p-8 relative bg-white/5 backdrop-blur-sm shadow-[0_0_20px_rgba(200,0,0,0.3)]">
+                                <h2 className="text-center font-force text-4xl text-white mb-10 text-outline-black">
+                                    店舗情報
+                                </h2>
+                                
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                                    <div className="space-y-6 text-white">
+                                        <div>
+                                            <h3 className="text-[var(--gokuu-yellow)] font-bold text-xl mb-1 flex items-center gap-2">
+                                                <IconClock /> 営業時間
+                                            </h3>
+                                            <p className="text-3xl font-force">
+                                                17:00 <span className="text-sm align-middle">〜</span> 翌3:00
+                                            </p>
+                                            <p className="text-gray-400 text-sm">※ラストオーダー 2:30 / 不定休あり</p>
+                                        </div>
+                                        <div>
+                                            <h3 className="text-[var(--gokuu-yellow)] font-bold text-xl mb-1 flex items-center gap-2">
+                                                <IconMapPin /> アクセス
+                                            </h3>
+                                            <p className="text-lg">埼玉県三郷市早稲田1-5-8</p>
+                                            <p className="text-gray-400">JR武蔵野線「三郷駅」北口より徒歩2分</p>
+                                        </div>
+                                        <div>
+                                            <a href="tel:0489584886" className="block bg-[var(--gokuu-red)] hover:bg-[var(--gokuu-dark-red)] text-white text-center p-4 rounded font-force text-2xl transition border-2 border-white shadow-lg">
+                                                <div className="text-xs mb-1">席予約・お問い合わせ</div>
+                                                <IconPhone className="inline mb-1 mr-2"/>048-958-4886
+                                            </a>
+                                        </div>
+                                        {/* 店舗情報内Uber Eats */}
+                                        <div>
+                                            <a href={uberUrl} target="_blank" rel="noopener noreferrer" className="block bg-[var(--uber-green)] hover:bg-green-700 text-white text-center p-4 rounded font-force text-2xl transition border-2 border-white shadow-lg">
+                                                <div className="text-xs mb-1">デリバリー</div>
+                                                <span className="flex items-center justify-center gap-2">
+                                                    <IconBike className="inline mb-1"/> Uber Eats
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    {/* 地図エリア全体を経路案内リンクに変更 */}
+                                    <a 
+                                        href={mapNavUrl} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="block h-64 md:h-full min-h-[300px] border-2 border-gray-600 relative bg-gray-900 group cursor-pointer overflow-hidden"
+                                    >
+                                         {/* オーバーレイ：クリックを促す表示 */}
+                                        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 transition bg-black/20 group-hover:bg-black/10">
+                                            <div className="bg-black/80 text-white px-4 py-2 rounded-full flex items-center gap-2 border border-[var(--gokuu-red)] shadow-lg transform group-hover:scale-105 transition duration-300">
+                                                <IconMapPin size={20} className="text-[var(--gokuu-red)]" />
+                                                <span className="font-bold text-sm md:text-base">現在地からのルートを表示</span>
+                                            </div>
+                                        </div>
+                                        
+                                        {/* iframe：pointer-events-noneでクリックを透過させ、親のaタグを有効にする */}
+                                        <iframe 
+                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.332306263798!2d139.8854473762963!3d35.84081597253587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60189a6eb7d5c0e1%3A0x1d368097054238e5!2z44GU44GP44GG44Op44O844KB44KT!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" 
+                                            width="100%" 
+                                            height="100%" 
+                                            style={{border:0}} 
+                                            loading="lazy"
+                                            className="opacity-60 group-hover:opacity-80 transition duration-500 pointer-events-none w-full h-full object-cover"
+                                        ></iframe>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* --- フッター --- */}
+                    <footer className="bg-[#1a1a1a] text-gray-400 py-8 text-center border-t border-gray-700">
+                        <p className="font-fude text-xl text-white mb-2">ごくうらーめん</p>
+                        <p className="text-xs">&copy; 1979 Gokuu Ramen. 三郷の夜を照らし続けて45年。</p>
+                    </footer>
+
+                    {/* スマホ用固定フッター（注文ボタン） */}
+                    <div className="md:hidden fixed bottom-0 left-0 w-full bg-[#2C2C2C] border-t border-gray-600 p-2 flex justify-around z-50 shadow-[0_-4px_6px_rgba(0,0,0,0.5)]">
+                        <a href="tel:0489584886" className="flex-1 bg-[var(--gokuu-red)] text-white py-3 rounded text-center font-bold mx-1 flex flex-col justify-center items-center gap-1 text-xs">
+                            <IconPhone size={20}/> <span>電話する</span>
+                        </a>
+                        <a href="#menu" className="flex-1 bg-white text-black py-3 rounded text-center font-bold mx-1 border border-gray-400 flex flex-col justify-center items-center gap-1 text-xs">
+                            <IconUtensils size={20}/> <span>メニュー</span>
+                        </a>
+                        {/* スマホ用固定フッターにUber Eats追加 */}
+                        <a href={uberUrl} target="_blank" rel="noopener noreferrer" className="flex-1 bg-[var(--uber-green)] text-white py-3 rounded text-center font-bold mx-1 flex flex-col justify-center items-center gap-1 text-xs">
+                            <IconBike size={20}/> <span>Uber Eats</span>
+                        </a>
                     </div>
-                    <div class="flex flex-col items-end">
-                        <span class="text-xl font-serif font-bold text-brand-gold whitespace-nowrap">
-                            ${typeof item.price === 'number' ? '¥' + item.price.toLocaleString() : item.price}
-                        </span>
-                    </div>
+
                 </div>
-            `).join('');
-        }
-        function switchTab(id) {
-            activeTab = id;
-            renderTabs();
-            renderMenu();
-        }
-        // Takeout Modal Logic
-        const takeoutModal = document.getElementById('takeout-modal');
-        const takeoutBackdrop = document.getElementById('takeout-backdrop');
-        const takeoutPanel = document.getElementById('takeout-panel');
-        const takeoutTotal = document.getElementById('takeout-total');
-        function openTakeoutModal() {
-            takeoutModal.classList.remove('hidden');
-            setTimeout(() => {
-                takeoutBackdrop.classList.remove('opacity-0');
-                takeoutPanel.classList.remove('translate-x-full');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-            renderTakeoutMenu();
-        }
-        function closeTakeoutModal() {
-            takeoutBackdrop.classList.add('opacity-0');
-            takeoutPanel.classList.add('translate-x-full');
-            setTimeout(() => {
-                takeoutModal.classList.add('hidden');
-            }, 500);
-            document.body.style.overflow = '';
-        }
-        function renderTakeoutMenu() {
-            const list = document.getElementById('takeout-menu-list');
-            let html = '';
-            menuCategories.forEach(cat => {
-                const items = menuData[cat.id];
-                if (!items || items.length === 0) return;
-                html += `
-                    <div class="mb-8">
-                        <h4 class="text-brand-gold text-xs tracking-[0.2em] font-bold mb-4 border-b border-white/10 pb-2">${cat.label}</h4>
-                        <div class="space-y-4">
-                `;
-                items.forEach(item => {
-                    if (typeof item.price !== 'number') return;
-                    const qty = takeoutOrder[item.name]?.quantity || 0;
-                    html += `
-                        <div class="flex items-center justify-between group">
-                            <div class="flex-1 pr-4">
-                                <div class="text-white text-sm font-medium group-hover:text-brand-gold transition-colors">${item.name}</div>
-                                <div class="text-gray-500 text-xs">¥${item.price.toLocaleString()}</div>
-                            </div>
-                            <div class="flex items-center gap-4 bg-white/5 rounded-full px-2 py-1 border border-transparent hover:border-white/20 transition-colors">
-                                <button onclick="updateQty('${item.name}', ${item.price}, -1)" class="text-gray-400 hover:text-white w-6 h-6 flex items-center justify-center">-</button>
-                                <span class="text-white text-sm font-mono w-4 text-center">${qty}</span>
-                                <button onclick="updateQty('${item.name}', ${item.price}, 1)" class="text-gray-400 hover:text-white w-6 h-6 flex items-center justify-center">+</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                html += `</div></div>`;
-            });
-            list.innerHTML = html;
-        }
-        function updateQty(name, price, change) {
-            if (!takeoutOrder[name]) takeoutOrder[name] = { price, quantity: 0 };
-            takeoutOrder[name].quantity += change;
-            if (takeoutOrder[name].quantity < 0) takeoutOrder[name].quantity = 0;
-            renderTakeoutMenu();
-            updateTotal();
-        }
-        function updateTotal() {
-            let total = 0;
-            Object.values(takeoutOrder).forEach(item => {
-                total += item.price * item.quantity;
-            });
-            takeoutTotal.innerText = '¥' + total.toLocaleString();
-        }
-        // Initialize
-        renderTabs();
-        renderMenu();
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 </html>
+
+
+
