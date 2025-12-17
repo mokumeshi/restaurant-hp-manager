@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手打ちうどん こげら | 東京・東村山の本格讃岐うどん</title>
+    <meta name="description" content="東京・東村山の隠れ家、手打ちうどんこげら。香川出身の店主が打つ、小麦の香り豊かな極太剛腰うどん。">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Twitter Widget -->
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;900&family=Shippori+Mincho:wght@500;700;800&family=Zen+Kurenaido&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'kogera-black': '#2b231f', // 墨色に近い黒
+                        'kogera-brown': '#594e46',
+                        'kogera-gold': '#c7a252', // 落ち着いた金
+                        'kogera-gold-light': '#f0e6d2',
+                        'kogera-gold-dark': '#b08d45',
+                        'kogera-white': '#f7f6f2', // 和紙のような白O
+                        'kogera-red': '#a82e25', // 深みのある茜色
+                        'kogera-red-brown': '#883018', // 弁柄色（赤茶色）
+                        'washi-gray': '#ebe9e4',
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Serif JP"', 'serif'],
+                        serif: ['"Shippori Mincho"', 'serif'],
+                        hand: ['"Zen Kurenaido"', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'texture-paper': "url('https://www.transparenttextures.com/patterns/cream-paper.png')",
+                    },
+                    letterSpacing: {
+                        'widest-xl': '0.25em',
+                    },
+                    boxShadow: {
+                        'noren': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f7f6f2;
+            color: #2b231f;
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+
+        /* Vertical Writing Mode */
+        .writing-vertical {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+        }
+
+        /* SVG Dividers */
+        .divider-curve {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+        .divider-curve svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 60px;
+        }
+        .divider-curve .shape-fill {
+            fill: #f7f6f2;
+        }
+        
+        /* Animations */
+        @keyframes subtle-zoom {
+            0% { transform: scale(1.00); }
+            100% { transform: scale(1.02); }
+        }
+        .animate-subtle-zoom {
+            animation: subtle-zoom 0.5s ease-out forwards;
+        }
+        
+        @keyframes gentle-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .animate-gentle-bounce {
+            animation: gentle-bounce 3s ease-in-out infinite;
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Card Hover Effects */
+        .menu-card {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+            border-radius: 4px;
+        }
+        .menu-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 30px -5px rgba(43, 35, 31, 0.15), 0 10px 10px -5px rgba(43, 35, 31, 0.04);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f7f6f2; }
+        ::-webkit-scrollbar-thumb { background: #c7a252; border-radius: 4px; }
+
+        /* Noren Cloth Animation & Texture */
+        .noren-cloth {
+            transform-origin: top center;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), height 0.3s ease;
+            background: linear-gradient(to bottom, #f0efe9 0%, #f7f6f2 15%, #f7f6f2 100%); 
+        }
+        .noren-cloth::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/canvas-orange.png');
+            opacity: 0.2;
+            pointer-events: none;
+        }
+        .noren-cloth:hover {
+            transform: skewX(-1deg) scaleY(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // --- Icons ---
+        const Icon = ({ path, className, size = 28 }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                {path}
+            </svg>
+        );
+        const Icons = {
+            Menu: <path d="M3 12h18M3 6h18M3 18h18" />,
+            MapPin: <g><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></g>,
+            Clock: <g><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></g>,
+            ArrowRight: <path d="M5 12h14M12 5l7 7-7 7" />,
+            Info: <g><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></g>,
+            Nav: <polygon points="3 11 22 2 13 21 11 13 3 11" />,
+            Award: <g><path d="M12 15l-2 5l9-5l9 5l-2-5" transform="translate(-6 -6)" /><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" /></g>,
+            Close: <path d="M18 6L6 18M6 6l12 12" />,
+            Wallet: <g><rect x="2" y="5" width="20" height="14" rx="2" /><line x1="2" y1="10" x2="22" y2="10" /></g>,
+            Twitter: <g><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></g>,
+            X: <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="currentColor" stroke="none" />,
+        };
+
+        // --- Background Slideshow Component ---
+        const BackgroundSlideshow = ({ images, duration = 7000, transition = 1500 }) => {
+            const [currentIndex, setCurrentIndex] = React.useState(0);
+            const [fade, setFade] = React.useState(true);
+
+            React.useEffect(() => {
+                const interval = setInterval(() => {
+                    setFade(false);
+                    setTimeout(() => {
+                        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+                        setFade(true);
+                    }, transition);
+                }, duration);
+
+                return () => clearInterval(interval);
+            }, [images, duration, transition]);
+
+            return (
+                <div className="absolute inset-0 z-0 overflow-hidden">
+                    {images.map((image, index) => (
+                        <img
+                            key={image}
+                            src={image}
+                            alt={`Background ${index + 1}`}
+                            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${
+                                index === currentIndex && fade ? 'opacity-40' : 'opacity-0'
+                            }`}
+                        />
+                    ))}
+                </div>
+            );
+        };
+
+        // --- Components ---
+        const SectionTitle = ({ en, jp, color = "text-kogera-black" }) => (
+            <div className={`mb-24 text-center fade-in-up ${color}`}>
+                <span className="block text-base font-bold tracking-[0.3em] opacity-80 mb-3 font-sans text-kogera-brown">{en}</span>
+                <h2 className="text-5xl md:text-6xl font-serif font-bold tracking-widest relative inline-block">
+                    {jp}
+                    <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-16 h-1.5 bg-kogera-red-brown rounded-full opacity-40"></span>
+                </h2>
+            </div>
+        );
+
+        // --- Noren Component ---
+        const Noren = ({ className = "" }) => {
+            const panels = [
+                { text: '讃岐', color: 'text-kogera-red-brown font-bold' },
+                { text: 'う', color: 'text-kogera-red-brown font-extrabold text-4xl md:text-7xl' },
+                { text: 'ど', color: 'text-kogera-red-brown font-extrabold text-4xl md:text-7xl' },
+                { text: 'ん', color: 'text-kogera-red-brown font-extrabold text-4xl md:text-7xl' },
+                { text: '◆', color: 'text-kogera-gold opacity-50' }, 
+            ];
+
+            return (
+                <div className={`relative max-w-4xl mx-auto mb-16 pt-4 fade-in-up ${className}`}>
+                    <div className="absolute top-0 left-0 w-full h-3 md:h-5 bg-[#3e2723] rounded-full z-20 shadow-md"></div>
+                    <div className="flex justify-between items-start pointer-events-auto px-2 md:px-6">
+                        {panels.map((panel, idx) => (
+                            <div key={idx} 
+                                 className={`noren-cloth relative group w-[19%] h-40 md:h-72 bg-[#f7f6f2] border-b-2 border-gray-300 shadow-lg flex flex-col justify-center items-center cursor-default
+                                    ${idx === 0 ? 'rounded-bl-sm' : 'rounded-b-sm'}
+                                    ${idx === panels.length - 1 ? 'rounded-br-sm' : 'rounded-b-sm'}
+                                 `}
+                                 style={{transitionDelay: `${idx * 50}ms`}}
+                            >
+                                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-1.5 md:w-2 h-6 md:h-8 bg-[#5d4037] rounded-full z-40 shadow-sm"></div>
+                                <div className="writing-vertical h-full py-4 md:py-8 flex items-center justify-center opacity-90">
+                                    <span className={`font-serif font-bold tracking-widest whitespace-nowrap text-2xl md:text-5xl ${panel.color}`} style={{color: panel.text !== '◆' ? '#883018' : undefined}}>{panel.text}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        // --- Temp Badge Component ---
+        const TempBadge = ({ type }) => {
+            if (type === 'hot') {
+                return <span className="inline-block bg-[#d32f2f] text-white text-xs px-2 py-0.5 rounded ml-1 font-bold">温</span>;
+            } else if (type === 'cold') {
+                return <span className="inline-block bg-[#1976d2] text-white text-xs px-2 py-0.5 rounded ml-1 font-bold">冷</span>;
+            } else if (type === 'both') {
+                return (
+                    <span className="inline-flex ml-1">
+                        <span className="bg-[#d32f2f] text-white text-xs px-2 py-0.5 rounded-l font-bold border-r border-white/20">温</span>
+                        <span className="bg-[#1976d2] text-white text-xs px-2 py-0.5 rounded-r font-bold">冷</span>
+                    </span>
+                );
+            }
+            return null;
+        };
+
+        // --- Menu Card (Simplified for Top Page) ---
+        const MenuCard = ({ img, title, price, sub, desc, tag, delay, temp, overlayStyle, imgPosition = 'center' }) => (
+            <div className="menu-card bg-white overflow-hidden shadow-lg relative fade-in-up border border-opacity-20 border-kogera-brown group cursor-pointer h-full flex flex-col" style={{transitionDelay: delay}}>
+                <div className="relative h-64 overflow-hidden shrink-0">
+                    <div className="absolute inset-0 bg-gradient-to-t from-kogera-black/50 to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity duration-500" style={overlayStyle}></div>
+                    <img src={img} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" style={{objectPosition: imgPosition}} />
+                    {tag && <div className={`absolute top-0 right-0 text-white text-lg font-bold px-5 py-2 z-20 shadow-lg tracking-wider rounded-bl-md ${temp === 'cold' ? 'bg-[#1976d2]' : 'bg-[#d32f2f]'}`}>{tag}</div>}
+                </div>
+                
+                <div className="p-6 flex flex-col flex-grow bg-white relative">
+                    <div className="mb-4">
+                        <div className="flex justify-between items-start mb-1">
+                            <h3 className="text-2xl font-serif font-bold tracking-widest text-kogera-black flex items-center gap-2">
+                                {title}
+                                <TempBadge type={temp} />
+                            </h3>
+                        </div>
+                        {/* Increased sub-title size for hierarchy */}
+                        <p className="text-base font-bold text-kogera-gold-dark tracking-wide mb-3">{sub}</p>
+                        
+                        {/* Improved Description Readability: Larger font, darker color, relaxed leading */}
+                        <p className="text-gray-700 text-base leading-8 font-medium">{desc}</p>
+                    </div>
+                    
+                    <div className="mt-auto">
+                        <div className="w-full h-px bg-gray-200 border-t border-dashed border-gray-300 mb-5"></div>
+                        
+                        {/* Price Grid - High Contrast & Hierarchy */}
+                        <div className="flex justify-between items-end px-1 mt-2">
+                            {/* Small */}
+                            <div className="flex flex-col items-center group/price cursor-default">
+                                <span className="text-sm font-bold text-gray-600 mb-1 tracking-widest">小</span>
+                                <span className="font-serif text-2xl font-bold text-kogera-brown">300</span>
+                            </div>
+                            
+                            {/* Standard (Highlighted) */}
+                            <div className="flex flex-col items-center relative -top-1 px-4 cursor-default">
+                                <span className="text-base text-kogera-red font-bold mb-1 tracking-widest">並</span>
+                                <span className="font-serif text-4xl text-kogera-red font-black tracking-tight leading-none drop-shadow-sm">{price}</span>
+                                <div className="w-12 h-1 bg-kogera-red/20 mt-1 rounded-full"></div>
+                            </div>
+                            
+                            {/* Medium */}
+                            <div className="flex flex-col items-center group/price cursor-default">
+                                <span className="text-sm font-bold text-gray-600 mb-1 tracking-widest">中</span>
+                                <span className="font-serif text-2xl font-bold text-kogera-brown">500</span>
+                            </div>
+                            
+                            {/* Large */}
+                            <div className="flex flex-col items-center group/price cursor-default">
+                                <span className="text-sm font-bold text-gray-600 mb-1 tracking-widest">大</span>
+                                <span className="font-serif text-2xl font-bold text-kogera-brown">600</span>
+                            </div>
+                        </div>
+                        {/* Updated Tax Label: Larger size, darker color for better visibility */}
+                        <div className="text-sm text-center text-gray-500 mt-4 font-bold tracking-widest">
+                            税込み
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // --- Full Menu Modal ---
+        const FullMenuModal = ({ isOpen, onClose }) => {
+            if (!isOpen) return null;
+
+            return (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-kogera-black/80 backdrop-blur-sm" onClick={onClose}></div>
+                    <div className="bg-[#fdfbf7] w-full max-w-5xl max-h-[95vh] overflow-y-auto rounded-lg shadow-2xl relative animate-subtle-zoom p-8 md:p-14 border-4 border-double border-kogera-brown bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')]">
+                        <button onClick={onClose} className="absolute top-4 right-4 text-kogera-brown hover:text-kogera-red transition-colors bg-white/50 rounded-full p-2">
+                            <Icon path={Icons.Close} size={40} />
+                        </button>
+                        
+                        <div className="text-center mb-16">
+                            <h3 className="text-4xl md:text-6xl font-serif font-bold text-kogera-black tracking-widest mb-6">お品書き</h3>
+                            <div className="w-20 h-1.5 bg-kogera-red-brown mx-auto rounded-full"></div>
+                        </div>
+                        
+                        {/* Payment Note in Modal */}
+                         <div className="text-center mb-12 p-4 bg-kogera-white rounded border-2 border-dashed border-kogera-red/50">
+                            <p className="text-[#a82e25] font-bold flex items-center justify-center gap-2 text-lg">
+                                <Icon path={Icons.Wallet} size={24} />
+                                ※お支払いは現金のみとなります
+                            </p>
+                        </div>
+
+                        {/* Limited & Sides */}
+                        <div className="grid md:grid-cols-2 gap-12 mb-16">
+                            <div className="bg-white p-8 rounded-lg border-2 border-kogera-gold shadow-md relative overflow-hidden">
+                                <div className="absolute top-0 right-0 bg-kogera-gold text-white text-xs px-3 py-1 rounded-bl-lg font-bold">期間限定</div>
+                                <h4 className="text-2xl font-serif font-bold text-kogera-black mb-4 border-b border-gray-200 pb-2">限定メニュー</h4>
+                                <div className="mb-4">
+                                    <div className="relative h-48 overflow-hidden rounded-lg mb-4">
+                                        <img src="image/karupiskamatamajpg.jpg" alt="カルピスバター明太釜玉" className="w-full h-full object-cover" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-kogera-black/50 to-transparent"></div>
+                                    </div>
+                                    <div className="flex justify-between items-center mb-2">
+                                        <div>
+                                            <h5 className="text-xl font-bold text-kogera-black">カルピスバター明太釜玉 <TempBadge type="hot" /></h5>
+                                            <p className="text-sm text-gray-600 mt-1">高級バターと明太子の濃厚なハーモニー</p>
+                                        </div>
+                                        <div className="text-right min-w-[80px]">
+                                            <span className="text-sm font-bold text-gray-500 block mb-1">並(1玉)</span>
+                                            <span className="text-3xl font-serif font-black text-kogera-red-brown">600</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bg-white p-8 rounded-lg border border-kogera-brown/20 shadow-sm">
+                                <h4 className="text-2xl font-serif font-bold text-kogera-black mb-6 border-b border-gray-200 pb-2">サイドメニュー</h4>
+                                <ul className="space-y-6">
+                                    <li className="flex justify-between items-end border-b border-dashed border-gray-200 pb-2">
+                                        <div>
+                                            <span className="text-lg font-bold text-kogera-black block">こげらセット</span>
+                                            <span className="text-sm font-medium text-gray-600">かけうどん・TKG・天ぷら1個</span>
+                                        </div>
+                                        <span className="text-2xl font-serif font-black text-kogera-brown">600</span>
+                                    </li>
+                                    <li className="flex justify-between items-end border-b border-dashed border-gray-200 pb-2">
+                                        <div>
+                                            <span className="text-lg font-bold text-kogera-black block">天ぷら</span>
+                                            <span className="text-sm font-medium text-gray-600">げそ天・ちくわ天・謎天</span>
+                                        </div>
+                                        <span className="text-2xl font-serif font-black text-kogera-brown">100</span>
+                                    </li>
+                                    <li className="flex justify-between items-end pb-2">
+                                        <div>
+                                            <span className="text-lg font-bold text-kogera-black block">TKG</span>
+                                            <span className="text-sm font-medium text-gray-600">特製出汁の卵かけご飯</span>
+                                        </div>
+                                        <span className="text-2xl font-serif font-black text-kogera-brown">200</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* Udon Section */}
+                        <div className="mb-8">
+                             <div className="bg-kogera-white p-6 rounded-xl border border-kogera-gold mb-10 shadow-sm text-center">
+                                <h4 className="text-xl font-serif font-bold text-kogera-black mb-6">うどんサイズ別価格（全品共通）</h4>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                                    <div className="bg-white p-4 rounded border border-gray-200 flex flex-col items-center shadow-sm">
+                                        <span className="block text-sm font-bold text-gray-600 mb-2">小 (約120g)</span>
+                                        <span className="text-3xl font-serif font-bold text-kogera-brown">300</span>
+                                    </div>
+                                    <div className="bg-white p-4 rounded border-2 border-kogera-red-brown relative overflow-hidden flex flex-col items-center shadow-md transform scale-105">
+                                        <span className="block text-sm font-bold text-kogera-red-brown mb-2">並 (約180g)</span>
+                                        <span className="text-4xl font-serif font-black text-kogera-red-brown">400</span>
+                                    </div>
+                                    <div className="bg-white p-4 rounded border border-gray-200 flex flex-col items-center shadow-sm">
+                                        <span className="block text-sm font-bold text-gray-600 mb-2">中 (約300g)</span>
+                                        <span className="text-3xl font-serif font-bold text-kogera-brown">500</span>
+                                    </div>
+                                    <div className="bg-white p-4 rounded border border-gray-200 flex flex-col items-center shadow-sm">
+                                        <span className="block text-sm font-bold text-gray-600 mb-2">大 (約420g)</span>
+                                        <span className="text-3xl font-serif font-bold text-kogera-brown">600</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [scrolled, setScrolled] = useState(false);
+            const [menuOpen, setMenuOpen] = useState(false);
+            const [showAllMenu, setShowAllMenu] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => setScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) entry.target.classList.add('is-visible');
+                    });
+                }, { threshold: 0.1 });
+                
+                document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const scrollTo = (id) => {
+                setMenuOpen(false);
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                } else if (id === 'top') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            };
+
+            return (
+                <div className="relative text-kogera-black">
+                    <FullMenuModal isOpen={showAllMenu} onClose={() => setShowAllMenu(false)} />
+
+                    {/* Navigation */}
+                    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-kogera-white/95 py-5 shadow-md backdrop-blur-md text-kogera-black' : 'py-10 bg-transparent text-kogera-black'}`}>
+                        <div className="container mx-auto px-6 flex justify-between items-center">
+                            <div className="font-serif z-50 cursor-pointer" onClick={() => scrollTo('top')}>
+                                <div className={`text-base tracking-[0.4em] mb-1 opacity-90 font-bold ${scrolled ? 'text-kogera-brown' : 'text-white/90'}`}>TOKYO HIGASHIMURAYAMA</div>
+                                <h1 className="text-3xl md:text-4xl font-bold tracking-widest flex items-center gap-3">
+                                    <span className={`${scrolled ? 'text-kogera-black' : 'text-kogera-black'}`}>手打ち</span>
+                                    <span className={`${scrolled ? 'text-kogera-black' : 'text-kogera-black'}`}>うどん</span>
+                                    <span className="text-kogera-red">こげら</span>
+                                </h1>
+                            </div>
+
+                            {/* Desktop Menu */}
+                            <div className={`hidden md:flex space-x-14 text-lg font-bold tracking-widest transition-colors duration-300 ${scrolled ? 'text-kogera-black' : 'text-kogera-black'}`}>
+                                {['お品書き', 'ご注文', 'こだわり', '店舗情報'].map((item, i) => (
+                                    <button key={i} onClick={() => scrollTo(['menu', 'howto', 'about', 'access'][i])} className="hover:text-kogera-gold transition-colors relative group py-2">
+                                        {item}
+                                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-kogera-gold transition-all duration-300 group-hover:w-full"></span>
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Mobile Toggle */}
+                            <button onClick={() => setMenuOpen(!menuOpen)} className={`md:hidden z-50 p-2 ${scrolled ? 'text-kogera-black' : 'text-kogera-black'}`}>
+                                <Icon path={Icons.Menu} size={40} />
+                            </button>
+                        </div>
+                    </nav>
+
+                    {/* Mobile Overlay */}
+                    <div className={`fixed inset-0 bg-kogera-white z-40 flex items-center justify-center transition-transform duration-500 ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                        <div className="flex flex-col space-y-12 text-center">
+                            {['お品書き', 'ご注文', 'こだわり', '店舗情報'].map((item, i) => (
+                                <button key={i} onClick={() => scrollTo(['menu', 'howto', 'about', 'access'][i])} className="text-4xl font-serif font-bold text-kogera-black tracking-widest hover:text-kogera-gold">
+                                    {item}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Hero Section */}
+                    <header id="top" className="relative h-screen overflow-hidden flex items-center justify-center">
+                        <div className="absolute inset-0 bg-[#f0e6d2]">
+                             <img src="https://images.unsplash.com/photo-1516550893885-dd0df2b0bcc9?q=80&w=2000&auto=format&fit=crop" 
+                             alt="Wood Background" 
+                             className="w-full h-full object-cover opacity-60" />
+                        </div>
+                        
+                        <div className="relative z-20 container mx-auto px-6 h-full flex flex-col justify-center">
+                            <div className="flex flex-col md:flex-row justify-center items-center h-full pt-20">
+                                
+                                {/* Center Content: The Noren & Copy */}
+                                <div className="flex flex-col items-center justify-center text-center w-full max-w-5xl relative">
+                                    
+                                    {/* Grand Noren Visual */}
+                                    <div className="w-full mb-12">
+                                        <Noren />
+                                    </div>
+
+                                    {/* Award Badge - PROMINENTLY PLACED */}
+                                    <div className="relative z-30 mb-[-30px] animate-gentle-bounce">
+                                         <div className="inline-flex items-center gap-3 bg-gradient-to-b from-[#b8860b] to-[#d4af37] px-10 py-4 rounded-full shadow-2xl border-4 border-kogera-white transform hover:scale-105 transition-transform">
+                                            <div className="text-white drop-shadow-md"><Icon path={Icons.Award} size={36} /></div>
+                                            <span className="font-serif font-extrabold text-2xl md:text-3xl text-white tracking-widest drop-shadow-sm">うどん百名店 選出</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-kogera-white/90 backdrop-blur-sm p-12 pt-20 border border-kogera-brown/20 rounded-lg shadow-2xl relative z-20">
+                                        <p className="text-2xl md:text-4xl font-medium tracking-widest text-kogera-black mb-10 leading-relaxed font-serif">
+                                            小麦の香りを、噛みしめる。
+                                            東村山の隠れ家で味わう本場の讃岐。
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="mt-16 animate-bounce">
+                                        <button onClick={() => scrollTo('features')} className="text-kogera-black hover:text-kogera-gold transition-colors flex flex-col items-center gap-2">
+                                            <span className="text-base tracking-widest font-bold">SCROLL</span>
+                                            <Icon path={Icons.Nav} className="transform rotate-180" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Divider */}
+                        <div className="divider-curve">
+                            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill" fill="#fdfbf7"></path>
+                            </svg>
+                        </div>
+                    </header>
+
+                    {/* Features Section (Explanation of Keywords) */}
+                    <section id="features" className="py-24 bg-[#fdfbf7]">
+                        <div className="container mx-auto px-6">
+                            <SectionTitle en="FEATURES" jp="こげらのこだわり" />
+                            
+                            <div className="grid md:grid-cols-2 gap-16 max-w-6xl mx-auto">
+                                {/* Gokubuto Feature */}
+                                <div className="flex flex-col items-center text-center p-12 bg-white rounded-xl shadow-lg border-b-8 border-kogera-red-brown relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+                                     <div className="absolute -right-6 -top-6 text-9xl opacity-5 font-serif font-black text-kogera-red-brown select-none">太</div>
+                                     
+                                     {/* Photo */}
+                                     <div className="w-64 h-32 rounded-lg shadow-md mb-8 overflow-hidden border-4 border-kogera-red-brown/20 relative z-10">
+                                        <img src="image/gokubutoudon.jpg.jpg" alt="極太うどん" className="w-full h-full object-cover" />
+                                     </div>
+
+                                     <h3 className="text-3xl font-serif font-bold mb-6 text-kogera-black">
+                                        <span className="text-kogera-red-brown text-base block font-sans font-bold mb-2 tracking-widest">GOKUBUTO</span>
+                                        驚きの「極太麺」
+                                     </h3>
+                                     <p className="text-gray-900 leading-8 font-medium text-xl">
+                                        こげらのうどんは、割り箸よりも太いと言われるほどの<strong>超極太サイズ</strong>。
+                                        ただ太いだけではありません。口いっぱいに頬張ると、<strong>小麦本来の甘みと香り</strong>がダイレクトに広がります。
+                                     </p>
+                                </div>
+
+                                {/* Tsuyogoshi Feature */}
+                                <div className="flex flex-col items-center text-center p-12 bg-white rounded-xl shadow-lg border-b-8 border-kogera-gold relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+                                     <div className="absolute -right-6 -top-6 text-9xl opacity-5 font-serif font-black text-kogera-gold select-none">腰</div>
+                                     
+                                     {/* Photo */}
+                                     <div className="w-64 h-32 rounded-lg shadow-md mb-8 overflow-hidden border-4 border-kogera-gold/20 relative z-10">
+                                        <img src="image/teuchi.jpg.png" alt="手打ちの様子" className="w-full h-full object-cover" />
+                                     </div>
+
+                                     <h3 className="text-3xl font-serif font-bold mb-6 text-kogera-black">
+                                        <span className="text-kogera-gold-dark text-base block font-sans font-bold mb-2 tracking-widest">TSUYOGOSHI</span>
+                                        モチモチの「弾力」
+                                     </h3>
+                                     <p className="text-gray-900 leading-8 font-medium text-xl">
+                                        「コシ」とは硬さのことではありません。
+                                        噛んだ瞬間の<strong>モチモチとした食感</strong>と、そこからグッと押し返してくる<strong>強い弾力</strong>。
+                                        この心地よい反発力こそが、本場の「強腰」です。
+                                     </p>
+                                </div>
+                            </div>
+                        </div>
+                         {/* Curve Divider Bottom */}
+                        <div className="divider-curve">
+                            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" className="shape-fill" fill="#washi-gray"></path>
+                            </svg>
+                        </div>
+                    </section>
+
+                    {/* Menu Section */}
+                    <section id="menu" className="py-32 bg-washi-gray text-kogera-black relative">
+                        <div className="container mx-auto px-6 relative z-10">
+                            <SectionTitle en="GRAND MENU" jp="お品書き" />
+                            
+                            <p className="text-center text-kogera-brown mb-20 fade-in-up font-medium tracking-wider text-xl">
+                                飾らない。だからこそ、誤魔化しがきかない。
+                                素材と技術が織りなす、至高の四種。
+                            </p>
+
+                            {/* Main 4 Menu Items */}
+                            <div className="grid md:grid-cols-2 gap-16 max-w-6xl mx-auto mb-20">
+                                <MenuCard 
+                                    img="image/kakeudon.jpg.jpg"
+                                    title="かけうどん"
+                                    price="400"
+                                    sub="もちもち極太麺"
+                                    desc="いりこ出汁が主役の基本の味。琥珀色に輝く出汁は、最後の一滴まで飲み干せる優しさ。極太麺との相性も抜群。"
+                                    tag="一番人気"
+                                    delay="0ms"
+                                    temp="both"
+                                    imgPosition="center 60%"
+                                />
+                                <MenuCard 
+                                    img="image/syouyuudon.jpg.jpg"
+                                    title="しょうゆうどん"
+                                    price="400"
+                                    sub="小麦の風味ダイレクト"
+                                    desc="だし醤油と大根おろしのみ。小麦の風味を最もダイレクトに感じる一杯。特製だし醤油の香りが食欲をそそります。"
+                                    delay="150ms"
+                                    temp="both"
+                                />
+                                <MenuCard 
+                                    img="image/zaruudon.jpg.jpg"
+                                    title="ざるうどん"
+                                    price="400"
+                                    sub="圧倒的なコシ"
+                                    desc="冷水でキュッと締めた麺を、特製つけだしで。のどごしの良さと、強烈なコシを楽しみたい方に最適です。"
+                                    tag="冷のみ"
+                                    delay="300ms"
+                                    temp="cold"
+                                    overlayStyle={{left: 'unset', top: 'unset', right: '0', bottom: '0'}}
+                                />
+                                <MenuCard 
+                                    img="image/kamatamaudon.jpg.jpg"
+                                    title="釜玉うどん"
+                                    price="400"
+                                    sub="濃厚たまご絡む"
+                                    desc="茹でたて熱々の麺に生卵を絡めて。卵のまろやかさと醤油の香ばしさが融合した、カルボナーラのような濃厚さ。"
+                                    tag="温のみ"
+                                    delay="450ms"
+                                    temp="hot"
+                                    overlayStyle={{left: '1px', top: '11px', right: '0', bottom: '0'}}
+                                />
+                            </div>
+
+                            {/* All Menu Button */}
+                            <div className="text-center fade-in-up">
+                                <button 
+                                    onClick={() => setShowAllMenu(true)} 
+                                    className="bg-kogera-brown text-white font-bold py-5 px-16 rounded-full shadow-lg hover:bg-kogera-gold transition-colors text-xl tracking-widest border-2 border-white/20 transform hover:scale-105 duration-200"
+                                >
+                                    全メニューはこちら
+                                </button>
+                            </div>
+                        </div>
+                        
+                        {/* Curve Divider Bottom */}
+                        <div className="divider-curve">
+                            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" className="shape-fill" fill="#fdfbf7"></path>
+                            </svg>
+                        </div>
+                    </section>
+
+                    {/* How to Order Section */}
+                    <section id="howto" className="py-32 bg-[#fdfbf7] relative">
+                        <div className="container mx-auto px-6">
+                            <SectionTitle en="SYSTEM" jp="ご注文の流れ" />
+                            
+                            <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-12 relative mb-24">
+                                {/* Dotted Line */}
+                                <div className="hidden md:block absolute top-12 left-0 w-full border-t-2 border-dashed border-gray-300 -z-0"></div>
+
+                                {[
+                                    { step: "1", title: "うどんを選ぶ", text: "かけ・しょうゆ・ざる・釜玉 その日の気分で。" },
+                                    { step: "2", title: "サイズを選ぶ", text: "小(120g)〜大(420g) お腹と相談してください。" },
+                                    { step: "3", title: "温度を選ぶ", text: "「あつあつ」「ひやあつ」 通な頼み方も可能です。" }
+                                ].map((s, i) => (
+                                    <div key={i} className="bg-white p-10 rounded-xl shadow-lg relative z-10 text-center fade-in-up border border-gray-100" style={{transitionDelay: `${i*150}ms`}}>
+                                        <div className="w-24 h-24 bg-kogera-black text-kogera-gold font-serif text-4xl font-bold flex items-center justify-center rounded-full mx-auto mb-8 border-8 shadow-sm" style={{borderColor: '#c7a252'}}>
+                                            {s.step}
+                                        </div>
+                                        <h3 className="text-2xl font-bold mb-4 border-b-2 border-kogera-gold/30 pb-2 inline-block text-kogera-brown">{s.title}</h3>
+                                        <p className="text-gray-700 whitespace-pre-line text-lg leading-8 font-medium">{s.text}</p>
+                                        
+                                        {/* Added Temperature Selection Visual for Step 3 */}
+                                        {i === 2 && (
+                                            <div className="mt-4 flex flex-wrap gap-2 justify-center">
+                                                 <div className="flex gap-1 items-center bg-gray-100 rounded px-2 py-1"><span className="w-3 h-3 rounded-full bg-[#d32f2f]"></span><span className="text-sm font-bold">温</span></div>
+                                                 <div className="flex gap-1 items-center bg-gray-100 rounded px-2 py-1"><span className="w-3 h-3 rounded-full bg-[#1976d2]"></span><span className="text-sm font-bold">冷</span></div>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Temperature Matrix */}
+                            <div className="max-w-4xl mx-auto bg-washi-gray p-12 rounded-xl border border-gray-200 fade-in-up relative overflow-hidden shadow-inner">
+                                <div className="absolute -right-10 -top-10 w-40 h-40 bg-kogera-gold/10 rounded-full"></div>
+                                <h3 className="flex items-center justify-center gap-3 font-bold text-2xl mb-10 text-kogera-brown">
+                                    <Icon path={Icons.Info} size={36} />
+                                    <span>讃岐うどん「温度」の呼び方</span>
+                                </h3>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                    {[
+                                        { l: "あつあつ", d: "麺温 / 出汁温", m: "ふんわり", t1: "hot", t2: "hot" },
+                                        { l: "ひやあつ", d: "麺冷 / 出汁温", m: "コシと香り", rec: true, t1: "cold", t2: "hot" },
+                                        { l: "あつひや", d: "麺温 / 出汁冷", m: "珍食感", t1: "hot", t2: "cold" },
+                                        { l: "ひやひや", d: "麺冷 / 出汁冷", m: "最強コシ", t1: "cold", t2: "cold" }
+                                    ].map((t, i) => (
+                                        <div key={i} className={`p-6 bg-white text-center shadow-sm rounded-lg relative ${t.rec ? 'border-2 border-kogera-gold' : 'border border-gray-100'}`}>
+                                            {t.rec && <span className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-kogera-gold text-white text-sm px-4 py-1.5 font-bold tracking-wider rounded-full shadow-md">推奨</span>}
+                                            <div className="font-serif font-bold text-xl mb-2 text-kogera-black">{t.l}</div>
+                                            
+                                            {/* Temperature Visuals */}
+                                            <div className="flex justify-center gap-2 mb-3">
+                                                <span className={`w-3 h-3 rounded-full ${t.t1 === 'hot' ? 'bg-[#d32f2f]' : 'bg-[#1976d2]'}`} title={`麺: ${t.t1 === 'hot' ? '温' : '冷'}`}></span>
+                                                <span className={`w-3 h-3 rounded-full ${t.t2 === 'hot' ? 'bg-[#d32f2f]' : 'bg-[#1976d2]'}`} title={`出汁: ${t.t2 === 'hot' ? '温' : '冷'}`}></span>
+                                            </div>
+
+                                            <div className="text-sm text-gray-600 mb-2 font-bold">{t.d}</div>
+                                            <div className="text-base font-bold text-kogera-brown">{t.m}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* About Section */}
+                    <section id="about" className="py-16 md:py-32 bg-kogera-black text-white relative text-center">
+                        {/* ノスタルジックフォトジェニック背景画像 */}
+                        <div className="absolute inset-0 z-0">
+                            <img 
+                                src="image/ノスタルジックフォトジェニック写真.png" 
+                                alt="背景" 
+                                className="w-full h-full object-cover opacity-40"
+                            />
+                        </div>
+                        <div className="absolute inset-0 bg-kogera-black/50 z-[1]"></div>
+                        <div className="container mx-auto px-6 relative z-10">
+                            <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20">
+                                <div className="w-full md:w-1/2 fade-in-up">
+                                </div>
+                                <div className="w-full md:w-1/2 fade-in-up">
+                                    <span className="text-kogera-gold font-bold tracking-[0.2em] mb-4 block text-lg">SPIRIT</span>
+                                    <h2 className="text-3xl md:text-5xl font-serif font-bold leading-relaxed mb-6 md:mb-8">
+                                        アットホームな<br/>
+                                        温かい空間
+                                    </h2>
+                                    <div className="space-y-4 md:space-y-6 text-gray-100 leading-7 md:leading-9 font-medium tracking-wide text-justify text-base md:text-xl">
+                                        <p>
+                                            こげらは店主が一人で切り盛りする小さなお店。
+                                            カウンター越しにお客様と会話が弾む、そんなアットホームな雰囲気が自慢です。
+                                        </p>
+                                        <p>
+                                            <span className="text-white border-b-2 border-kogera-gold pb-1">「百名店」</span>にも選ばれた本格的な味を守りながら、
+                                            気取らず、誰もがほっと一息つける場所でありたい。
+                                            忙しい時には常連様がそっと手伝ってくれることもある、そんな優しい時間が流れています。
+                                        </p>
+                                        <p>
+                                            店名の「こげら」は小さなキツツキの名前。
+                                            うどんを通じて、皆様の日常に小さな喜びと温かさをお届けできれば幸いです。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Closing Statement Section */}
+                    <section className="py-24 bg-kogera-black text-white relative overflow-hidden">
+                        <BackgroundSlideshow images={["image/Image (9).png", "image/Image (10).png"]} />
+                        <div className="absolute inset-0 bg-kogera-black/50 z-[1]"></div>
+                         
+                         <div className="container mx-auto px-6 relative z-10">
+                            <div className="fade-in-up text-center">
+                                <h2 className="writing-vertical text-4xl md:text-5xl font-serif font-bold tracking-widest leading-loose text-white inline-block py-8 border-y border-kogera-gold/30">
+                                    一枚の風景画のような、<br/><span className="mt-8 block">記憶に残る一杯を。</span>
+                                </h2>
+                            </div>
+                         </div>
+                    </section>
+
+                    {/* Access Section (Updated with Noren) */}
+                    <section id="access" className="py-32 bg-kogera-white relative">
+                         {/* Curve Divider Top */}
+                         <div className="divider-curve" style={{bottom: 'auto', top: 0, transform: 'rotate(0)'}}>
+                            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill" fill="#1a120b"></path>
+                            </svg>
+                        </div>
+
+                        <div className="container mx-auto px-6 pt-16">
+                            
+                            {/* Noren Title for Access */}
+                            <div className="relative max-w-xl mx-auto mb-16 pt-4 fade-in-up">
+                                <div className="absolute top-0 left-0 w-full h-3 bg-[#3e2723] rounded-full z-20 shadow-md"></div>
+                                <div className="flex justify-center items-start pt-2 px-2 gap-1">
+                                    {['店', '舗', '情', '報'].map((char, i) => (
+                                        <div key={i} className="w-1/4 h-48 bg-[#fdfbf7] shadow-lg flex justify-center items-center relative border-b-4 border-gray-100 hover:h-52 transition-all duration-500 origin-top">
+                                            <span className="font-serif font-bold text-4xl md:text-5xl text-kogera-black">{char}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="bg-white p-8 md:p-14 shadow-2xl rounded-sm max-w-6xl mx-auto flex flex-col md:flex-row gap-16 relative z-10 fade-in-up border-t-4 border-kogera-black">
+                                <div className="w-full md:w-1/2 space-y-12 text-right">
+                                    <div className="flex gap-6">
+                                        <div className="text-kogera-gold mt-1"><Icon path={Icons.MapPin} size={40} /></div>
+                                        <div>
+                                            <h4 className="font-serif font-bold text-2xl mb-4 text-kogera-black">手打ちうどん <span className="text-kogera-red">こげら</span></h4>
+                                            <p className="text-gray-700 leading-relaxed text-xl">
+                                                〒189-0024<br/>
+                                                東京都東村山市富士見町２丁目６−７２
+                                            </p>
+                                            <p className="text-lg text-gray-500 mt-2 font-bold">
+                                                西武拝島線「小川駅」「東大和市駅」徒歩15〜20分
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex gap-6">
+                                        <div className="text-kogera-gold mt-1"><Icon path={Icons.Clock} size={40} /></div>
+                                        <div>
+                                            <h4 className="font-serif font-bold text-2xl mb-4 text-kogera-black">営業時間</h4>
+                                            <p className="text-gray-700 text-xl">
+                                                11:00頃 〜 麺がなくなり次第終了
+                                                <span className="block text-base text-kogera-red mt-2 font-bold">※お昼過ぎに売り切れる場合もございます</span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex gap-6">
+                                        <div className="text-kogera-gold mt-1"><Icon path={Icons.Info} size={40} /></div>
+                                        <div>
+                                            <h4 className="font-serif font-bold text-2xl mb-4 text-kogera-black">その他</h4>
+                                            <p className="text-gray-700 text-xl">
+                                                完全禁煙 / 駐車場なし<br/>
+                                                <span className="text-lg text-gray-500 font-bold">※近隣のコインパーキングをご利用ください</span>
+                                            </p>
+                                            <p className="text-[#a82e25] font-bold text-lg mt-3 flex items-center gap-2">
+                                                <Icon path={Icons.Wallet} size={24} />
+                                                ※お支払いは現金のみとなります
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Map */}
+                                <div className="w-full md:w-1/2 h-96 md:h-auto bg-gray-100 relative group overflow-hidden rounded-lg shadow-inner border border-gray-200">
+                                    <iframe 
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3238.974635661414!2d139.4452143762955!3d35.72685797257256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018e00c3b000001%3A0x6018e00c3b000001!2z5p2x5p2R5bGx5biC5a-M5aOr6KaL55S677yS5LiB55uu77yW4oiS77yX77yS!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" 
+                                        width="100%" height="100%" style={{border:0}} allowFullScreen="" loading="lazy" 
+                                        className="absolute inset-0 w-full h-full"
+                                    ></iframe>
+                                    
+                                    <div className="absolute bottom-6 right-6 z-10">
+                                        <a 
+                                            href="https://www.google.com/maps/dir/?api=1&destination=手打ちうどんこげら+東京都東村山市富士見町２丁目６−７２" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="bg-kogera-red text-white font-bold py-4 px-10 rounded-full shadow-lg hover:bg-red-800 transition-colors flex items-center gap-3 transform hover:scale-105 duration-200 border-2 border-white text-xl"
+                                        >
+                                            <Icon path={Icons.Nav} size={24} />
+                                            <span>現在地から行く</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer className="bg-kogera-black text-gray-400 py-20 border-t border-white/10 relative z-10">
+                        <div className="container mx-auto px-6 text-center">
+                            <h2 className="font-serif text-4xl text-white mb-8 tracking-widest">手打ちうどん こげら</h2>
+                            
+                            <div className="flex flex-col items-center mb-10">
+                                <a href="https://twitter.com/oga2414" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center gap-3 text-white hover:text-kogera-gold transition-colors mb-6">
+                                    <div className="p-4 border-2 border-kogera-gold rounded-full bg-kogera-gold/20 group-hover:bg-kogera-gold/40 transition-all shadow-lg">
+                                        <Icon path={Icons.X} size={40} />
+                                    </div>
+                                    <span className="text-base font-bold tracking-widest text-white">最新のつぶやき</span>
+                                </a>
+                                <div className="w-full max-w-md bg-white rounded-lg overflow-hidden shadow-xl">
+                                    <a className="twitter-timeline" data-height="400" data-theme="light" data-chrome="noheader nofooter" href="https://twitter.com/oga2414">@oga2414 のツイート</a>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-center flex-wrap gap-10 text-base font-bold tracking-widest mb-16">
+                                <button onClick={() => scrollTo('menu')} className="hover:text-white transition-colors">お品書き</button>
+                                <button onClick={() => scrollTo('howto')} className="hover:text-white transition-colors">ご注文</button>
+                                <button onClick={() => scrollTo('about')} className="hover:text-white transition-colors">こだわり</button>
+                                <button onClick={() => scrollTo('access')} className="hover:text-white transition-colors">店舗情報</button>
+                            </div>
+                            
+                            <div className="w-20 h-[1px] bg-gray-700 mx-auto mb-10"></div>
+                            <p className="text-sm tracking-widest opacity-50">&copy; Hand Made Udon KOGERA. All Rights Reserved.</p>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
