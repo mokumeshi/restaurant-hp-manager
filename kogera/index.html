@@ -155,8 +155,54 @@
                 </a>
             </div>
 
+            <!-- モバイルメニューボタン -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-kogera-black z-50" onclick="toggleMobileMenu()">
+                <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18" />
+                </svg>
+                <svg id="close-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+            </button>
         </div>
     </nav>
+
+    <!-- モバイルメニュー -->
+    <div id="mobile-menu" class="fixed inset-0 bg-kogera-black/95 z-40 hidden flex-col items-center justify-center">
+        <div class="flex flex-col items-center gap-8 text-center">
+            <a href="#menu" onclick="toggleMobileMenu()" class="text-white text-2xl font-bold tracking-widest hover:text-kogera-gold transition-colors">お品書き</a>
+            <a href="#access" onclick="toggleMobileMenu()" class="text-white text-2xl font-bold tracking-widest hover:text-kogera-gold transition-colors">店舗情報</a>
+            <div class="w-16 h-px bg-kogera-gold/50 my-4"></div>
+            <a href="https://twitter.com/oga2414" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-white text-xl font-bold tracking-widest hover:text-kogera-gold transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+                X（Twitter）
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.classList.add('flex');
+                menuIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+    </script>
 
     <!-- ヒーローセクション -->
     <header id="top" class="relative min-h-fit md:min-h-screen overflow-hidden flex items-center justify-center pb-16 md:pb-0">
