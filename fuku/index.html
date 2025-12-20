@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>弁当屋 福 - BENTO-YA FUKU</title>
     <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6246752921583310" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6246752921583310"
+        crossorigin="anonymous"></script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Reggae+One&family=RocknRoll+One&family=DotGothic16&family=Bangers&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Reggae+One&family=RocknRoll+One&family=DotGothic16&family=Bangers&display=swap"
+        rel="stylesheet">
     <!-- React & ReactDOM -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <!-- Babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
-        body { font-family: 'RocknRoll One', sans-serif; }
+        body {
+            font-family: 'RocknRoll One', sans-serif;
+        }
     </style>
 </head>
+
 <body>
     <div id="root"></div>
     <script>
@@ -325,13 +332,13 @@
                                     </a>
                                 </div>
                                 <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm md:text-base font-bold">
-                                    <div className="flex items-center gap-3 bg-gray-50 p-3 border-2 border-gray-200">
+                                    <a href="https://maps.app.goo.gl/K8sBYQiqDJYhGkm8A" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 bg-gray-50 p-3 border-2 border-gray-200 hover:bg-gray-100 transition-colors cursor-pointer text-left">
                                         <MapPin className="w-6 h-6 text-red-600 flex-shrink-0" />
                                         <div>
                                             <span className="block text-xs text-gray-500">LOCATION</span>
                                             愛知県刈谷市 井ヶ谷町下前田
                                         </div>
-                                    </div>
+                                    </a>
                                     <div className="flex items-center gap-3 bg-gray-50 p-3 border-2 border-gray-200">
                                         <Clock className="w-6 h-6 text-red-600 flex-shrink-0" />
                                         <div>
@@ -652,5 +659,5 @@
         root.render(<BentoFukuLP />);
     </script>
 </body>
-</html>
 
+</html>
