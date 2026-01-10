@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王道家直系 我道家 | Full Menu Guide</title>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons (Vanilla JS version) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Inter:wght@400;700&display=swap');
+        
+        /* Custom Font Injection */
+        @font-face {
+            font-family: 'RuikaMono';
+            src: url('RuikaMono-09.TTF') format('truetype'); 
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            font-family: 'RuikaMono', 'Inter', 'Noto Sans JP', 'Noto Sans SC', sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #444; 
+            border-radius: 4px;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes logoFadeIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 0.7; transform: scale(1); }
+        }
+
+        @keyframes logoTextFade {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes buttonsFade {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-fade-in {
+            animation: logoFadeIn 1.5s ease-out forwards;
+        }
+
+        .logo-text-fade {
+            animation: logoTextFade 1s ease-out 0.5s forwards;
+            opacity: 0;
+        }
+
+        .buttons-fade {
+            animation: buttonsFade 1s ease-out 0.8s forwards;
+            opacity: 0;
+        }
+
+        @keyframes gadouyaColorChange {
+            0% { color: white; }
+            100% { color: #ec4899; }
+        }
+
+        .gadouya-text {
+            animation: gadouyaColorChange 1.5s ease-in-out 4.5s forwards;
+        }
+
+        .tab-active {
+            border-bottom: 4px solid #ef4444;
+            color: #ffffff;
+        }
+        .tab-inactive {
+            border-bottom: 4px solid transparent;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        // --- Icon Handling ---
+        const Icon = ({ name, className }) => {
+            useEffect(() => {
+                if (window.lucide) window.lucide.createIcons();
+            });
+            return <i data-lucide={name} className={className}></i>;
+        };
+        const AlertTriangle = (props) => <Icon name="alert-triangle" {...props} />;
+        const ChevronDown = (props) => <Icon name="chevron-down" {...props} />;
+        const ArrowLeft = (props) => <Icon name="arrow-left" {...props} />;
+        const Utensils = (props) => <Icon name="utensils" {...props} />;
+        const HelpCircle = (props) => <Icon name="help-circle" {...props} />;
+        const MapPin = (props) => <Icon name="map-pin" {...props} />;
+        const Clock = (props) => <Icon name="clock" {...props} />;
+        const Info = (props) => <Icon name="info" {...props} />;
+        const MessageSquareQuote = (props) => <Icon name="message-square-quote" {...props} />;
+        const Layers = (props) => <Icon name="layers" {...props} />;
+        const MessageCircle = (props) => <Icon name="message-circle" {...props} />;
+        const CheckCircle = (props) => <Icon name="check-circle" {...props} />;
+        const BookOpen = (props) => <Icon name="book-open" {...props} />;
+        const Star = (props) => <Icon name="star" {...props} />;
+        const InfinityIcon = (props) => <Icon name="infinity" {...props} />;
+        const Soup = (props) => <Icon name="soup" {...props} />;
+        const Users = (props) => <Icon name="users" {...props} />;
+        const Phone = (props) => <Icon name="phone" {...props} />;
+        const Briefcase = (props) => <Icon name="briefcase" {...props} />;
+
+        // --- Data Management ---
+        const SITE_DATA = {
+            "meta": {
+                "shop_name": "王道家直系 我道家 OSAKA本店",
+                "last_updated": "2026-01-10",
+                "price_note": {
+                    "en": "Prices on the ticket machine are final.",
+                    "zh": "价格以售票机显示为准。",
+                    "ja": "価格は券売機が優先されます（税込）。"
+                }
+            },
+            "categories": [
+                { "id": "noodles", "label": { "en": "Ramen", "zh": "拉面", "ja": "麺類" } },
+                { "id": "rice", "label": { "en": "Rice", "zh": "米饭", "ja": "ご飯" } },
+                { "id": "toppings", "label": { "en": "Toppings", "zh": "加料", "ja": "トッピング" } },
+                { "id": "drinks", "label": { "en": "Drinks", "zh": "饮料", "ja": "飲み物" } }
+            ],
+            // ■■■ 1. Reference Menu (Japanese Full Menu / 確定版データ) ■■■
+            "jp_reference": {
+                "noodles": [
+                    {"name_ja": "チャーシューめん", "image": "image/チャーシューメン.png", "sizes": [{"label_ja": "並", "price": 1130}, {"label_ja": "大", "price": 1310}, {"label_ja": "特", "price": 1380}]},
+                    {"name_ja": "王道之らあめん", "image": "image/王道のらぁめん.png", "sizes": [{"label_ja": "並", "price": 1220}, {"label_ja": "大", "price": 1400}, {"label_ja": "特", "price": 1470}]},
+                    {"name_ja": "ネギチャーシューめん", "sizes": [{"label_ja": "並", "price": 1350}, {"label_ja": "大", "price": 1530}, {"label_ja": "特", "price": 1600}]},
+                    {"name_ja": "ネギらあめん", "sizes": [{"label_ja": "並", "price": 1170}, {"label_ja": "大", "price": 1350}, {"label_ja": "特", "price": 1420}]},
+                    {"name_ja": "らあめん", "image": "image/らーめん.png", "sizes": [{"label_ja": "並", "price": 950}, {"label_ja": "大", "price": 1130}, {"label_ja": "特", "price": 1200}]}
+                ],
+                "rice": [
+                    {"name_ja": "ライス", "sizes": [{"label_ja": "小", "price": 150}, {"label_ja": "中", "price": 200}, {"label_ja": "大", "price": 250}]},
+                    {"name_ja": "チャーシューまぶし", "image": "image/ちゃーしゅーまぶし.png", "sizes": [{"label_ja": "小", "price": 200}, {"label_ja": "中", "price": 250}, {"label_ja": "大", "price": 300}]},
+                    {"name_ja": "たまごまぶし", "sizes": [{"label_ja": "小", "price": 200}, {"label_ja": "中", "price": 250}, {"label_ja": "大", "price": 300}]},
+                    {"name_ja": "家系ネギ豚丼［赤・辛味噌］", "sizes": [{"label_ja": "小", "price": 300}, {"label_ja": "中", "price": 350}, {"label_ja": "大", "price": 400}]},
+                    {"name_ja": "家系ネギ豚丼［白・和風］", "sizes": [{"label_ja": "小", "price": 300}, {"label_ja": "中", "price": 350}, {"label_ja": "大", "price": 400}]}
+                ],
+                "toppings": [
+                    {"name_ja": "名物ホルモン揚げ", "price": 110},
+                    {"name_ja": "家系ネギ［赤・辛味噌］", "price": 220},
+                    {"name_ja": "生ネギ", "price": 220},
+                    {"name_ja": "うすぎり豚", "price": 110},
+                    {"name_ja": "家系ネギ［白・和風］", "price": 220},
+                    {"name_ja": "青ネギ", "price": 110},
+                    {"name_ja": "チャーシュー", "price": 200},
+                    {"name_ja": "のり", "price": 110},
+                    {"name_ja": "味玉", "price": 130},
+                    {"name_ja": "ほうれん草", "price": 110},
+                    {"name_ja": "生卵", "price": 100}
+                ],
+                "drinks": [
+                    {"name_ja": "エビスビール［おつまみ付き］", "price": 390},
+                    {"name_ja": "コーラ", "price": 150},
+                    {"name_ja": "角ハイボール", "price": 390},
+                    {"name_ja": "黒ウーロン茶", "price": 190}
+                ]
+            },
+            // ■■■ 2. International Order Menu (Foreigner Only / 固定仕様) ■■■
+            "intl_menu": [
+                {
+                    "category": "noodles",
+                    "name": { "en": "Ramen (International)", "zh": "拉面 (国际版)" },
+                    "price": 1500,
+                    "desc": { "en": "Fixed specs (No customization)", "zh": "固定规格 (不可选硬度/味道)" },
+                    "image": "image/らーめん.png"
+                },
+                {
+                    "category": "noodles",
+                    "name": { "en": "Chashu Ramen (International)", "zh": "叉烧拉面 (国际版)" },
+                    "price": 1900,
+                    "desc": { "en": "Fixed specs / More pork", "zh": "固定规格 / 肉量增加" },
+                    "image": "image/チャーシューメン.png"
+                },
+                {
+                    "category": "noodles",
+                    "name": { "en": "Negi Chashu Ramen (International)", "zh": "葱叉烧拉面 (国际版)" },
+                    "price": 2200,
+                    "desc": { "en": "Fixed specs / Green Onion & Pork", "zh": "固定规格 / 葱花与叉烧" }
+                },
+                {
+                    "category": "noodles",
+                    "name": { "en": "Special Ramen", "zh": "特制拉面" },
+                    "price": 2000,
+                    "desc": { "en": "Recommended Set / Fixed Specs", "zh": "推荐套餐 / 固定规格" }
+                },
+                {
+                    "category": "sides", 
+                    "name": { "en": "Fried Hormone", "zh": "炸内脏" },
+                    "price": 100,
+                    "desc": { "en": "Famous side dish", "zh": "名物小吃" }
+                }
+            ],
+            // --- UPDATED TEXTS FROM VIDEO/OWNER INTENT ---
+            "notice": {
+                "en": {
+                    "title": "Important Notice: Menu & Prices",
+                    "bullets": [
+                        "This is a different menu from the Japanese menu.",
+                        "Items/specs and prices are different.",
+                        "We offer a fixed-spec menu to prevent ordering mistakes."
+                    ],
+                    "intent_title": "Message from the Owner",
+                    "why": "Our ramen has many preferences and custom options (style, noodle firmness, richness, oil amount). During busy hours it's difficult to explain every detail to guests who don't read Japanese. To prevent ordering mistakes, we provide an 'easy-to-order, no-mistake' fixed-spec menu for non-Japanese readers. Because this menu has different preparation and ingredients, the price is different.",
+                    "checkbox": "I understand items & prices differ from the Japanese menu.",
+                    "btn_order": "Go to Order Menu",
+                    "btn_ref": "View Reference Menu",
+                    "menu_tab_order": "Order Menu",
+                    "menu_tab_ref": "Reference Menu",
+                    "ref_warning": "Reference Only. You cannot order these items in English mode. Specs differ from the Order Menu.",
+                    "search_ph": "Search ramen, pork, etc..."
+                },
+                "zh": {
+                    "title": "重要提示：菜单与价格说明",
+                    "bullets": [
+                        "本菜单与日文菜单 不是同一商品。",
+                        "规格与价格不同。",
+                        "为避免点单误解，提供 固定规格菜单。"
+                    ],
+                    "intent_title": "店主致辞",
+                    "why": "本店拉面可选择口味类型、面硬度、浓度、油量等，点单与说明较复杂。营业高峰时很难向不读日文的顾客逐一解释。为避免点单失误，我们为不读日文的顾客提供'更容易点单、不会失败'的固定规格菜单。由于制作方式与配料不同，准备成本更高，因此价格也不同。",
+                    "checkbox": "我已理解：菜品内容与价格与日文菜单不同。",
+                    "btn_order": "前往下单菜单",
+                    "btn_ref": "查看参考菜单",
+                    "menu_tab_order": "下单菜单",
+                    "menu_tab_ref": "参考菜单",
+                    "ref_warning": "仅供参考。中文模式下无法点这些菜品。规格与下单菜单不同。",
+                    "search_ph": "搜索拉面、叉烧等..."
+                },
+                "ja": {
+                    "title": "重要：外国語メニューについて",
+                    "bullets": [
+                        "外国語メニューは 日本語メニューとは別商品 です",
+                        "商品仕様・価格が異なります",
+                        "注文ミスを防ぐため、説明不要の固定仕様として提供しています"
+                    ],
+                    "intent_title": "店主からのメッセージ",
+                    "why": "当店の家系ラーメンは好みが分かれ、さらに「味の種類／麺の硬さ／濃さ／鶏油量」などカスタムが複雑です。営業中に日本語が不自由な方へ十分に説明することが難しいため、当店では'失敗しない一杯'として、外国語メニューは説明不要の固定仕様にし、内容（仕様）を変更した別メニューとして提供しています。その準備には追加の手間とコストがかかるため、価格も異なります。",
+                    "checkbox": "上記を理解しました",
+                    "btn_order": "メニューを確認",
+                    "menu_tab_order": "メニュー",
+                    "search_ph": "検索..."
+                }
+            },
+            "faq": {
+                "en": [
+                    { "q": "Why are prices different?", "a": "Because the international menu is a different fixed-spec menu with different preparation/ingredients to prevent ordering mistakes." },
+                    { "q": "Is this discrimination?", "a": "According to the owner, this is based on Japanese-reading ability, not nationality." },
+                    { "q": "Can I get a refund?", "a": "No refunds after serving. If you selected the wrong language on the ticket machine, please tell staff IMMEDIATELY after purchase." }
+                ],
+                "zh": [
+                    { "q": "为什么价格不同？", "a": "因为国际菜单是为避免点单误解而提供的固定规格'别菜单'，制作与准备成本更高。" },
+                    { "q": "这是歧视吗？", "a": "店主说明：区分依据是'是否能理解日文'，并非国籍。" },
+                    { "q": "可以退款吗？", "a": "出餐后无法退款。如在售票机选错语言，请在购票后立刻告知工作人员。" }
+                ],
+                "ja": [
+                    { "q": "なぜ価格が違うのですか？", "a": "外国語メニューは注文ミスを防ぐために仕様を変えた別商品で、準備に追加の手間とコストがかかるためです。" },
+                    { "q": "差別ですか？", "a": "店主の説明では、国籍ではなく「日本語理解度」による提供方式の違いです。" },
+                    { "q": "返金はできますか？", "a": "提供後の返金は原則不可です。食券購入直後にスタッフへお申し付けください。" }
+                ]
+            },
+            "common": {
+                "back": { "en": "Back", "zh": "返回", "ja": "戻る" },
+                "access": { "en": "Shop Info", "zh": "店铺信息", "ja": "店舗情報" },
+                "faq": { "en": "FAQ", "zh": "常见问题", "ja": "よくある質問" },
+                "cash_only": { "en": "CASH ONLY", "zh": "仅收现金", "ja": "現金のみ" },
+                "why_different": { "en": "Why Different?", "zh": "为什么不同？", "ja": "なぜ別仕様？" },
+                "how_to_eat": { "en": "How to Eat", "zh": "吃法指南", "ja": "美味しい食べ方" }
+            },
+            // ■■■ Why Different Page Content ■■■
+            "why_different": {
+                "en": {
+                    "title": "Why the International Menu is Different",
+                    "subtitle": "(Specs & Prices)",
+                    "summary": [
+                        "Our ramen is crafted with **over 8 hours of daily preparation** and a highly detailed customization system with **81 possible combinations**.",
+                        "Explaining every option in multiple languages during busy service is not realistic.",
+                        "To prevent ordering mistakes, we offer an **easy-to-order fixed-spec international menu**, which is prepared differently—therefore pricing differs."
+                    ],
+                    "key_facts": {
+                        "title": "Key Facts",
+                        "items": [
+                            { "number": "8+", "unit": "hours", "desc": "Daily soup preparation" },
+                            { "number": "81", "unit": "combinations", "desc": "Style × Firmness × Richness × Oil" },
+                            { "number": "Peak", "unit": "hours", "desc": "Full explanations difficult" }
+                        ]
+                    },
+                    "sections": [
+                        {
+                            "title": "81 Possible Combinations",
+                            "icon": "layers",
+                            "content": "Our regular menu includes: 3 soy sauce styles (Rich / Original / Mild) × 3 noodle firmness levels × 3 richness levels × 3 oil amounts = 81 combinations. Even Japanese first-timers can be unsure."
+                        },
+                        {
+                            "title": "8+ Hours of Daily Preparation",
+                            "icon": "clock",
+                            "content": "Every day we prepare: pork bone broth, chicken stock, back fat processing, chashu preparation, and more. This is a craftsman-level process that cannot be simplified."
+                        },
+                        {
+                            "title": "Why We Can't Explain Everything",
+                            "icon": "message-circle",
+                            "content": "During peak hours, we serve hundreds of bowls. Taking time to fully explain 81 options in multiple languages would slow service for everyone and increase the risk of ordering mistakes."
+                        },
+                        {
+                            "title": "The 'No-Mistake Bowl' Solution",
+                            "icon": "check-circle",
+                            "content": "The international menu is designed as a 'no-mistake bowl'—fixed specs, adjusted preparation, guaranteed satisfaction without complex ordering. Because it's a different menu with different preparation, the price is different."
+                        }
+                    ],
+                    "cta_order": "Go to Order Menu",
+                    "cta_faq": "Read FAQ"
+                },
+                "zh": {
+                    "title": "为什么国际菜单不同",
+                    "subtitle": "（规格与价格）",
+                    "summary": [
+                        "我道家拉面每天需要**8小时以上**的准备工作，并且有**81种**组合的自定义系统。",
+                        "营业高峰时用多语言完整解释几乎不现实。",
+                        "为了避免点单误解，我们提供**固定规格的国际菜单**（制作与配料不同），因此价格也不同。"
+                    ],
+                    "key_facts": {
+                        "title": "关键事实",
+                        "items": [
+                            { "number": "8+", "unit": "小时", "desc": "每日汤底准备" },
+                            { "number": "81", "unit": "种组合", "desc": "口味×硬度×浓度×油量" },
+                            { "number": "高峰", "unit": "时段", "desc": "难以详细说明" }
+                        ]
+                    },
+                    "sections": [
+                        {
+                            "title": "81种可能的组合",
+                            "icon": "layers",
+                            "content": "日文菜单包含：3种酱油口味（浓口/本店/旨口）× 3种面硬度 × 3种浓度 × 3种油量 = 81种组合。即使日本初次来店的顾客也可能犹豫。"
+                        },
+                        {
+                            "title": "每日8小时以上的准备",
+                            "icon": "clock",
+                            "content": "每天我们准备：猪骨汤、鸡骨汤、背脂处理、叉烧制作等。这是无法简化的职人级工序。"
+                        },
+                        {
+                            "title": "为什么无法完整说明",
+                            "icon": "message-circle",
+                            "content": "高峰时段我们要提供数百碗。用多语言详细解释81种选项会拖慢所有顾客的服务，并增加点单错误的风险。"
+                        },
+                        {
+                            "title": "'不会失败的一碗'解决方案",
+                            "icon": "check-circle",
+                            "content": "国际菜单设计为'不会失败的一碗'——固定规格、调整制作、无需复杂点单即可保证满意。由于是不同的菜单和不同的制作方式，所以价格不同。"
+                        }
+                    ],
+                    "cta_order": "进入订单菜单",
+                    "cta_faq": "查看常见问题"
+                },
+                "ja": {
+                    "title": "なぜ外国語メニューは「別仕様・別価格」なのか",
+                    "subtitle": "",
+                    "summary": [
+                        "我道家の家系ラーメンは、**仕込みに毎日8時間以上**、さらに**81通りのカスタマイズ**がある'職人仕様'です。",
+                        "営業中にこの内容を外国語で説明し切るのは現実的に難しいため、",
+                        "外国語メニューは**注文ミスを防ぐ固定仕様（別メニュー）**として提供しています。"
+                    ],
+                    "key_facts": {
+                        "title": "Key Facts",
+                        "items": [
+                            { "number": "8+", "unit": "時間", "desc": "毎日のスープ仕込み" },
+                            { "number": "81", "unit": "通り", "desc": "味×麺硬さ×濃さ×油量" },
+                            { "number": "繁忙", "unit": "時間帯", "desc": "個別説明が困難" }
+                        ]
+                    },
+                    "sections": [
+                        {
+                            "title": "81通りのカスタマイズ",
+                            "icon": "layers",
+                            "content": "当店のメニューには「濃口／本店／旨口」の醤油タイプ × 麺の硬さ3段階 × 味の濃さ3段階 × 鶏油量3段階 = 81通りの組み合わせがあります。初来店の日本人でも迷いやすい仕組みです。"
+                        },
+                        {
+                            "title": "毎日8時間以上の仕込み",
+                            "icon": "clock",
+                            "content": "毎日、豚骨スープ・鶏ガラスープ・背脂処理・チャーシュー仕込みなど、複数の工程を行っています。簡略化できない職人技です。"
+                        },
+                        {
+                            "title": "なぜ説明できないのか",
+                            "icon": "message-circle",
+                            "content": "繁忙時は数百杯を提供します。81通りの選択肢を多言語で説明する時間を取ると、全てのお客様へのサービスが遅れ、注文ミスのリスクも高まります。"
+                        },
+                        {
+                            "title": "「失敗しない一杯」という解決策",
+                            "icon": "check-circle",
+                            "content": "外国語メニューは「失敗しない一杯」として設計されています。固定仕様・調整された調理法・複雑な注文なしで満足を保証。別メニュー・別調理のため、価格も異なります。"
+                        }
+                    ],
+                    "cta_order": "メニューを確認",
+                    "cta_faq": "よくある質問を見る"
+                }
+            },
+            // ■■■ How to Eat Page Content ■■■
+            "how_to_eat": {
+                "en": {
+                    "title": "How to Enjoy Your Ramen",
+                    "subtitle": "Table Condiments & Tips",
+                    "intro": "Make the most of your bowl with these tips from the shop!",
+                    "sections": [
+                        {
+                            "title": "Table Condiments",
+                            "icon": "utensils",
+                            "items": [
+                                { "name": "Garlic (にんにく)", "desc": "Fresh minced garlic. Add to taste - start with a little!" },
+                                { "name": "Ginger (しょうが)", "desc": "Pickled ginger to refresh your palate between bites." },
+                                { "name": "Pepper (コショウ)", "desc": "White pepper for extra kick." },
+                                { "name": "Vinegar (酢)", "desc": "A splash can cut through the richness." },
+                                { "name": "Soy Sauce (醤油)", "desc": "For adjusting saltiness if needed." },
+                                { "name": "Chili Oil (ラー油)", "desc": "Spicy oil for heat lovers." }
+                            ]
+                        },
+                        {
+                            "title": "Recommended Eating Style",
+                            "icon": "star",
+                            "tips": [
+                                "Start by tasting the soup as-is to appreciate the original flavor.",
+                                "Mix in garlic and condiments gradually.",
+                                "Use nori (seaweed) to wrap rice and dip in soup.",
+                                "Add rice to remaining soup for a 'soup-rice' finish.",
+                                "Eat while hot - the flavor changes as it cools!"
+                            ]
+                        },
+                        {
+                            "title": "Infinite Garlic Rice (にんにくライス)",
+                            "icon": "infinity",
+                            "content": "Order rice and use the FREE unlimited garlic on the table. Mix garlic into your rice, then dip in ramen soup. A legendary combination!"
+                        }
+                    ],
+                    "warning": "Garlic is STRONG. Start with a small amount!",
+                    "cta_menu": "Back to Menu"
+                },
+                "zh": {
+                    "title": "如何享用拉面",
+                    "subtitle": "桌上调味料与技巧",
+                    "intro": "按照店家推荐的方式，最大化享受您的拉面！",
+                    "sections": [
+                        {
+                            "title": "桌上调味料",
+                            "icon": "utensils",
+                            "items": [
+                                { "name": "蒜泥 (にんにく)", "desc": "新鲜蒜泥，建议从少量开始尝试！" },
+                                { "name": "生姜 (しょうが)", "desc": "腌制生姜，用于清口。" },
+                                { "name": "胡椒 (コショウ)", "desc": "白胡椒增加风味。" },
+                                { "name": "醋 (酢)", "desc": "少许可解腻。" },
+                                { "name": "酱油 (醤油)", "desc": "根据需要调整咸度。" },
+                                { "name": "辣油 (ラー油)", "desc": "适合喜欢辣味的顾客。" }
+                            ]
+                        },
+                        {
+                            "title": "推荐吃法",
+                            "icon": "star",
+                            "tips": [
+                                "先品尝原味汤头，感受原本的味道。",
+                                "逐渐加入蒜泥和调味料。",
+                                "用海苔包裹米饭，蘸汤食用。",
+                                "汤剩余时加入米饭做'泡饭'收尾。",
+                                "趁热吃——冷却后味道会变化！"
+                            ]
+                        },
+                        {
+                            "title": "无限蒜泥饭 (にんにくライス)",
+                            "icon": "infinity",
+                            "content": "点一份米饭，使用桌上免费无限供应的蒜泥。将蒜泥拌入米饭，再蘸拉面汤食用。这是传说级的组合！"
+                        }
+                    ],
+                    "warning": "蒜泥味道很重，建议从少量开始！",
+                    "cta_menu": "返回菜单"
+                },
+                "ja": {
+                    "title": "美味しい食べ方",
+                    "subtitle": "卓上調味料とおすすめ",
+                    "intro": "当店のラーメンをより楽しむためのヒント！",
+                    "sections": [
+                        {
+                            "title": "卓上調味料",
+                            "icon": "utensils",
+                            "items": [
+                                { "name": "にんにく", "desc": "無料・無限！少量から始めるのがおすすめ。" },
+                                { "name": "しょうが", "desc": "口直しに最適。" },
+                                { "name": "コショウ", "desc": "パンチを加えたい時に。" },
+                                { "name": "酢", "desc": "少量で味変。濃さを和らげます。" },
+                                { "name": "醤油", "desc": "塩味の調整に。" },
+                                { "name": "ラー油", "desc": "辛さが欲しい方に。" }
+                            ]
+                        },
+                        {
+                            "title": "おすすめの食べ方",
+                            "icon": "star",
+                            "tips": [
+                                "まずはスープをそのまま味わう。",
+                                "にんにく・調味料は少しずつ加える。",
+                                "海苔でライスを巻いてスープに浸す。",
+                                "残ったスープにライスを投入して'スープ飯'で〆る。",
+                                "熱いうちに食べる！冷めると味が変わります。"
+                            ]
+                        },
+                        {
+                            "title": "無限にんにくライス",
+                            "icon": "infinity",
+                            "content": "ライスを注文して、卓上の無料にんにくを好きなだけ使用。にんにくをライスに混ぜ、ラーメンスープに浸して食べる。伝説の組み合わせ！"
+                        }
+                    ],
+                    "warning": "にんにくは強烈です！少量から始めてください。",
+                    "cta_menu": "メニューに戻る"
+                }
+            }
+        };
+
+        const LanguageSelector = ({ onSelect }) => (
+            <div className="flex flex-col items-center justify-center min-h-screen p-6 space-y-8 bg-black relative overflow-hidden">
+                {/* Logo Background with Fade-in Animation */}
+                <div className="absolute inset-0 flex items-center justify-center logo-fade-in">
+                    <img 
+                        src="image/logo.png" 
+                        alt="我道家ロゴ" 
+                        className="w-80 h-80 md:w-96 md:h-96 object-contain opacity-70"
+                    />
+                </div>
+                
+                <div className="text-center space-y-4 relative z-10 logo-text-fade">
+                    <h1 className="text-3xl md:text-4xl font-bold text-white tracking-wider">
+                        王道家直系 <span className="gadouya-text">我道家</span> OSAKA本店
+                    </h1>
+                    <div className="bg-red-600 h-1.5 w-24 mx-auto"></div>
+                    <p className="text-gray-400 text-lg">Please select your language</p>
+                </div>
+
+                <div className="w-full max-w-lg space-y-6 relative z-10 buttons-fade">
+                    <button onClick={() => onSelect('en')} className="w-full py-6 px-8 bg-white text-black font-bold text-3xl rounded-xl shadow-lg hover:bg-gray-200 transition flex items-center justify-between group">
+                        <span>English</span>
+                        <ChevronDown className="w-8 h-8 group-hover:translate-x-1 transition" />
+                    </button>
+                    <button onClick={() => onSelect('zh')} className="w-full py-6 px-8 bg-white text-black font-bold text-3xl rounded-xl shadow-lg hover:bg-gray-200 transition flex items-center justify-between group">
+                        <span>中文（简体）</span>
+                        <ChevronDown className="w-8 h-8 group-hover:translate-x-1 transition" />
+                    </button>
+                    <button onClick={() => onSelect('ja')} className="w-full py-6 px-8 bg-zinc-800 text-white border-2 border-zinc-700 font-bold text-3xl rounded-xl shadow-lg hover:bg-zinc-700 transition flex items-center justify-between">
+                        <span>日本語</span>
+                        <span className="text-lg text-gray-400">JAPANESE</span>
+                    </button>
+                </div>
+            </div>
+        );
+
+        const NoticeGate = ({ lang, onAccept, onBack }) => {
+            const content = SITE_DATA.notice[lang];
+            const [checked, setChecked] = useState(false);
+
+            return (
+                <div className="min-h-screen bg-zinc-900 p-6 flex flex-col fade-in">
+                    <button onClick={onBack} className="text-gray-400 mb-6 flex items-center text-xl font-bold">
+                        <ArrowLeft className="w-6 h-6 mr-2" /> {SITE_DATA.common.back[lang]}
+                    </button>
+
+                    <div className="flex-1 max-w-2xl mx-auto w-full">
+                        {/* Notice Hero: 3-Line Summary */}
+                        <div className="bg-red-600 text-white p-6 rounded-t-xl flex items-start space-x-4">
+                            <AlertTriangle className="w-10 h-10 flex-shrink-0 mt-1" />
+                            <h2 className="font-bold text-3xl leading-tight">{content.title}</h2>
+                        </div>
+                        
+                        <div className="bg-zinc-800 p-8 rounded-b-xl mb-6 shadow-xl border-2 border-zinc-700">
+                            {/* Short Bullets */}
+                            <ul className="space-y-4 mb-8">
+                                {content.bullets.map((txt, i) => (
+                                    <li key={i} className="flex items-start text-white font-bold text-2xl">
+                                        <span className="text-red-500 mr-3">•</span>
+                                        {txt}
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {/* Owner Intent Card */}
+                            <div className="bg-zinc-900 p-6 rounded-lg border-l-4 border-red-500 mb-8">
+                                <div className="flex items-center text-gray-400 mb-3">
+                                    <MessageSquareQuote className="w-6 h-6 mr-2" />
+                                    <span className="font-bold uppercase tracking-widest text-sm">{content.intent_title}</span>
+                                </div>
+                                <p className="text-xl text-gray-200 leading-relaxed font-medium">
+                                    {content.why}
+                                </p>
+                            </div>
+
+                            <label className="flex items-start space-x-4 p-6 bg-zinc-700 rounded-lg cursor-pointer hover:bg-zinc-650 transition">
+                                <input 
+                                    type="checkbox" 
+                                    checked={checked} 
+                                    onChange={(e) => setChecked(e.target.checked)}
+                                    className="mt-1 w-8 h-8 accent-red-600"
+                                />
+                                <span className="text-2xl font-bold text-white select-none">
+                                    {content.checkbox}
+                                </span>
+                            </label>
+
+                            <div className="mt-10 space-y-5">
+                                <button 
+                                    onClick={() => onAccept('order')}
+                                    disabled={!checked}
+                                    className={`w-full py-6 rounded-xl font-bold text-3xl transition flex flex-col items-center justify-center ${
+                                        checked 
+                                        ? 'bg-red-600 text-white shadow-lg hover:bg-red-700' 
+                                        : 'bg-zinc-600 text-zinc-400 cursor-not-allowed'
+                                    }`}
+                                >
+                                    {content.btn_order}
+                                </button>
+                                
+                                {lang !== 'ja' && (
+                                     <button 
+                                        onClick={() => onAccept('reference')}
+                                        disabled={!checked}
+                                        className={`w-full py-5 rounded-xl text-xl transition border-2 ${
+                                            checked 
+                                            ? 'border-gray-500 text-gray-400 hover:text-white hover:border-white' 
+                                            : 'border-zinc-700 text-zinc-600 cursor-not-allowed'
+                                        }`}
+                                    >
+                                        {content.btn_ref}
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const MenuPage = ({ lang, viewMode, setViewMode, onBack, setPage }) => {
+            const [activeCat, setActiveCat] = useState('noodles');
+            
+            const notice = SITE_DATA.notice[lang];
+            const categories = SITE_DATA.categories;
+            
+            // Logic to fetch items based on ViewMode
+            const displayItems = useMemo(() => {
+                let items = [];
+                const isReference = (viewMode === 'reference' || lang === 'ja');
+                
+                if (isReference) {
+                    // Use JP Reference Data
+                    const rawItems = SITE_DATA.jp_reference[activeCat] || [];
+                    items = rawItems.map(item => ({
+                        name: item.name_ja,
+                        desc: "",
+                        image: item.image || null,
+                        priceObj: item.sizes ? item.sizes : { price: item.price }, 
+                        isOrderable: (lang === 'ja'), 
+                        isMultiSize: !!item.sizes
+                    }));
+                } else {
+                    // Use Intl Order Data
+                    items = SITE_DATA.intl_menu
+                        .filter(item => {
+                            if (activeCat === 'noodles') return item.category === 'noodles';
+                            if (activeCat === 'rice') return item.category === 'rice';
+                            if (activeCat === 'toppings' || activeCat === 'sides') return item.category === 'sides' || item.category === 'toppings';
+                            return false;
+                        })
+                        .map(item => ({
+                            name: item.name[lang] || item.name['en'],
+                            desc: item.desc[lang] || item.desc['en'],
+                            image: item.image || null,
+                            priceObj: { price: item.price },
+                            isOrderable: true,
+                            isMultiSize: false
+                        }));
+                }
+
+                return items;
+            }, [lang, viewMode, activeCat]);
+
+            return (
+                <div className="min-h-screen bg-zinc-900 pb-32 fade-in">
+                    {/* Header */}
+                    <div className="bg-zinc-800 sticky top-0 z-20 shadow-lg border-b border-zinc-700">
+                        <div className="p-4 flex justify-between items-center">
+                            <h2 className="font-bold text-white text-xl md:text-2xl pr-2">
+                                <span className="hidden sm:inline">{SITE_DATA.meta.shop_name}</span>
+                                <span className="sm:hidden">我道家 OSAKA本店</span>
+                            </h2>
+                            <button onClick={onBack} className="text-lg text-gray-400 border border-gray-600 px-4 py-2 rounded shrink-0">
+                                Lang
+                            </button>
+                        </div>
+                        
+                        {/* Tab Switcher (Only for non-JA) */}
+                        {lang !== 'ja' && (
+                            <div className="flex w-full text-xl font-bold">
+                                <button 
+                                    onClick={() => setViewMode('order')}
+                                    className={`flex-1 py-4 text-center transition ${viewMode === 'order' ? 'tab-active bg-zinc-700' : 'tab-inactive bg-zinc-800'}`}
+                                >
+                                    {notice.menu_tab_order}
+                                </button>
+                                <button 
+                                    onClick={() => setViewMode('reference')}
+                                    className={`flex-1 py-4 text-center transition ${viewMode === 'reference' ? 'tab-active bg-zinc-700' : 'tab-inactive bg-zinc-800'}`}
+                                >
+                                    {notice.menu_tab_ref}
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Reference Warning Banner */}
+                    {lang !== 'ja' && viewMode === 'reference' && (
+                        <div className="bg-red-900/80 p-4 text-xl text-red-100 flex items-start space-x-3 border-b border-red-700">
+                            <Info className="w-8 h-8 shrink-0" />
+                            <span>{notice.ref_warning}</span>
+                        </div>
+                    )}
+                    {/* Order Mode Note */}
+                    {lang !== 'ja' && viewMode === 'order' && (
+                         <div className="bg-yellow-900/30 p-3 text-lg text-yellow-500 text-center border-b border-yellow-900/50 font-bold">
+                            Displaying: Fixed Spec Menu (Orderable)
+                        </div>
+                    )}
+
+                    {/* Category Tabs */}
+                    <div className="p-4">
+                        <div className="flex space-x-3 overflow-x-auto pb-4 no-scrollbar">
+                            {categories
+                                /* INTL_CATEGORY_FILTER: 英語・中国語では noodles のみ表示。復活時はこのfilterを削除 */
+                                .filter(cat => lang === 'ja' || cat.id === 'noodles')
+                                .map(cat => (
+                                <button
+                                    key={cat.id}
+                                    onClick={() => setActiveCat(cat.id)}
+                                    className={`whitespace-nowrap px-6 py-3 rounded-full text-xl font-bold transition ${
+                                        activeCat === cat.id 
+                                        ? 'bg-red-600 text-white' 
+                                        : 'bg-zinc-800 text-gray-400 border border-zinc-700'
+                                    }`}
+                                >
+                                    {cat.label[lang]}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Menu Grid */}
+                    <div className="px-4 grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {displayItems.map((item, idx) => (
+                            <div 
+                                key={idx} 
+                                className={`rounded-xl p-4 border-2 flex flex-col relative overflow-hidden aspect-square ${
+                                    item.isOrderable 
+                                    ? 'bg-zinc-800 border-zinc-700' 
+                                    : 'bg-zinc-800/50 border-zinc-800 opacity-70'
+                                }`}
+                                style={item.image ? {
+                                    backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.8) 100%), url('${item.image}')`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center'
+                                } : {}}
+                            >
+                                {!item.isOrderable && (
+                                    <div className="absolute top-0 right-0 bg-gray-600 text-white text-xs px-2 py-1 rounded-bl font-bold">
+                                        REF
+                                    </div>
+                                )}
+                                
+                                {/* Item Name */}
+                                <h3 className={`font-bold text-lg sm:text-xl md:text-2xl leading-tight mb-2 sm:mb-3 ${item.image ? 'text-white drop-shadow-lg' : 'text-white'}`}>
+                                    {item.name}
+                                </h3>
+                                {item.desc && (
+                                    <p className="text-sm text-gray-400 italic mb-2">
+                                        {item.desc}
+                                    </p>
+                                )}
+                                
+                                {/* Single Price Display */}
+                                {!item.isMultiSize && (
+                                    <div className={`mt-auto text-2xl sm:text-3xl font-bold ${item.isOrderable ? 'text-red-500' : 'text-gray-500'}`}>
+                                        ¥{item.priceObj.price.toLocaleString()}
+                                    </div>
+                                )}
+
+                                {/* Multi-Size Price Grid */}
+                                {item.isMultiSize && (
+                                    <div className={`mt-auto grid grid-cols-3 gap-2 ${item.image ? 'bg-black/60 -mx-4 -mb-4 px-4 py-3 rounded-b-xl' : ''}`}>
+                                        {item.priceObj.map((size, sIdx) => (
+                                            <div key={sIdx} className={`text-center rounded-lg py-1.5 sm:py-2 px-0.5 sm:px-1 ${item.image ? 'bg-black/40' : 'bg-zinc-900'}`}>
+                                                <div className="text-gray-300 text-xs font-bold">{size.label_ja || size.label}</div>
+                                                <div className={`text-sm sm:text-base font-bold ${item.isOrderable ? 'text-red-400' : 'text-gray-500'}`}>
+                                                    ¥{size.price.toLocaleString()}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+
+                        {displayItems.length === 0 && (
+                            <div className="col-span-full text-center text-gray-500 py-10 text-2xl">
+                                No items in this category.
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Footer Nav */}
+                    <div className="fixed bottom-0 left-0 right-0 bg-zinc-900 border-t-2 border-zinc-800 p-2 flex justify-around items-center z-30">
+                        <button className="flex flex-col items-center text-red-500 p-1">
+                            <Utensils className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">Menu</span>
+                        </button>
+                        <button onClick={() => setPage('how-to-eat')} className="flex flex-col items-center text-gray-500 p-1 hover:text-white">
+                            <Star className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">Tips</span>
+                        </button>
+                        <button onClick={() => setPage('why-different')} className="flex flex-col items-center text-gray-500 p-1 hover:text-white">
+                            <BookOpen className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">Why?</span>
+                        </button>
+                        <button onClick={() => setPage('faq')} className="flex flex-col items-center text-gray-500 p-1 hover:text-white">
+                            <HelpCircle className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">FAQ</span>
+                        </button>
+                        {lang === 'ja' && (
+                            <button onClick={() => setPage('special')} className="flex flex-col items-center text-yellow-500 p-1 hover:text-yellow-300">
+                                <Star className="w-6 h-6" />
+                                <span className="text-xs font-bold mt-0.5">Special</span>
+                            </button>
+                        )}
+                        {lang === 'ja' && (
+                            <button onClick={() => setPage('recruit')} className="flex flex-col items-center text-gray-500 p-1 hover:text-white">
+                                <Briefcase className="w-6 h-6" />
+                                <span className="text-xs font-bold mt-0.5">求人</span>
+                            </button>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const InfoPage = ({ lang, pageType, onBack, setPage }) => {
+            const common = SITE_DATA.common;
+            const isFaq = pageType === 'faq';
+            const title = isFaq ? common.faq[lang] : common.access[lang];
+            const faqData = SITE_DATA.faq[lang] || SITE_DATA.faq['en'];
+
+            return (
+                <div className="min-h-screen bg-zinc-900 pb-32 fade-in">
+                    <div className="bg-zinc-800 p-4 sticky top-0 z-10 shadow-lg border-b border-zinc-700 flex items-center">
+                         <button onClick={() => setPage('menu')} className="mr-4 text-gray-400">
+                             <ArrowLeft className="w-8 h-8" />
+                         </button>
+                        <h2 className="font-bold text-white text-3xl">{title}</h2>
+                    </div>
+
+                    <div className="p-6 max-w-2xl mx-auto">
+                        {isFaq ? (
+                            <div className="space-y-6">
+                                {faqData.map((item, i) => (
+                                    <div key={i} className="bg-zinc-800 rounded-xl p-6 border-2 border-zinc-700">
+                                        <h3 className="text-red-400 font-bold text-xl mb-3">Q. {item.q}</h3>
+                                        <p className="text-white text-2xl leading-relaxed">A. {item.a}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="space-y-8 text-center">
+                                <div className="bg-red-600 text-white p-8 rounded-xl font-bold text-4xl shadow-lg">
+                                    {common.cash_only[lang]}
+                                </div>
+                                <div className="bg-zinc-800 p-8 rounded-xl border-2 border-zinc-700 space-y-6">
+                                    <div className="flex items-center justify-center space-x-3 text-gray-300 text-2xl">
+                                        <Clock className="w-8 h-8" />
+                                        <span>11:00 - 23:00 (L.O. 22:30)</span>
+                                    </div>
+                                    <div className="flex items-center justify-center space-x-3 text-gray-300 text-2xl">
+                                        <MapPin className="w-8 h-8" />
+                                        <span>Osaka, Naniwa Ward</span>
+                                    </div>
+                                </div>
+                                <div className="text-lg text-gray-500 mt-6">
+                                    Last Updated: {SITE_DATA.meta.last_updated}
+                                    <br/>
+                                    {SITE_DATA.meta.price_note[lang]}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                     {/* Footer Nav */}
+                    <div className="fixed bottom-0 left-0 right-0 bg-zinc-900 border-t-2 border-zinc-800 p-2 flex justify-around items-center z-30">
+                        <button onClick={() => setPage('menu')} className="flex flex-col items-center text-gray-500 p-1 hover:text-white">
+                            <Utensils className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">Menu</span>
+                        </button>
+                        <button onClick={() => setPage('how-to-eat')} className="flex flex-col items-center text-gray-500 p-1 hover:text-white">
+                            <Star className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">Tips</span>
+                        </button>
+                        <button onClick={() => setPage('why-different')} className="flex flex-col items-center text-gray-500 p-1 hover:text-white">
+                            <BookOpen className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">Why?</span>
+                        </button>
+                        <button onClick={() => setPage('faq')} className={`flex flex-col items-center p-1 ${pageType === 'faq' ? 'text-red-500' : 'text-gray-500 hover:text-white'}`}>
+                            <HelpCircle className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">FAQ</span>
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        // ■■■ Why Different Page Component ■■■
+        const WhyDifferentPage = ({ lang, setPage }) => {
+            const content = SITE_DATA.why_different[lang];
+            const common = SITE_DATA.common;
+            
+            const getIcon = (iconName) => {
+                switch(iconName) {
+                    case 'layers': return <Layers className="w-8 h-8" />;
+                    case 'clock': return <Clock className="w-8 h-8" />;
+                    case 'message-circle': return <MessageCircle className="w-8 h-8" />;
+                    case 'check-circle': return <CheckCircle className="w-8 h-8" />;
+                    default: return <Info className="w-8 h-8" />;
+                }
+            };
+
+            const renderText = (text) => {
+                // Simple markdown bold (**text**) rendering
+                return text.split(/\*\*(.*?)\*\*/g).map((part, i) => 
+                    i % 2 === 1 ? <strong key={i} className="text-red-400">{part}</strong> : part
+                );
+            };
+
+            return (
+                <div className="min-h-screen bg-zinc-900 pb-32 fade-in">
+                    {/* Header */}
+                    <div className="bg-zinc-800 p-4 sticky top-0 z-10 shadow-lg border-b border-zinc-700 flex items-center">
+                        <button onClick={() => setPage('menu')} className="mr-4 text-gray-400">
+                            <ArrowLeft className="w-8 h-8" />
+                        </button>
+                        <h2 className="font-bold text-white text-xl truncate">{common.why_different[lang]}</h2>
+                    </div>
+
+                    <div className="p-4 max-w-2xl mx-auto">
+                        {/* Hero Section */}
+                        <div className="bg-gradient-to-br from-red-900 to-zinc-800 rounded-2xl p-6 mb-6 border-2 border-red-700">
+                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">
+                                {content.title}
+                            </h1>
+                            {content.subtitle && (
+                                <p className="text-red-300 text-lg mb-4">{content.subtitle}</p>
+                            )}
+                            
+                            {/* Summary */}
+                            <div className="space-y-3 mb-6">
+                                {content.summary.map((line, i) => (
+                                    <p key={i} className="text-gray-200 text-lg leading-relaxed">
+                                        {renderText(line)}
+                                    </p>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Key Facts */}
+                        <div className="mb-6">
+                            <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                                <AlertTriangle className="w-6 h-6 text-yellow-500 mr-2" />
+                                {content.key_facts.title}
+                            </h3>
+                            <div className="grid grid-cols-3 gap-3">
+                                {content.key_facts.items.map((fact, i) => (
+                                    <div key={i} className="bg-zinc-800 rounded-xl p-4 text-center border-2 border-zinc-700">
+                                        <div className="text-3xl font-bold text-red-500">{fact.number}</div>
+                                        <div className="text-sm text-gray-400 font-bold">{fact.unit}</div>
+                                        <div className="text-xs text-gray-500 mt-1">{fact.desc}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Detail Sections */}
+                        <div className="space-y-4 mb-8">
+                            {content.sections.map((section, i) => (
+                                <div key={i} className="bg-zinc-800 rounded-xl p-5 border-l-4 border-red-600">
+                                    <div className="flex items-center mb-3">
+                                        <div className="text-red-500 mr-3">
+                                            {getIcon(section.icon)}
+                                        </div>
+                                        <h4 className="text-xl font-bold text-white">{section.title}</h4>
+                                    </div>
+                                    <p className="text-gray-300 leading-relaxed">{section.content}</p>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* CTA Buttons */}
+                        <div className="space-y-4">
+                            <button 
+                                onClick={() => setPage('menu')}
+                                className="w-full py-5 bg-red-600 text-white font-bold text-xl rounded-xl hover:bg-red-700 transition shadow-lg"
+                            >
+                                {content.cta_order}
+                            </button>
+                            <button 
+                                onClick={() => setPage('faq')}
+                                className="w-full py-4 border-2 border-gray-600 text-gray-300 font-bold text-lg rounded-xl hover:border-white hover:text-white transition"
+                            >
+                                {content.cta_faq}
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Footer Nav */}
+                    <div className="fixed bottom-0 left-0 right-0 bg-zinc-900 border-t-2 border-zinc-800 p-2 flex justify-around items-center z-30">
+                        <button onClick={() => setPage('menu')} className="flex flex-col items-center text-gray-500 p-1 hover:text-white">
+                            <Utensils className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">Menu</span>
+                        </button>
+                        <button onClick={() => setPage('how-to-eat')} className="flex flex-col items-center text-gray-500 p-1 hover:text-white">
+                            <Star className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">Tips</span>
+                        </button>
+                        <button onClick={() => setPage('why-different')} className="flex flex-col items-center text-red-500 p-1">
+                            <BookOpen className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">Why?</span>
+                        </button>
+                        <button onClick={() => setPage('faq')} className="flex flex-col items-center text-gray-500 p-1 hover:text-white">
+                            <HelpCircle className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">FAQ</span>
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        // ■■■ How to Eat Page Component ■■■
+        const HowToEatPage = ({ lang, setPage }) => {
+            const content = SITE_DATA.how_to_eat[lang];
+            const common = SITE_DATA.common;
+            
+            const getSectionIcon = (iconName) => {
+                switch(iconName) {
+                    case 'utensils': return <Utensils className="w-7 h-7" />;
+                    case 'star': return <Star className="w-7 h-7" />;
+                    case 'infinity': return <InfinityIcon className="w-7 h-7" />;
+                    default: return <Utensils className="w-7 h-7" />;
+                }
+            };
+
+            return (
+                <div className="min-h-screen bg-zinc-900 pb-32 fade-in">
+                    {/* Header */}
+                    <div className="bg-zinc-800 p-4 sticky top-0 z-10 shadow-lg border-b border-zinc-700 flex items-center">
+                        <button onClick={() => setPage('menu')} className="mr-4 text-gray-400">
+                            <ArrowLeft className="w-8 h-8" />
+                        </button>
+                        <h2 className="font-bold text-white text-xl truncate">{common.how_to_eat[lang]}</h2>
+                    </div>
+
+                    <div className="p-4 max-w-2xl mx-auto">
+                        {/* Hero Section */}
+                        <div className="bg-gradient-to-br from-yellow-900 to-zinc-800 rounded-2xl p-6 mb-6 border-2 border-yellow-700">
+                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">
+                                {content.title}
+                            </h1>
+                            <p className="text-yellow-300 text-lg mb-2">{content.subtitle}</p>
+                            <p className="text-gray-300">{content.intro}</p>
+                        </div>
+
+                        {/* Sections */}
+                        <div className="space-y-6">
+                            {content.sections.map((section, idx) => (
+                                <div key={idx} className="bg-zinc-800 rounded-xl p-5 border-l-4 border-yellow-500">
+                                    <div className="flex items-center mb-4">
+                                        <div className="text-yellow-500 mr-3">
+                                            {getSectionIcon(section.icon)}
+                                        </div>
+                                        <h3 className="text-xl font-bold text-white">{section.title}</h3>
+                                    </div>
+                                    
+                                    {/* Condiments List */}
+                                    {section.items && (
+                                        <div className="grid grid-cols-2 gap-3">
+                                            {section.items.map((item, i) => (
+                                                <div key={i} className="bg-zinc-900 rounded-lg p-3">
+                                                    <div className="font-bold text-yellow-400 text-sm">{item.name}</div>
+                                                    <div className="text-gray-400 text-xs mt-1">{item.desc}</div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                    
+                                    {/* Tips List */}
+                                    {section.tips && (
+                                        <ul className="space-y-2">
+                                            {section.tips.map((tip, i) => (
+                                                <li key={i} className="flex items-start text-gray-300">
+                                                    <span className="text-yellow-500 mr-2 font-bold">{i + 1}.</span>
+                                                    {tip}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                    
+                                    {/* Content Block */}
+                                    {section.content && (
+                                        <p className="text-gray-300 leading-relaxed">{section.content}</p>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Warning */}
+                        <div className="mt-6 bg-red-900/50 border-2 border-red-700 rounded-xl p-4 flex items-start">
+                            <AlertTriangle className="w-6 h-6 text-red-400 mr-3 flex-shrink-0 mt-1" />
+                            <p className="text-red-200 font-bold">{content.warning}</p>
+                        </div>
+
+                        {/* CTA */}
+                        <button 
+                            onClick={() => setPage('menu')}
+                            className="w-full mt-6 py-5 bg-yellow-600 text-white font-bold text-xl rounded-xl hover:bg-yellow-700 transition shadow-lg"
+                        >
+                            {content.cta_menu}
+                        </button>
+                    </div>
+
+                    {/* Footer Nav */}
+                    <div className="fixed bottom-0 left-0 right-0 bg-zinc-900 border-t-2 border-zinc-800 p-2 flex justify-around items-center z-30">
+                        <button onClick={() => setPage('menu')} className="flex flex-col items-center text-gray-500 p-1 hover:text-white">
+                            <Utensils className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">Menu</span>
+                        </button>
+                        <button onClick={() => setPage('how-to-eat')} className="flex flex-col items-center text-yellow-500 p-1">
+                            <Star className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">Tips</span>
+                        </button>
+                        <button onClick={() => setPage('why-different')} className="flex flex-col items-center text-gray-500 p-1 hover:text-white">
+                            <BookOpen className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">Why?</span>
+                        </button>
+                        <button onClick={() => setPage('faq')} className="flex flex-col items-center text-gray-500 p-1 hover:text-white">
+                            <HelpCircle className="w-6 h-6" />
+                            <span className="text-xs font-bold mt-0.5">FAQ</span>
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        // Specialページ（日本語のみ）- 美味しい召し上がり方
+        const SpecialPage = ({ setPage }) => {
+            return (
+                <div className="min-h-screen bg-zinc-900 pb-32 fade-in">
+                    {/* Header */}
+                    <div className="bg-zinc-800 p-4 sticky top-0 z-10 shadow-lg border-b border-zinc-700 flex items-center">
+                        <button onClick={() => setPage('menu')} className="mr-4 text-gray-400">
+                            <ArrowLeft className="w-8 h-8" />
+                        </button>
+                        <h2 className="text-2xl font-bold text-white">Special</h2>
+                    </div>
+
+                    <div className="p-4 space-y-6">
+                        {/* Hero Section */}
+                        <div className="bg-gradient-to-br from-yellow-600 to-orange-600 rounded-2xl p-6 text-center">
+                            <h1 className="text-3xl font-bold text-white mb-2">美味しい召し上がり方</h1>
+                            <p className="text-white/90 text-lg">当店おすすめ</p>
+                        </div>
+
+                        {/* お客様へ */}
+                        <div className="bg-zinc-800 rounded-xl p-5 border-l-4 border-yellow-500">
+                            <h3 className="text-xl font-bold text-yellow-400 mb-3">お客様へ</h3>
+                            <p className="text-gray-300 leading-relaxed">
+                                当店での「おいしいラーメンの召し上がり方」をご紹介します。<br/>
+                                まずは一杯の<span className="text-yellow-400 font-bold">"パンチ"</span>を楽しみつつ、途中から卓上調味料で自分好みに仕上げてください。
+                            </p>
+                        </div>
+
+                        {/* 味変の目安 */}
+                        <div className="bg-zinc-800 rounded-xl p-5 border-2 border-orange-500">
+                            <div className="flex items-center mb-4">
+                                <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mr-3">
+                                    <Star className="w-6 h-6 text-white" />
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-bold text-orange-400">当店おすすめ：味変の目安</h3>
+                                    <p className="text-orange-300 text-sm">まずはこの配合</p>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-3 mb-4">
+                                <div className="bg-zinc-900 rounded-lg p-3 text-center">
+                                    <div className="text-gray-400 text-sm">コショウ</div>
+                                    <div className="text-white font-bold text-lg">少々</div>
+                                </div>
+                                <div className="bg-zinc-900 rounded-lg p-3 text-center">
+                                    <div className="text-gray-400 text-sm">ニンニク</div>
+                                    <div className="text-white font-bold text-lg">1/2</div>
+                                </div>
+                                <div className="bg-zinc-900 rounded-lg p-3 text-center">
+                                    <div className="text-gray-400 text-sm">カラシみそ</div>
+                                    <div className="text-white font-bold text-lg">1/2</div>
+                                </div>
+                                <div className="bg-zinc-900 rounded-lg p-3 text-center">
+                                    <div className="text-gray-400 text-sm">生姜</div>
+                                    <div className="text-white font-bold text-lg">1/2</div>
+                                </div>
+                                <div className="bg-zinc-900 rounded-lg p-3 text-center col-span-2">
+                                    <div className="text-gray-400 text-sm">酢</div>
+                                    <div className="text-white font-bold text-lg">少々</div>
+                                </div>
+                            </div>
+                            <p className="text-gray-500 text-sm">※分量はあくまで目安です。最初は少なめから、好みに合わせて調整してください。</p>
+                        </div>
+
+                        {/* お好み */}
+                        <div className="bg-zinc-800 rounded-xl p-5 border-2 border-red-500">
+                            <h3 className="text-xl font-bold text-red-400 mb-4">お好み（注文時に調整できます）</h3>
+                            <div className="space-y-3">
+                                <div className="flex items-center justify-between bg-zinc-900 rounded-lg p-3">
+                                    <span className="text-gray-300">麺のかたさ</span>
+                                    <span className="text-white font-bold">かため・ふつうめ・やわらかめ</span>
+                                </div>
+                                <div className="flex items-center justify-between bg-zinc-900 rounded-lg p-3">
+                                    <span className="text-gray-300">味（醤油）の濃さ</span>
+                                    <span className="text-white font-bold">うす口・ふつうめ・濃い口</span>
+                                </div>
+                                <div className="flex items-center justify-between bg-zinc-900 rounded-lg p-3">
+                                    <span className="text-gray-300">油の量</span>
+                                    <span className="text-white font-bold">多め・ふつうめ・少なめ</span>
+                                </div>
+                            </div>
+                            <p className="text-gray-400 text-sm mt-3">
+                                ※味（醤油）の「濃い／薄い」は、いつでも調整できます。必要な場合は呼び出しボタンを押してください。
+                            </p>
+                        </div>
+
+                        {/* ラーメン：食べ方極意 */}
+                        <div className="bg-gradient-to-br from-red-900 to-red-700 rounded-xl p-5">
+                            <h3 className="text-2xl font-bold text-white mb-4 flex items-center">
+                                <Soup className="w-8 h-8 mr-2" />
+                                ラーメン：食べ方極意
+                            </h3>
+                            
+                            <div className="space-y-4">
+                                <div className="bg-black/30 rounded-lg p-4">
+                                    <div className="flex items-center mb-2">
+                                        <span className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold mr-2">①</span>
+                                        <h4 className="text-lg font-bold text-yellow-400">家系スープを堪能せよ</h4>
+                                    </div>
+                                    <p className="text-white/90 text-sm leading-relaxed">
+                                        「豚骨＆鶏骨」の旨味成分を活かした、<span className="text-yellow-300 font-bold">三層（鶏油層＆乳化層＆醤油層）</span>の濃密スープ。<br/>
+                                        まずはスープを味わいながら、半分ほど食べ進めるのがおすすめです。
+                                    </p>
+                                </div>
+                                
+                                <div className="bg-black/30 rounded-lg p-4">
+                                    <div className="flex items-center mb-2">
+                                        <span className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold mr-2">②</span>
+                                        <h4 className="text-lg font-bold text-yellow-400">「刻みしょうが」＆ 卓上調味料を使う</h4>
+                                    </div>
+                                    <p className="text-white/90 text-sm leading-relaxed">
+                                        刻みしょうがと一緒に食べると、パンチのある家系ラーメンがサッパリと食べられます。<br/>
+                                        卓上調味料も使って、自分好みにアレンジするのもおすすめです。
+                                    </p>
+                                </div>
+                                
+                                <div className="bg-black/30 rounded-lg p-4">
+                                    <div className="flex items-center mb-2">
+                                        <span className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold mr-2">③</span>
+                                        <h4 className="text-lg font-bold text-yellow-400">ラーメン酢で〆（しめ）</h4>
+                                    </div>
+                                    <p className="text-white/90 text-sm leading-relaxed">
+                                        ラーメン酢は、パンチの強い家系スープのコクを最大限に引き立てます。<br/>
+                                        まろやかでスッキリに変化するスープを、最後まで味わってください。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* ご飯：食べ方極意 */}
+                        <div className="bg-gradient-to-br from-amber-800 to-yellow-700 rounded-xl p-5">
+                            <h3 className="text-2xl font-bold text-white mb-4 flex items-center">
+                                <Utensils className="w-8 h-8 mr-2" />
+                                ご飯：食べ方極意
+                            </h3>
+                            
+                            <div className="space-y-4">
+                                <div className="bg-black/30 rounded-lg p-4">
+                                    <div className="flex items-center mb-2">
+                                        <span className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black font-bold mr-2">①</span>
+                                        <h4 className="text-lg font-bold text-white">「無限にんにく」鉄板必須</h4>
+                                    </div>
+                                    <ul className="text-white/90 text-sm space-y-1">
+                                        <li>• 適量のせて食す（素材を楽しむ）</li>
+                                        <li>• <span className="text-yellow-300 font-bold">マヨネーズをかけて食す（鉄板）!!</span></li>
+                                    </ul>
+                                </div>
+                                
+                                <div className="bg-black/30 rounded-lg p-4">
+                                    <div className="flex items-center mb-2">
+                                        <span className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black font-bold mr-2">②</span>
+                                        <h4 className="text-lg font-bold text-white">「刻みしょうが」おすすめ</h4>
+                                    </div>
+                                    <ul className="text-white/90 text-sm space-y-1">
+                                        <li>• 適量のせて食す</li>
+                                        <li>• お好みでマヨネーズを少量かけて食べるのもおすすめです。</li>
+                                    </ul>
+                                </div>
+                                
+                                <div className="bg-black/30 rounded-lg p-4">
+                                    <div className="flex items-center mb-2">
+                                        <span className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black font-bold mr-2">③</span>
+                                        <h4 className="text-lg font-bold text-white">「通＆マニア」食べ方</h4>
+                                    </div>
+                                    <ul className="text-white/90 text-sm space-y-1">
+                                        <li>• 家系スープをしみこませた海苔を巻いて食す。</li>
+                                        <li>• <span className="text-yellow-300 font-bold">「無限メシマヨ」</span>をお好みで海苔を巻いて食す。</li>
+                                        <li>• <span className="text-yellow-300 font-bold">「うすぎり豚」</span>を家系スープにしみこませ、巻いて食す。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 補足 */}
+                        <div className="bg-zinc-800 rounded-xl p-5 border-2 border-zinc-600">
+                            <h3 className="text-xl font-bold text-white mb-4">補足（この店の味変ポイント）</h3>
+                            <div className="space-y-3">
+                                <div className="flex items-start">
+                                    <span className="text-yellow-400 font-bold w-28 shrink-0">ラーメン酢</span>
+                                    <span className="text-gray-300">パンチの強い家系ラーメンのコクを引き立てる</span>
+                                </div>
+                                <div className="flex items-start">
+                                    <span className="text-yellow-400 font-bold w-28 shrink-0">きざみ生姜</span>
+                                    <span className="text-gray-300">パンチのある家系らーめんがスッキリ食べられる</span>
+                                </div>
+                                <div className="flex items-start">
+                                    <span className="text-yellow-400 font-bold w-28 shrink-0">ライス</span>
+                                    <span className="text-gray-300">食感の良いきざみ生姜を入れてお召し上がりください</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 戻るボタン */}
+                        <button 
+                            onClick={() => setPage('menu')}
+                            className="w-full py-4 bg-zinc-700 text-white font-bold text-lg rounded-xl hover:bg-zinc-600 transition"
+                        >
+                            メニューに戻る
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        // 求人ページ（日本語のみ）
+        const RecruitPage = ({ setPage }) => {
+            return (
+                <div className="min-h-screen bg-zinc-900 pb-32 fade-in">
+                    {/* Header */}
+                    <div className="bg-zinc-800 p-4 sticky top-0 z-10 shadow-lg border-b border-zinc-700 flex items-center">
+                        <button onClick={() => setPage('menu')} className="mr-4 text-gray-400">
+                            <ArrowLeft className="w-8 h-8" />
+                        </button>
+                        <h2 className="text-2xl font-bold text-white">求人情報</h2>
+                    </div>
+
+                    <div className="p-4 space-y-6">
+                        {/* Hero Section */}
+                        <div className="bg-gradient-to-br from-pink-600 to-red-600 rounded-2xl p-6 text-center">
+                            <h1 className="text-3xl font-bold text-white mb-3">スタッフ募集中！</h1>
+                            <p className="text-white/90 text-lg leading-relaxed">
+                                当店では、修業生／正社員／キャストを募集しています。<br/>
+                                あなたのスタイルを大切にしながら、一緒に働ける方を歓迎します。
+                            </p>
+                        </div>
+
+                        {/* 修業生 */}
+                        <div className="bg-zinc-800 rounded-xl p-5 border-2 border-yellow-500">
+                            <div className="flex items-center mb-4">
+                                <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-3">
+                                    <Star className="w-6 h-6 text-white" />
+                                </div>
+                                <div>
+                                    <h3 className="text-2xl font-bold text-yellow-400">修業生</h3>
+                                    <p className="text-yellow-300 text-sm">※修業期間終了後「我道家直系店」として営業可能!!</p>
+                                </div>
+                            </div>
+                            <div className="space-y-2 text-gray-300">
+                                <div className="flex"><span className="text-yellow-400 font-bold w-20">期間</span><span>1年〜3年（最短3ヶ月〜6ヶ月）</span></div>
+                                <div className="flex"><span className="text-yellow-400 font-bold w-20">給料</span><span>15万円〜22万円</span></div>
+                                <div className="flex"><span className="text-yellow-400 font-bold w-20">時間</span><span>応相談</span></div>
+                            </div>
+                        </div>
+
+                        {/* 正社員 */}
+                        <div className="bg-zinc-800 rounded-xl p-5 border-2 border-red-500">
+                            <div className="flex items-center mb-4">
+                                <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mr-3">
+                                    <Users className="w-6 h-6 text-white" />
+                                </div>
+                                <h3 className="text-2xl font-bold text-red-400">正社員</h3>
+                            </div>
+                            <div className="space-y-2 text-gray-300 mb-4">
+                                <div className="flex"><span className="text-red-400 font-bold w-20">経験</span><span>やる気!!</span></div>
+                                <div className="flex"><span className="text-red-400 font-bold w-20">年齢</span><span>制限無し</span></div>
+                                <div className="flex"><span className="text-red-400 font-bold w-20">給料</span><span className="text-xl font-bold text-white">22万円〜50万円以上</span></div>
+                                <div className="flex"><span className="text-red-400 font-bold w-20">時間</span><span>8:00〜24:00の間で実働8時間（時間応相談）</span></div>
+                            </div>
+                            <div className="bg-zinc-900 rounded-lg p-4">
+                                <h4 className="text-red-400 font-bold mb-2">待遇</h4>
+                                <div className="grid grid-cols-2 gap-2 text-sm text-gray-300">
+                                    <div>✓ 週休2日</div>
+                                    <div>✓ 有給あり</div>
+                                    <div>✓ 昇給年3回</div>
+                                    <div>✓ 各種社会保険完備</div>
+                                    <div>✓ GROUP店舗の賄い食べ放題</div>
+                                    <div>✓ 制服支給</div>
+                                    <div>✓ 車・バイク・自転車通勤OK</div>
+                                    <div>✓ 出産・育児休暇実績多数有り</div>
+                                    <div className="col-span-2">✓ お子様行事全休</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* キャスト */}
+                        <div className="bg-zinc-800 rounded-xl p-5 border-2 border-pink-500">
+                            <div className="flex items-center mb-4">
+                                <div className="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center mr-3">
+                                    <Star className="w-6 h-6 text-white" />
+                                </div>
+                                <h3 className="text-2xl font-bold text-pink-400">キャスト（アルバイト）</h3>
+                            </div>
+                            <div className="space-y-2 text-gray-300 mb-4">
+                                <div className="flex"><span className="text-pink-400 font-bold w-20">経験</span><span>やる気!!</span></div>
+                                <div className="flex"><span className="text-pink-400 font-bold w-20">年齢</span><span>18歳〜50歳</span></div>
+                                <div className="flex"><span className="text-pink-400 font-bold w-20">給料</span><span className="text-xl font-bold text-white">時給1200円〜1500円</span><span className="text-sm text-gray-400 ml-2">※研修期間なし</span></div>
+                                <div className="flex"><span className="text-pink-400 font-bold w-20">内容</span><span>盛り付け＆接客＆洗い場</span></div>
+                                <div className="flex"><span className="text-pink-400 font-bold w-20">時間</span><span>9:00〜24:00の間で応相談</span></div>
+                            </div>
+                            <div className="bg-zinc-900 rounded-lg p-4">
+                                <h4 className="text-pink-400 font-bold mb-2">待遇</h4>
+                                <div className="grid grid-cols-2 gap-2 text-sm text-gray-300">
+                                    <div>✓ 昇給年3回</div>
+                                    <div>✓ GROUP店舗の賄い食べ放題</div>
+                                    <div>✓ 制服支給</div>
+                                    <div>✓ 車・バイク・自転車通勤OK!!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* メッセージ */}
+                        <div className="bg-gradient-to-br from-red-700 to-red-500 rounded-xl p-5">
+                            <div className="flex items-center mb-3">
+                                <MessageCircle className="w-8 h-8 text-white mr-2" />
+                                <h3 className="text-xl font-bold text-white">店主からのメッセージ</h3>
+                            </div>
+                            <p className="text-white/95 leading-relaxed">
+                                「自分自身の個性を大切に」をモットーに、髪型＆髪色はモチロン!!<br/>
+                                ネイル＆アクセサリー＆タトゥー等…<span className="font-bold text-yellow-300">何でもOKです!!</span><br/><br/>
+                                賄いを<span className="font-bold">"いつでも＆どこでも"</span>、並ぶ必要なしで食べれます!!
+                            </p>
+                        </div>
+
+                        {/* 応募・お問い合わせ */}
+                        <div className="bg-zinc-800 rounded-xl p-5 border-2 border-zinc-600">
+                            <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                                <Phone className="w-6 h-6 text-green-400 mr-2" />
+                                応募・お問い合わせ
+                            </h3>
+                            <p className="text-gray-300 mb-4">ご応募・ご質問は、下記までお気軽にご連絡ください。</p>
+                            
+                            <div className="space-y-3">
+                                <a 
+                                    href="https://x.com/Iekei_osaka?lang=ja" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="flex items-center bg-black rounded-xl p-4 hover:bg-zinc-700 transition"
+                                >
+                                    <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-3">
+                                        <span className="text-black font-bold text-xl">𝕏</span>
+                                    </div>
+                                    <div>
+                                        <div className="text-white font-bold">X（店主アカウント）</div>
+                                        <div className="text-gray-400 text-sm">※DMでのご連絡も可能です</div>
+                                    </div>
+                                </a>
+                                
+                                <a 
+                                    href="tel:0743-86-4241"
+                                    className="flex items-center bg-green-600 rounded-xl p-4 hover:bg-green-700 transition"
+                                >
+                                    <Phone className="w-10 h-10 text-white mr-3" />
+                                    <div>
+                                        <div className="text-white font-bold text-xl">0743-86-4241</div>
+                                        <div className="text-white/80 text-sm">タップして電話する</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* 戻るボタン */}
+                        <button 
+                            onClick={() => setPage('menu')}
+                            className="w-full py-4 bg-zinc-700 text-white font-bold text-lg rounded-xl hover:bg-zinc-600 transition"
+                        >
+                            メニューに戻る
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [lang, setLang] = useState(null); 
+            const [gatePassed, setGatePassed] = useState(false);
+            const [viewMode, setViewMode] = useState('order'); 
+            const [page, setPage] = useState('menu');
+
+            // JP user: Always Order mode
+            useEffect(() => {
+                if (lang === 'ja') setViewMode('order');
+            }, [lang]);
+
+            const handleBackToLang = () => {
+                setLang(null);
+                setGatePassed(false);
+                setPage('menu');
+                setViewMode('order');
+            };
+
+            const handleGateAccept = (mode) => {
+                setGatePassed(true);
+                setViewMode(mode);
+            };
+
+            if (!lang) {
+                return <LanguageSelector onSelect={setLang} />;
+            }
+
+            if (!gatePassed) {
+                 return <NoticeGate lang={lang} onAccept={handleGateAccept} onBack={handleBackToLang} />;
+            }
+
+            if (page === 'menu') {
+                return <MenuPage lang={lang} viewMode={viewMode} setViewMode={setViewMode} onBack={handleBackToLang} setPage={setPage} />;
+            }
+
+            if (page === 'why-different') {
+                return <WhyDifferentPage lang={lang} setPage={setPage} />;
+            }
+
+            if (page === 'how-to-eat') {
+                return <HowToEatPage lang={lang} setPage={setPage} />;
+            }
+
+            if (page === 'recruit') {
+                return <RecruitPage setPage={setPage} />;
+            }
+
+            if (page === 'special') {
+                return <SpecialPage setPage={setPage} />;
+            }
+
+            return <InfoPage lang={lang} pageType={page} onBack={handleBackToLang} setPage={setPage} />;
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
