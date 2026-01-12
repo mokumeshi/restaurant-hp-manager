@@ -168,7 +168,7 @@
       line-height: 2;
       color: var(--sumi);
       background: var(--kinari);
-      -webkit-font-smoothing: antialiased;
+            -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
       min-height: 100vh;
@@ -728,8 +728,17 @@
             width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 35%;
+      object-position: center center;
       transition: transform 1.2s var(--ease);
+    }
+
+    /* スマホでは料理全体が見えるように */
+    @media (max-width: 768px) {
+      .intro-kake-img img {
+        object-fit: contain;
+        object-position: center center;
+        background: #1A1816;
+      }
     }
 
     .intro-kake-main:hover .intro-kake-img img {
@@ -953,7 +962,9 @@
         min-height: auto;
       }
       .intro-kake-img {
-        height: 360px;
+        height: auto;
+        min-height: 280px;
+        aspect-ratio: 4/3;
       }
       .intro-kake-img::after {
         /* スマホでは黒いオーバーレイを消す */
@@ -1014,7 +1025,9 @@
         border-radius: 6px;
       }
       .intro-kake-img {
-        height: 250px;
+        height: auto;
+        min-height: 240px;
+        aspect-ratio: 4/3;
       }
       .intro-kake-content {
         padding: var(--space-lg) var(--space-md);
@@ -1158,9 +1171,9 @@
     .btn span {
       position: relative;
       z-index: 1;
-    }
+        }
 
-    .btn:hover {
+        .btn:hover {
       color: var(--shiro);
     }
 
@@ -1209,7 +1222,7 @@
 
     /* 和風セクションヘッダー */
     .section-header {
-      text-align: center;
+            text-align: center;
       margin-bottom: var(--space-xl);
       position: relative;
     }
@@ -1351,7 +1364,7 @@
     }
 
     .menu-cta {
-      text-align: center;
+            text-align: center;
       margin-top: var(--space-xl);
     }
 
@@ -1564,7 +1577,7 @@
       height: 56px;
       background: var(--matcha);
       color: var(--shiro);
-      border-radius: 50%;
+            border-radius: 50%;
       font-size: 26px;
       font-weight: 700;
       box-shadow: 0 4px 16px rgba(74,124,74,0.4);
@@ -1698,7 +1711,7 @@
 
     .access-photo img {
       position: relative;
-      width: 100%;
+            width: 100%;
       aspect-ratio: 4/3;
       object-fit: cover;
       box-shadow: var(--shadow-medium);
@@ -1771,9 +1784,9 @@
     }
 
     .access-interior img {
-      width: 100%;
-      height: auto;
-      display: block;
+            width: 100%;
+            height: auto;
+            display: block;
     }
 
     .access-interior-caption {
@@ -1819,7 +1832,7 @@
       background: var(--sumi);
       color: var(--shiro);
       padding: var(--space-xl) var(--space-lg);
-      text-align: center;
+            text-align: center;
     }
 
     .footer-logo {
@@ -1870,7 +1883,7 @@
     }
 
     .share-label {
-      display: block;
+                display: block;
       font-size: 12px;
       color: rgba(255,255,255,0.5);
       margin-bottom: 16px;
@@ -2095,8 +2108,8 @@
       }
 
       .access-label {
-        width: 100%;
-      }
+                width: 100%;
+            }
 
       .intro-text {
         font-size: 14px;
@@ -2263,7 +2276,7 @@
 
       .menu-modal-item {
         font-size: 16px;
-        padding: 12px 0;
+                padding: 12px 0;
       }
     }
 
@@ -2482,6 +2495,14 @@
         border-color: rgba(196, 148, 74, 0.3);
       }
 
+      .intro-kake-img {
+        background: #1A1816;
+      }
+
+      .intro-kake-img img {
+        background: #1A1816;
+      }
+
       .section {
         background: #0D0D0C;
       }
@@ -2524,12 +2545,12 @@
         background: rgba(26, 24, 22, 0.9);
       }
 
-      .info-table th {
+            .info-table th {
         color: #8A857D;
         border-color: rgba(196, 148, 74, 0.15);
-      }
+            }
 
-      .info-table td {
+            .info-table td {
         color: #E8E4DC;
         border-color: rgba(196, 148, 74, 0.15);
       }
@@ -2540,7 +2561,34 @@
 
       /* ボタン */
       .btn {
-        background: linear-gradient(145deg, #C4944A, #A67B3D);
+        background: transparent;
+        border-color: #C4944A;
+        color: #C4944A;
+      }
+
+      .btn:hover {
+        background: #C4944A;
+        color: #1A1816;
+      }
+
+      .btn-fill {
+        background: linear-gradient(145deg, #C4944A, #A67B3D) !important;
+        border-color: #C4944A !important;
+        color: #1A1816 !important;
+      }
+
+      .btn-fill:hover {
+        background: linear-gradient(145deg, #D4A45A, #B68B4D) !important;
+      }
+
+      .access-cta .btn-fill {
+        background: linear-gradient(145deg, #C4944A, #A67B3D) !important;
+        color: #1A1816 !important;
+      }
+
+      .mobile-cta .btn-fill {
+        background: linear-gradient(145deg, #C4944A, #A67B3D) !important;
+        color: #1A1816 !important;
       }
 
       .btn-outline {
@@ -2565,8 +2613,8 @@
       /* ローディング */
       .loader-overlay {
         background: #0D0D0C;
-      }
-    }
+            }
+        }
     </style>
 </head>
 
@@ -2870,13 +2918,12 @@
 
             <div class="access-map">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3245.5!2d139.6891!3d35.5686!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z44Gd44Gw44O744GG44Gp44KTIOOBvuOCi-e-jg!5e0!3m2!1sja!2sjp!4v1600000000000"
+                src="https://maps.google.com/maps?q=東京都大田区多摩川1-2-23&t=m&z=17&output=embed&iwloc=near"
                 width="100%" 
                 height="250" 
                 style="border:0; border-radius: 8px;" 
                 allowfullscreen="" 
                 loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade"
                 title="そば・うどん まる美 地図">
               </iframe>
             </div>
@@ -2919,7 +2966,7 @@
     </div>
     
     <p class="footer-copy">&copy; 2026 そば・うどん まる美</p>
-  </footer>
+        </footer>
 
   <!-- MOBILE CTA -->
   <div class="mobile-cta">
