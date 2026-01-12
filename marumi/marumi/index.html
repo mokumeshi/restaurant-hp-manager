@@ -1,0 +1,3015 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  
+  <!-- Google Analytics -->
+  <!-- 
+    ★ Googleアナリティクス設定方法 ★
+    1. https://analytics.google.com/ にアクセス
+    2. アカウント作成 → プロパティ作成
+    3. 「G-XXXXXXXXXX」形式の測定IDを取得
+    4. 下記の「G-XXXXXXXXXX」を置き換え
+    5. コメントアウトを外して有効化
+  -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>そば・うどん まる美｜大田区・矢口渡｜茹でたて自家製麺</title>
+  <meta name="description" content="大田区・矢口渡駅徒歩2分。茹でたて自家製麺のそば・うどん。かけ250円から。昭和の価格で、沁みる一杯。" />
+
+  <!-- OGP (SNSシェア用) -->
+  <meta property="og:title" content="そば・うどん まる美｜茹でたて自家製麺" />
+  <meta property="og:description" content="大田区・矢口渡駅徒歩2分。茹でたて自家製麺のそば・うどん。かけ250円から。昭和の価格で、沁みる一杯。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="そば・うどん まる美" />
+  <meta property="og:image" content="image/marubi-entrance-noren.jpg.png" />
+  <meta property="og:locale" content="ja_JP" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="そば・うどん まる美｜茹でたて自家製麺" />
+  <meta name="twitter:description" content="大田区・矢口渡駅徒歩2分。茹でたて自家製麺のそば・うどん。かけ250円から。" />
+  <meta name="twitter:image" content="image/marubi-entrance-noren.jpg.png" />
+
+  <!-- ファビコン -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='none' stroke='%232F5D3A' stroke-width='6'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='%232F5D3A' font-family='serif'>美</text></svg>" />
+  <link rel="apple-touch-icon" href="image/marubi-entrance-noren.jpg.png" />
+  
+  <!-- PWA対応 -->
+  <link rel="manifest" href="manifest.json" />
+  
+  <!-- 多言語対応 -->
+  <link rel="alternate" hreflang="ja" href="index.html" />
+  <link rel="alternate" hreflang="en" href="en.html" />
+  <link rel="alternate" hreflang="x-default" href="index.html" />
+
+  <!-- テーマカラー -->
+  <meta name="theme-color" content="#2F5D3A" />
+
+  <!-- 構造化データ (Google検索リッチリザルト用) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "そば・うどん まる美",
+    "image": "image/marubi-entrance-noren.jpg.png",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "多摩川1-2-23",
+      "addressLocality": "大田区",
+      "addressRegion": "東京都",
+      "postalCode": "146-0093",
+      "addressCountry": "JP"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 35.5686,
+      "longitude": 139.6891
+    },
+    "url": "https://marubi.example.com",
+    "telephone": "",
+    "servesCuisine": ["そば", "うどん", "日本料理"],
+    "priceRange": "¥",
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "11:00",
+      "closes": "15:00"
+    },
+    "menu": "お品書き",
+    "acceptsReservations": "False",
+    "paymentAccepted": "現金のみ",
+    "currenciesAccepted": "JPY"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Shippori+Mincho+B1:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+    /* ================================================================
+       まる美 - Professional Grade Design System
+       Inspired by traditional Japanese aesthetics
+       ================================================================ */
+    
+    :root {
+      /* 和の色彩 */
+      --sumi: #1A1816;          /* 墨色 */
+      --ro: #0D0D0C;            /* 黒 */
+      --hai: #4A4640;           /* 灰色 */
+      --nezumi: #7A756D;        /* 鼠色 */
+      --gin: #B5B0A8;           /* 銀鼠 */
+      --shiro: #FFFFFF;         /* 白 */
+      --kinari: #FAF8F5;        /* 生成り */
+      --kinu: #F5F2ED;          /* 絹色 */
+      --suna: #EBE6DE;          /* 砂色 */
+      
+      /* アクセント */
+      --kitsune: #C4944A;       /* 狐色 - ゴールド */
+      --kogecha: #A67B3D;       /* 焦茶 */
+      --matcha: #4A7C4A;        /* 抹茶色 */
+      --wakakusa: #7CB77C;      /* 若草色 */
+      --shu: #C4884A;           /* 朱色 - オレンジ */
+
+      /* Typography */
+      --font-mincho: "Shippori Mincho B1", "游明朝", "YuMincho", "Hiragino Mincho ProN", serif;
+      --font-gothic: "Zen Kaku Gothic New", "Noto Sans JP", "Hiragino Sans", sans-serif;
+      
+      /* Spacing */
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 48px;
+      --space-xl: 80px;
+      --space-2xl: 120px;
+
+      /* Effects */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-out: cubic-bezier(0, 0, 0.2, 1);
+      --shadow-soft: 0 4px 20px rgba(26,24,22,0.08);
+      --shadow-medium: 0 8px 40px rgba(26,24,22,0.12);
+      --shadow-deep: 0 20px 60px rgba(26,24,22,0.16);
+    }
+
+    /* ================================================================
+       BASE RESET & DEFAULTS
+       ================================================================ */
+    *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+      box-sizing: border-box;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      scroll-padding-top: 180px;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: var(--font-gothic);
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 2;
+      color: var(--sumi);
+      background: var(--kinari);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+
+    /* 和紙テクスチャの背景 */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(196,148,74,0.03) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(74,124,74,0.02) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ================================================================
+       TYPOGRAPHY - 美しい文字組み
+       ================================================================ */
+    h1, h2, h3, h4 {
+      font-family: var(--font-mincho);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      line-height: 1.6;
+    }
+
+    .vertical-text {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+
+    /* ================================================================
+       HEADER - 格式高いヘッダー
+       ================================================================ */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--shiro);
+      transition: all 0.4s var(--ease);
+    }
+
+    .header.scrolled {
+      box-shadow: var(--shadow-soft);
+    }
+
+    .header-inner {
+      max-width: 1400px;
+            margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+
+    /* ヘッダートップ - ロゴエリア */
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 150px;
+      border-bottom: 1px solid var(--suna);
+      position: relative;
+    }
+
+    /* 看板風ロゴ */
+    /* 暖簾アニメーション */
+    @keyframes norenDrop {
+      0% {
+        opacity: 0;
+        transform: translateY(-30px) rotateX(40deg);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(5px) rotateX(-5deg);
+      }
+      80% {
+        transform: translateY(-2px) rotateX(3deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg);
+      }
+    }
+
+    @keyframes norenSwing {
+      0%, 100% {
+        transform: rotateZ(0deg);
+      }
+      25% {
+        transform: rotateZ(1deg);
+      }
+      75% {
+        transform: rotateZ(-1deg);
+      }
+    }
+
+    @keyframes fadeSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      text-decoration: none;
+      perspective: 800px;
+    }
+
+    .logo-symbol {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      animation: norenDrop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      transform-origin: top center;
+    }
+
+    .logo-symbol:hover {
+      animation: norenSwing 2s ease-in-out infinite;
+    }
+
+    .logo-circle {
+      width: 88px;
+      height: 88px;
+      border: 3.5px solid var(--matcha);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mincho);
+      font-size: 44px;
+      font-weight: 700;
+      color: var(--matcha);
+      transition: all 0.3s var(--ease);
+      box-shadow: 0 4px 16px rgba(74,124,74,0.15);
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(250,248,245,0.9));
+    }
+
+    .logo:hover .logo-circle {
+      background: var(--matcha);
+      color: var(--shiro);
+      box-shadow: 0 6px 24px rgba(74,124,74,0.3);
+      transform: scale(1.05);
+    }
+
+    .logo-badge {
+      font-family: var(--font-mincho);
+      font-size: 15px;
+            font-weight: 600;
+      color: var(--shu);
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.4;
+    }
+
+    .logo-kicker {
+      font-family: var(--font-mincho);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--hai);
+      letter-spacing: 0.2em;
+      opacity: 0;
+      animation: fadeSlideIn 0.6s ease-out 0.3s forwards;
+    }
+
+    .logo-title {
+      font-family: var(--font-mincho);
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--sumi);
+      letter-spacing: 0.12em;
+      opacity: 0;
+      animation: fadeSlideIn 0.6s ease-out 0.4s forwards;
+    }
+
+    .logo-sub {
+      font-family: var(--font-mincho);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--nezumi);
+      letter-spacing: 0.25em;
+      margin-top: 6px;
+      opacity: 0;
+      animation: fadeSlideIn 0.6s ease-out 0.5s forwards;
+    }
+
+    /* ナビゲーション */
+    .header-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-md) 0;
+      border-top: 1px solid var(--suna);
+      border-bottom: 1px solid var(--suna);
+      background: linear-gradient(180deg, 
+        rgba(255,255,255,0) 0%,
+        rgba(250,248,245,0.5) 50%,
+        rgba(255,255,255,0) 100%
+      );
+    }
+
+    .header-nav a {
+      position: relative;
+      padding: 18px 36px;
+      font-family: var(--font-mincho);
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--hai);
+      letter-spacing: 0.16em;
+            text-decoration: none;
+      transition: all 0.3s var(--ease);
+            border-radius: 4px;
+      opacity: 0;
+      animation: fadeSlideIn 0.5s ease-out forwards;
+    }
+
+    .header-nav a:nth-child(1) { animation-delay: 0.6s; }
+    .header-nav a:nth-child(2) { animation-delay: 0.7s; }
+    .header-nav a:nth-child(3) { animation-delay: 0.8s; }
+    .header-nav a:nth-child(4) { animation-delay: 0.9s; }
+
+    /* 区切りの装飾 */
+    .header-nav a:not(:last-child)::after {
+      content: '・';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--hai);
+      font-size: 20px;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .header-nav a:hover {
+      color: var(--matcha);
+      background: rgba(47,93,58,0.06);
+    }
+
+    /* ホバー時の下線アニメーション */
+    .header-nav a span {
+      position: relative;
+    }
+
+    .header-nav a span::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--matcha), var(--wakakusa));
+      transition: width 0.4s var(--ease);
+      border-radius: 1px;
+    }
+
+    .header-nav a:hover span::after {
+            width: 100%;
+    }
+
+    /* 言語切り替えリンク */
+    .lang-link {
+      padding: 10px 20px !important;
+      border: 1px solid var(--kitsune);
+      border-radius: 4px;
+      font-size: 14px !important;
+      color: var(--kitsune) !important;
+      letter-spacing: 0.05em !important;
+    }
+
+    .lang-link:hover {
+      background: var(--kitsune) !important;
+      color: white !important;
+    }
+
+    .lang-link::after {
+      display: none !important;
+    }
+
+    .nav-sep {
+      color: var(--hai);
+      font-size: 20px;
+      opacity: 0.5;
+      margin: 0 8px;
+    }
+
+    @media (max-width: 900px) {
+      .header-nav { display: none; }
+      .header-top { height: 90px; }
+      .header-inner { padding: 0 var(--space-md); }
+      .logo { gap: var(--space-sm); }
+      .logo-circle { width: 56px; height: 56px; font-size: 28px; border-width: 2.5px; }
+      .logo-badge { font-size: 11px; }
+      .logo-kicker { font-size: 12px; }
+      .logo-title { font-size: 22px; }
+      .logo-sub { font-size: 10px; }
+    }
+
+    /* ================================================================
+       HERO - 圧倒的なファーストビュー
+       ================================================================ */
+    .hero {
+      margin-top: 220px;
+      position: relative;
+    }
+
+    @media (max-width: 900px) {
+      .hero { margin-top: 90px; }
+    }
+
+    .hero-visual {
+      position: relative;
+      height: 85vh;
+      min-height: 600px;
+      max-height: 1000px;
+      overflow: hidden;
+    }
+
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 80% 82%;
+    }
+
+    /* グラデーションオーバーレイ */
+    .hero-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(180deg, rgba(26,24,22,0.15) 0%, transparent 30%),
+        linear-gradient(180deg, transparent 50%, rgba(26,24,22,0.6) 100%);
+    }
+
+    /* 場所ラベル */
+    .hero-location {
+      position: absolute;
+      top: var(--space-lg);
+      left: var(--space-lg);
+      z-index: 2;
+    }
+
+    .hero-location span {
+            display: inline-block;
+      padding: 12px 24px;
+      background: rgba(255,255,255,0.95);
+      font-family: var(--font-mincho);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      color: var(--hai);
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* キャッチコピー */
+    .hero-catch {
+      position: absolute;
+      bottom: var(--space-xl);
+      left: var(--space-lg);
+      right: var(--space-lg);
+      z-index: 2;
+      color: var(--shiro);
+    }
+
+    .hero-catch h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      line-height: 1.5;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+      margin-bottom: var(--space-sm);
+    }
+
+    .hero-catch p {
+      font-size: 20px;
+      letter-spacing: 0.18em;
+      opacity: 0.95;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+      margin-top: var(--space-sm);
+    }
+
+    @media (max-width: 768px) {
+      .hero-visual {
+        height: 70vh;
+        min-height: 450px;
+      }
+      .hero-location { top: var(--space-md); left: var(--space-md); }
+      .hero-location span { padding: 10px 16px; font-size: 10px; }
+      .hero-catch { bottom: var(--space-lg); left: var(--space-md); right: var(--space-md); }
+      .hero-catch h1 { font-size: clamp(24px, 6vw, 36px); }
+      .hero-catch p { font-size: 16px; }
+    }
+
+    /* ================================================================
+       INTRO SECTION - 導入部（かけ250円と統合）
+       ================================================================ */
+    .intro {
+      position: relative;
+      padding: var(--space-2xl) var(--space-lg);
+      background: var(--shiro);
+    }
+
+    .intro::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(180deg, var(--suna), var(--kitsune));
+    }
+
+    .intro-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding-top: var(--space-xl);
+    }
+
+    .intro-head {
+            text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .intro-lead {
+      font-family: var(--font-mincho);
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      line-height: 1.8;
+      color: var(--sumi);
+      margin-bottom: var(--space-lg);
+    }
+
+    .intro-text {
+      font-size: 17px;
+      line-height: 2.4;
+      color: var(--hai);
+    }
+
+    .intro-kake {
+      margin: var(--space-xxl) 0;
+      position: relative;
+      padding: var(--space-xl) 0;
+    }
+
+    /* 背景の和紙テクスチャ風 */
+    .intro-kake::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 100% 80% at 30% 50%, rgba(47,93,58,0.03) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 100% at 80% 60%, rgba(200,140,80,0.04) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .intro-kake-main {
+      display: grid;
+      grid-template-columns: 58% 42%;
+      min-height: 620px;
+      background: linear-gradient(135deg, var(--sumi) 0%, #1f1d1a 100%);
+      border-radius: 10px;
+      box-shadow: 
+        0 40px 80px rgba(28,26,23,0.35),
+        0 20px 40px rgba(28,26,23,0.2),
+        0 8px 16px rgba(28,26,23,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      overflow: hidden;
+      position: relative;
+      transition: box-shadow 0.5s var(--ease), transform 0.5s var(--ease);
+    }
+
+    .intro-kake-main:hover {
+      box-shadow: 
+        0 50px 100px rgba(28,26,23,0.4),
+        0 25px 50px rgba(28,26,23,0.25),
+        0 10px 20px rgba(28,26,23,0.18),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      transform: translateY(-4px);
+    }
+
+    /* カード上部の金色アクセント */
+    .intro-kake-main::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, 
+        transparent 0%,
+        var(--kitsune) 20%,
+        rgba(230,180,100,0.8) 50%,
+        var(--kitsune) 80%,
+        transparent 100%
+      );
+      z-index: 10;
+    }
+
+    .intro-kake-img {
+      margin: 0;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px 0 0 8px;
+    }
+
+    .intro-kake-img img {
+            width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      transition: transform 1.2s var(--ease);
+    }
+
+    .intro-kake-main:hover .intro-kake-img img {
+      transform: scale(1.08);
+    }
+
+    /* 光のハイライト */
+    .intro-kake-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 60% 50% at 35% 25%, rgba(255,230,180,0.15) 0%, transparent 60%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* 右端へのフェード */
+    .intro-kake-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, 
+        transparent 55%,
+        rgba(28,26,23,0.7) 100%
+      );
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* 湯気アニメーション */
+    @keyframes steam {
+      0% { transform: translateY(0) scaleX(1); opacity: 0; }
+      15% { opacity: 0.5; }
+      50% { transform: translateY(-35px) scaleX(1.4); opacity: 0.25; }
+      100% { transform: translateY(-70px) scaleX(1.6); opacity: 0; }
+    }
+
+    .intro-kake-steam {
+      position: absolute;
+      top: 25%;
+      left: 35%;
+      width: 100px;
+      height: 80px;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .intro-kake-steam span {
+      position: absolute;
+      width: 24px;
+      height: 50px;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.4) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(10px);
+      animation: steam 3.5s ease-out infinite;
+    }
+
+    .intro-kake-steam span:nth-child(1) { left: 0; animation-delay: 0s; }
+    .intro-kake-steam span:nth-child(2) { left: 30px; animation-delay: 0.6s; }
+    .intro-kake-steam span:nth-child(3) { left: 60px; animation-delay: 1.2s; }
+
+    .intro-kake-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-xxl);
+      position: relative;
+      background: linear-gradient(135deg, 
+        var(--sumi) 0%,
+        #252320 100%
+      );
+    }
+
+    /* 装飾：角の金色アクセント */
+    .intro-kake-content::before {
+      content: '';
+      position: absolute;
+      top: var(--space-lg);
+      left: var(--space-lg);
+      width: 48px;
+      height: 48px;
+      border-top: 2px solid var(--kitsune);
+      border-left: 2px solid var(--kitsune);
+      opacity: 0.4;
+    }
+
+    .intro-kake-content::after {
+      content: '';
+      position: absolute;
+      bottom: var(--space-lg);
+      right: var(--space-lg);
+      width: 48px;
+      height: 48px;
+      border-bottom: 2px solid var(--kitsune);
+      border-right: 2px solid var(--kitsune);
+      opacity: 0.4;
+    }
+
+    .intro-kake-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      color: var(--kitsune);
+      text-transform: uppercase;
+      text-transform: uppercase;
+      margin-bottom: var(--space-md);
+      opacity: 0;
+      animation: fadeIn 0.8s var(--ease) 0.2s forwards;
+    }
+
+    .intro-kake-name {
+      font-family: var(--font-mincho);
+      font-size: 108px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      color: var(--shiro);
+      line-height: 1;
+      margin-bottom: var(--space-sm);
+      opacity: 0;
+      animation: fadeInUp 0.8s var(--ease) 0.3s forwards;
+      text-shadow: 
+        0 0 40px rgba(255,255,255,0.15),
+        0 0 80px rgba(255,255,255,0.08);
+      position: relative;
+    }
+
+    /* 「かけ」の下にアクセントライン */
+    .intro-kake-name::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+            width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--kitsune), transparent 80%);
+      opacity: 0.5;
+    }
+
+    .intro-kake-price {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: var(--space-xl);
+      opacity: 0;
+      animation: fadeInUp 0.8s var(--ease) 0.4s forwards;
+      padding: var(--space-sm) 0;
+    }
+
+    .intro-kake-price .num {
+      font-family: var(--font-mincho);
+      font-size: 88px;
+      font-weight: 400;
+      color: var(--kitsune);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-shadow: 
+        0 0 30px rgba(200,140,80,0.3),
+        0 0 60px rgba(200,140,80,0.15);
+    }
+
+    .intro-kake-price .yen {
+      font-family: var(--font-mincho);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--kitsune);
+      margin-left: 6px;
+      opacity: 0.9;
+    }
+
+    /* 価格の下に小さな装飾 */
+    .intro-kake-price::after {
+      content: '税込';
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.1em;
+      margin-left: 12px;
+      align-self: center;
+    }
+
+    .intro-kake-divider {
+      width: 64px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--kitsune), transparent);
+      margin-bottom: var(--space-lg);
+      opacity: 0;
+      animation: fadeIn 0.8s var(--ease) 0.5s forwards;
+    }
+
+    .intro-kake-copy {
+      font-family: var(--font-mincho);
+      font-size: 22px;
+      line-height: 2.2;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.9);
+      opacity: 0;
+      animation: fadeInUp 0.8s var(--ease) 0.6s forwards;
+      max-width: 340px;
+    }
+
+    .intro-kake-copy strong {
+      color: var(--kitsune);
+      font-weight: 400;
+      font-size: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .intro-kake-main {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .intro-kake-img {
+        height: 360px;
+      }
+      .intro-kake-img::after {
+        background: linear-gradient(180deg, 
+          transparent 60%,
+          rgba(28,26,23,0.6) 100%
+        );
+      }
+      .intro-kake-content {
+        padding: var(--space-xl);
+            text-align: center;
+        align-items: center;
+      }
+      .intro-kake-content::before {
+        top: var(--space-md);
+        left: var(--space-md);
+        width: 32px;
+        height: 32px;
+      }
+      .intro-kake-content::after {
+        bottom: var(--space-md);
+        right: var(--space-md);
+        width: 32px;
+        height: 32px;
+      }
+      .intro-kake-name { 
+        font-size: 72px; 
+      }
+      .intro-kake-name::after {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        background: linear-gradient(90deg, transparent 10%, var(--kitsune) 50%, transparent 90%);
+      }
+      .intro-kake-price .num { font-size: 64px; }
+      .intro-kake-price .yen { font-size: 22px; }
+      .intro-kake-price::after { display: none; }
+      .intro-kake-divider { 
+        margin-left: auto; 
+        margin-right: auto; 
+        background: linear-gradient(90deg, transparent, var(--kitsune), transparent);
+      }
+      .intro-kake-steam {
+        top: 15%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .intro-kake-copy {
+        max-width: 100%;
+        text-align: center;
+      }
+    }
+
+    /* スマホ用（500px以下） */
+    @media (max-width: 500px) {
+      .intro-kake {
+        margin: var(--space-lg) 0;
+        padding: var(--space-md) 0;
+      }
+      .intro-kake-main {
+        border-radius: 6px;
+      }
+      .intro-kake-img {
+        height: 250px;
+      }
+      .intro-kake-content {
+        padding: var(--space-lg) var(--space-md);
+      }
+      .intro-kake-content::before,
+      .intro-kake-content::after {
+        display: none;
+      }
+      .intro-kake-label {
+        font-size: 10px;
+        margin-bottom: var(--space-sm);
+      }
+      .intro-kake-name {
+        font-size: 56px;
+      }
+      .intro-kake-price {
+        margin-bottom: var(--space-md);
+      }
+      .intro-kake-price .num {
+        font-size: 48px;
+      }
+      .intro-kake-price .yen {
+        font-size: 18px;
+      }
+      .intro-kake-divider {
+        margin-bottom: var(--space-md);
+      }
+      .intro-kake-copy {
+        font-size: 16px;
+        line-height: 1.9;
+        letter-spacing: 0.08em;
+      }
+      .intro-kake-copy strong {
+        font-size: 18px;
+      }
+    }
+
+    .intro-btn {
+      margin-top: var(--space-lg);
+    }
+
+    .intro-menu {
+      margin-top: var(--space-xl);
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--suna);
+      scroll-margin-top: 0;
+    }
+
+    .howto-wrapper {
+      background: linear-gradient(180deg, var(--washi) 0%, var(--shiro) 100%);
+      padding: var(--space-xxl) 0;
+      scroll-margin-top: 0;
+    }
+
+    .intro-howto-title {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .intro-howto-title span {
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      font-family: var(--font-mincho);
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--sumi);
+    }
+
+    .intro-howto-title span::before,
+    .intro-howto-title span::after {
+      content: '';
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--matcha), transparent);
+    }
+
+        @media (max-width: 600px) {
+      .intro-howto-title span {
+        font-size: 26px;
+        gap: 14px;
+      }
+      .intro-howto-title span::before,
+      .intro-howto-title span::after {
+        width: 50px;
+      }
+    }
+
+    .intro-cta {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-top: var(--space-xl);
+    }
+
+    .intro-cta .btn {
+      min-height: 72px;
+      padding: 0 64px;
+      font-size: 20px;
+      letter-spacing: 0.15em;
+    }
+
+    @media (max-width: 768px) {
+      .intro { padding: var(--space-xl) var(--space-md); }
+      .intro-inner { padding-top: var(--space-lg); }
+    }
+
+
+    /* ================================================================
+       BUTTONS - 上品なボタン
+       ================================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 64px;
+      padding: 0 56px;
+      font-family: var(--font-mincho);
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      border: 2px solid var(--sumi);
+      background: transparent;
+      color: var(--sumi);
+      transition: all 0.4s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--sumi);
+      transform: translateY(100%);
+      transition: transform 0.4s var(--ease);
+    }
+
+    .btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn:hover {
+      color: var(--shiro);
+    }
+
+    .btn:hover::before {
+      transform: translateY(0);
+    }
+
+    .btn-fill {
+      background: var(--sumi);
+      color: var(--shiro);
+    }
+
+    .btn-fill::before {
+      background: var(--ro);
+    }
+
+    .btn-fill:hover {
+      border-color: var(--ro);
+    }
+
+    .btn-gold {
+      border-color: var(--kitsune);
+      color: var(--kitsune);
+    }
+
+    .btn-gold::before {
+      background: var(--kitsune);
+    }
+
+
+    /* ================================================================
+       SECTION COMMON - セクション共通スタイル
+       ================================================================ */
+    .section {
+      padding: var(--space-2xl) var(--space-lg);
+    }
+
+    @media (max-width: 768px) {
+      .section { padding: var(--space-xl) var(--space-md); }
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* 和風セクションヘッダー */
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+      position: relative;
+    }
+
+    .section-header::before {
+      content: '';
+                display: block;
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(180deg, transparent, var(--kitsune));
+      margin: 0 auto var(--space-lg);
+    }
+
+    .section-en {
+      font-family: var(--font-gothic);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      color: var(--kitsune);
+      margin-bottom: var(--space-sm);
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 44px);
+      letter-spacing: 0.18em;
+    }
+
+    .section-subtitle {
+      font-size: 18px;
+      color: var(--nezumi);
+      margin-top: var(--space-md);
+      letter-spacing: 0.08em;
+    }
+
+    /* 装飾線付きヘッダー */
+    .section-header-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+
+    .section-header-line::before,
+    .section-header-line::after {
+      content: '';
+      width: 60px;
+      height: 1px;
+      background: var(--suna);
+    }
+
+    /* ================================================================
+       MENU GRID - 美しいメニューカード
+       ================================================================ */
+    .menu-section {
+      background: var(--kinu);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
+    @media (max-width: 768px) {
+      .menu-grid { grid-template-columns: 1fr; gap: var(--space-md); }
+    }
+
+    .menu-card {
+      background: var(--shiro);
+      box-shadow: var(--shadow-soft);
+      transition: all 0.5s var(--ease);
+      overflow: hidden;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-deep);
+    }
+
+    .menu-card-img {
+      position: relative;
+      aspect-ratio: 3/2;
+      overflow: hidden;
+    }
+
+    .menu-card-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(26,24,22,0.1) 100%);
+    }
+
+    .menu-card-img img {
+                width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s var(--ease);
+    }
+
+    .menu-card:hover .menu-card-img img {
+      transform: scale(1.08);
+    }
+
+    .menu-card-body {
+      padding: var(--space-lg) var(--space-lg) var(--space-xl);
+    }
+
+    .menu-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--space-sm);
+      align-items: baseline;
+      margin-bottom: var(--space-sm);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--suna);
+    }
+
+    .menu-card-name {
+      font-family: var(--font-mincho);
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+    }
+
+    .menu-card-price {
+      font-family: var(--font-mincho);
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--kogecha);
+    }
+
+    .menu-card-desc {
+      font-size: 17px;
+      line-height: 2;
+      color: var(--hai);
+      letter-spacing: 0.03em;
+    }
+
+    .menu-cta {
+      text-align: center;
+      margin-top: var(--space-xl);
+    }
+
+    /* ================================================================
+       QUOTE - 店主の言葉（2枚の写真を使用）
+       ================================================================ */
+    .quote {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      min-height: 500px;
+      background: var(--sumi);
+    }
+
+    @media (max-width: 900px) {
+      .quote {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+    }
+
+    .quote-img {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 8s var(--ease);
+    }
+
+    .quote-img:hover img {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 900px) {
+      .quote-img { display: none; }
+    }
+
+    .quote-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: var(--space-xl) var(--space-lg);
+      text-align: center;
+      color: var(--shiro);
+    }
+
+    .quote-inner {
+      max-width: 400px;
+    }
+
+    .quote-title {
+      font-family: var(--font-mincho);
+      font-size: clamp(48px, 6vw, 64px);
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      color: var(--shiro);
+      margin-bottom: var(--space-lg);
+    }
+
+    .quote-text {
+      font-family: var(--font-mincho);
+      font-size: clamp(18px, 2.2vw, 22px);
+      font-weight: 400;
+      line-height: 2.4;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-lg);
+    }
+
+    .quote-author {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      color: var(--kitsune);
+    }
+
+    @media (max-width: 900px) {
+      .quote-content {
+        padding: var(--space-xl) var(--space-md);
+        min-height: 400px;
+        background: 
+          linear-gradient(rgba(26,24,22,0.8), rgba(26,24,22,0.8)),
+          url('image/marubi-noodle-lift-soba.jpg.png') center/cover;
+      }
+    }
+
+    /* ================================================================
+       HOWTO - ご利用の流れ（プロ仕様）
+       ================================================================ */
+    .howto-section {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 0;
+      background: var(--kinari);
+      margin-top: var(--space-lg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-medium);
+    }
+
+    @media (max-width: 1100px) {
+      .howto-section { grid-template-columns: 350px 1fr; }
+    }
+
+    @media (max-width: 900px) {
+      .howto-section { 
+        grid-template-columns: 1fr;
+        border-radius: 12px;
+      }
+    }
+
+    /* 左側：大きな写真 */
+    .howto-visual {
+      position: relative;
+      min-height: 700px;
+    }
+
+    .howto-visual-main {
+      position: absolute;
+      inset: 0;
+    }
+
+    .howto-visual-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .howto-visual-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-sm) var(--space-lg) var(--space-md);
+      background: linear-gradient(transparent 0%, rgba(26,24,22,0.9) 40%);
+      color: var(--shiro);
+    }
+
+    .howto-visual-title {
+      font-family: var(--font-mincho);
+      font-size: 42px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      margin-bottom: var(--space-sm);
+    }
+
+    .howto-visual-sub {
+      font-size: 18px;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 900px) {
+      .howto-visual { min-height: 400px; }
+      .howto-visual-title { font-size: 32px; }
+      .howto-visual-sub { font-size: 16px; }
+    }
+
+    /* 右側：ステップ - シンプルで見やすく */
+    .howto-steps {
+      display: flex;
+      flex-direction: column;
+      background: var(--shiro);
+      padding: var(--space-lg);
+      gap: var(--space-md);
+    }
+
+    .howto-step {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: var(--space-md);
+      background: var(--shiro);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+      min-width: 0;
+    }
+
+    .howto-step:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .howto-step-img {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    .howto-step-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--ease);
+    }
+
+    .howto-step:hover .howto-step-img img {
+      transform: scale(1.05);
+    }
+
+    .howto-step-num {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 56px;
+      height: 56px;
+      background: var(--matcha);
+      color: var(--shiro);
+      border-radius: 50%;
+      font-size: 26px;
+      font-weight: 700;
+      box-shadow: 0 4px 16px rgba(74,124,74,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mincho);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .howto-step-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-md);
+      color: var(--sumi);
+      min-width: 0;
+    }
+
+    .howto-step-title {
+      font-family: var(--font-mincho);
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-sm);
+      color: var(--sumi);
+    }
+
+    .howto-step-desc {
+      font-size: 18px;
+      line-height: 1.9;
+      color: var(--hai);
+      letter-spacing: 0.03em;
+    }
+
+    @media (max-width: 1100px) {
+      .howto-steps { padding: var(--space-md); }
+      .howto-step { grid-template-columns: 200px 1fr; }
+      .howto-step-title { font-size: 24px; }
+      .howto-step-desc { font-size: 16px; }
+    }
+
+    @media (max-width: 900px) {
+      .howto-steps { padding: var(--space-md); }
+      .howto-step {
+        grid-template-columns: 160px 1fr;
+      }
+      .howto-step-img { aspect-ratio: 1; }
+      .howto-step-content { padding: var(--space-sm); }
+      .howto-step-title { font-size: 22px; }
+      .howto-step-desc { font-size: 15px; }
+      .howto-step-num { width: 36px; height: 36px; font-size: 16px; top: 8px; left: 8px; }
+    }
+
+    @media (max-width: 600px) {
+      .howto-step { grid-template-columns: 100px 1fr; gap: var(--space-sm); }
+      .howto-step-img { aspect-ratio: 1; }
+      .howto-step-content { padding: var(--space-sm); }
+      .howto-step-title { font-size: 18px; white-space: nowrap; }
+      .howto-step-desc { font-size: 13px; line-height: 1.6; }
+      .howto-step-num { width: 28px; height: 28px; font-size: 12px; top: 4px; left: 4px; }
+    }
+
+    /* 小さいスマホ用（400px以下） */
+    @media (max-width: 400px) {
+      .howto-step { grid-template-columns: 80px 1fr; gap: 8px; }
+      .howto-step-title { font-size: 16px; }
+      .howto-step-desc { font-size: 12px; }
+      .howto-step-num { width: 24px; height: 24px; font-size: 11px; }
+    }
+
+    /* ================================================================
+       ACCESS - 店舗情報（シンプルで見やすく）
+       ================================================================ */
+    .access {
+      background: var(--kinu);
+      padding: var(--space-2xl) var(--space-lg);
+      scroll-margin-top: 0;
+    }
+
+    @media (max-width: 768px) {
+      .access { padding: var(--space-xl) var(--space-md); }
+    }
+
+    .access-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .access-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .access-grid { 
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+      }
+    }
+
+    .access-photo {
+      position: relative;
+    }
+
+    .access-photo::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: -12px;
+      bottom: -12px;
+      border: 1px solid var(--kitsune);
+      opacity: 0.3;
+    }
+
+    .access-photo img {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      box-shadow: var(--shadow-medium);
+    }
+
+    .access-photo-interior {
+      margin-top: var(--space-md);
+      aspect-ratio: 16/10;
+    }
+
+    .access-info {
+      padding: var(--space-sm) 0;
+    }
+
+    .access-name {
+      font-family: var(--font-mincho);
+      font-size: 34px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      margin-bottom: var(--space-xl);
+      padding-bottom: var(--space-md);
+      border-bottom: 2px solid var(--suna);
+    }
+
+    .access-row {
+      display: flex;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--suna);
+      align-items: baseline;
+    }
+
+    .access-label {
+      width: 120px;
+      flex-shrink: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--sumi);
+      letter-spacing: 0.08em;
+    }
+
+    .access-value {
+      font-size: 20px;
+      line-height: 1.9;
+      letter-spacing: 0.03em;
+    }
+
+    .access-value a {
+      color: var(--kitsune);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      font-weight: 500;
+    }
+
+    .access-value a:hover {
+      color: var(--kogecha);
+    }
+
+    .access-value small {
+      display: block;
+      font-size: 16px;
+      color: var(--hai);
+      margin-top: 6px;
+    }
+
+    .access-interior {
+      margin-top: var(--space-lg);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .access-interior img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .access-interior-caption {
+      background: var(--washi);
+      padding: var(--space-sm) var(--space-md);
+      font-size: 14px;
+      color: var(--hai);
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+
+    .access-map {
+      margin-top: var(--space-lg);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .access-map iframe {
+      display: block;
+    }
+
+    .access-cta {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .access-cta .btn {
+      padding: 18px 48px;
+      font-size: 17px;
+    }
+
+    @media (max-width: 500px) {
+      .access-cta { flex-direction: column; }
+      .access-cta .btn { width: 100%; }
+    }
+
+    /* ================================================================
+       FOOTER - フッター
+       ================================================================ */
+    .footer {
+      background: var(--sumi);
+      color: var(--shiro);
+      padding: var(--space-xl) var(--space-lg);
+      text-align: center;
+    }
+
+    .footer-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+
+    .footer .logo-circle {
+      width: 64px;
+      height: 64px;
+      border-color: var(--wakakusa);
+      color: var(--wakakusa);
+      font-size: 32px;
+    }
+
+    .footer .logo-badge {
+      color: var(--shu);
+    }
+
+    .footer-name {
+      font-family: var(--font-mincho);
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+    }
+
+    .footer-message {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: var(--space-lg);
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.3);
+      padding-top: var(--space-lg);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* SNSシェアボタン */
+    .share-buttons {
+      margin: var(--space-lg) 0;
+      text-align: center;
+    }
+
+    .share-label {
+      display: block;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 16px;
+      letter-spacing: 0.1em;
+    }
+
+    .share-icons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .share-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .share-x {
+      background: #000;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .share-x:hover {
+      background: #333;
+      transform: translateY(-3px);
+    }
+
+    .share-fb {
+      background: #1877F2;
+      color: #fff;
+      font-family: Georgia, serif;
+      font-size: 22px;
+    }
+
+    .share-fb:hover {
+      background: #0d65d9;
+      transform: translateY(-3px);
+    }
+
+    .share-line {
+      background: #06C755;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .share-line:hover {
+      background: #05b34c;
+      transform: translateY(-3px);
+    }
+
+    /* ================================================================
+       MOBILE STICKY CTA
+       ================================================================ */
+    .mobile-cta {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .mobile-cta {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        display: flex;
+        background: var(--sumi);
+        padding: 12px;
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+        gap: 8px;
+      }
+
+      .mobile-cta .btn {
+        flex: 1;
+        min-height: 52px;
+        padding: 0 16px;
+        font-size: 13px;
+        border-color: rgba(255,255,255,0.2);
+        color: var(--shiro);
+      }
+
+      .mobile-cta .btn::before {
+        background: var(--shiro);
+      }
+
+      .mobile-cta .btn:hover {
+        color: var(--sumi);
+      }
+
+      .mobile-cta .btn-fill {
+        background: var(--shiro);
+        border-color: var(--shiro);
+        color: var(--sumi);
+      }
+
+      .mobile-cta .btn-fill::before {
+        background: var(--kitsune);
+      }
+
+      .mobile-cta .btn-fill:hover {
+        color: var(--shiro);
+      }
+
+      body { padding-bottom: 76px; }
+
+      /* モバイル用フォントサイズ調整 */
+      .intro-lead {
+        font-size: clamp(24px, 6vw, 32px);
+        line-height: 1.7;
+      }
+
+      .section-title {
+        font-size: clamp(24px, 5vw, 32px);
+      }
+
+      .section-subtitle {
+        font-size: 15px;
+      }
+
+      .menu-card-name {
+        font-size: 22px;
+      }
+
+      .menu-card-price {
+        font-size: 20px;
+      }
+
+      .menu-card-desc {
+        font-size: 15px;
+      }
+
+      .access-name {
+        font-size: 26px;
+      }
+
+      .access-label {
+        font-size: 15px;
+        width: 90px;
+      }
+
+      .access-value {
+        font-size: 16px;
+      }
+
+      .btn {
+        min-height: 56px;
+        padding: 0 32px;
+        font-size: 15px;
+      }
+
+      .intro-cta .btn {
+        min-height: 60px;
+        padding: 0 40px;
+        font-size: 17px;
+      }
+    }
+
+    /* 小さいスマホ用 (iPhone SE等) */
+    @media (max-width: 375px) {
+      .logo-circle {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+      }
+
+      .logo-title {
+        font-size: 18px;
+      }
+
+      .logo-kicker {
+        font-size: 10px;
+      }
+
+      .logo-sub {
+        font-size: 9px;
+      }
+
+      .intro-lead {
+        font-size: 22px;
+      }
+
+      .intro-kake-name {
+        font-size: 56px;
+      }
+
+      .intro-kake-price .num {
+        font-size: 48px;
+      }
+
+      .howto-step {
+        grid-template-columns: 100px 1fr;
+      }
+
+      .howto-step-title {
+        font-size: 16px;
+      }
+
+      .howto-step-desc {
+        font-size: 13px;
+      }
+
+      .access-grid {
+        gap: var(--space-md);
+      }
+
+      .access-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .access-label {
+        width: 100%;
+      }
+
+      .intro-text {
+        font-size: 14px;
+        line-height: 2;
+      }
+
+      .intro-kake-copy {
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .intro-kake-copy strong {
+        font-size: 16px;
+      }
+    }
+
+    /* ================================================================
+       MODALS - モーダル
+       ================================================================ */
+    dialog {
+      border: none;
+      padding: 0;
+      width: 94vw;
+      max-width: 600px;
+      max-height: 85vh;
+      background: var(--shiro);
+      box-shadow: var(--shadow-deep);
+      border-radius: 8px;
+      margin: auto;
+    }
+
+    dialog::backdrop {
+      background: rgba(13,13,12,0.85);
+      backdrop-filter: blur(6px);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 1px solid var(--suna);
+      position: sticky;
+      top: 0;
+      background: var(--shiro);
+      z-index: 1;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .modal-title {
+      font-family: var(--font-mincho);
+      font-size: 22px;
+      letter-spacing: 0.12em;
+    }
+
+    .modal-close {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: var(--nezumi);
+      transition: color 0.2s;
+      border-radius: 50%;
+      border-radius: 50%;
+    }
+
+    .modal-close:hover {
+      color: var(--sumi);
+      background: var(--kinu);
+    }
+
+    .modal-body {
+      padding: var(--space-lg) var(--space-lg);
+      overflow-y: auto;
+    }
+
+    /* メニューモーダル */
+    .menu-modal-note {
+      font-size: 18px;
+      color: var(--hai);
+      margin-bottom: var(--space-xl);
+      text-align: center;
+      letter-spacing: 0.1em;
+    }
+
+    .menu-modal-section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .menu-modal-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .menu-modal-category {
+      font-family: var(--font-mincho);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--kogecha);
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-md);
+      border-bottom: 2px solid var(--suna);
+    }
+
+    .menu-modal-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 14px 0;
+      font-size: 18px;
+      border-bottom: 1px dotted var(--suna);
+    }
+
+    .menu-modal-item:last-child {
+      border-bottom: none;
+    }
+
+    .menu-modal-item span:last-child {
+      font-weight: 500;
+      color: var(--kogecha);
+    }
+
+    .menu-modal-item-note {
+      font-size: 15px;
+      color: var(--nezumi);
+      margin-top: var(--space-sm);
+    }
+
+    /* モーダルのモバイル対応 */
+    @media (max-width: 600px) {
+      dialog {
+        width: 96vw;
+        max-height: 80vh;
+        border-radius: 12px;
+      }
+
+      .modal-head {
+        padding: var(--space-sm) var(--space-md);
+      }
+
+      .modal-title {
+        font-size: 18px;
+      }
+
+      .modal-close {
+        width: 44px;
+        height: 44px;
+        font-size: 24px;
+      }
+
+      .modal-body {
+        padding: var(--space-md);
+      }
+
+      .menu-modal-note {
+        font-size: 14px;
+      }
+
+      .menu-modal-category {
+        font-size: 13px;
+      }
+
+      .menu-modal-item {
+        font-size: 16px;
+        padding: 12px 0;
+      }
+    }
+
+    /* ================================================================
+       LOADING SCREEN
+       ================================================================ */
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--kinari);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loading.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loading-content {
+      text-align: center;
+    }
+
+    .loading-logo {
+      width: 80px;
+      height: 80px;
+      border: 3px solid var(--matcha);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mincho);
+      font-size: 40px;
+      color: var(--matcha);
+      margin: 0 auto var(--space-md);
+      animation: loadingPulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes loadingPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+
+    .loading-text {
+      font-family: var(--font-mincho);
+      font-size: 18px;
+      color: var(--hai);
+      letter-spacing: 0.3em;
+    }
+
+    /* ================================================================
+       ACCESSIBILITY
+       ================================================================ */
+    /* スキップリンク */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--sumi);
+      color: var(--shiro);
+      padding: 12px 24px;
+      border-radius: 4px;
+      z-index: 10000;
+      font-size: 14px;
+      text-decoration: none;
+      transition: top 0.3s;
+    }
+
+    .skip-link:focus {
+      top: 10px;
+    }
+
+    /* フォーカススタイル */
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--matcha);
+      outline-offset: 3px;
+    }
+
+    /* 動きを減らす設定のユーザー向け */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ================================================================
+       PRINT STYLES - 印刷用
+       ================================================================ */
+    @media print {
+      /* 不要な要素を非表示 */
+      .header,
+      .mobile-cta,
+      .loading,
+      .skip-link,
+      .btn,
+      .access-map,
+      .intro-kake-steam,
+      footer {
+        display: none !important;
+      }
+
+      /* 背景色をリセット */
+      body {
+        background: white !important;
+        color: black !important;
+        font-size: 12pt;
+        line-height: 1.5;
+      }
+
+      /* ヒーローを小さく */
+      .hero {
+        margin-top: 0 !important;
+      }
+
+      .hero-visual {
+        height: auto !important;
+        min-height: auto !important;
+        max-height: 300px !important;
+      }
+
+      /* セクションの余白調整 */
+      .section,
+      .intro,
+      .access {
+        padding: 20px 0 !important;
+        page-break-inside: avoid;
+      }
+
+      /* リンクのURLを表示 */
+      a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 10pt;
+        color: #666;
+      }
+
+      /* 画像を適切なサイズに */
+      img {
+        max-width: 100% !important;
+        page-break-inside: avoid;
+      }
+
+      /* 店舗情報を見やすく */
+      .access-grid {
+        display: block !important;
+      }
+
+      .access-photo {
+        max-width: 300px !important;
+        margin-bottom: 20px;
+      }
+    }
+
+    /* ================================================================
+       DARK MODE - ダークモード（システム設定連動）
+       ================================================================ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --kinari: #1A1816;
+        --kinu: #1E1C1A;
+        --suna: #252320;
+        --shiro: #E8E4DC;
+        --sumi: #E8E4DC;
+        --hai: #B8B4AC;
+        --nezumi: #8A857D;
+        --ro: #F5F2ED;
+      }
+
+      body {
+        background-color: #0D0D0C;
+      }
+
+      .header {
+        background: rgba(13, 13, 12, 0.95);
+        border-bottom-color: rgba(196, 148, 74, 0.2);
+      }
+
+      .logo-circle {
+        background: linear-gradient(145deg, #1E3D1E, #2F5D3A);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      }
+
+      .nav-link {
+        color: #B8B4AC;
+      }
+
+      .nav-link:hover {
+        color: #C4944A;
+      }
+
+      .hero-content {
+        background: linear-gradient(to top, rgba(13, 13, 12, 0.95), transparent);
+      }
+
+      .intro {
+        background: linear-gradient(180deg, #0D0D0C 0%, #1A1816 100%);
+      }
+
+      .intro-kake {
+        background: linear-gradient(135deg, #1A1816 0%, #0D0D0C 100%);
+      }
+
+      .intro-kake-card {
+        background: linear-gradient(145deg, #1E1C1A, #252320);
+        border-color: rgba(196, 148, 74, 0.3);
+      }
+
+      .section {
+        background: #0D0D0C;
+      }
+
+      .menu-section {
+        background: linear-gradient(180deg, #1A1816 0%, #0D0D0C 100%);
+      }
+
+      .menu-card {
+        background: linear-gradient(145deg, #1E1C1A, #252320);
+        border-color: rgba(196, 148, 74, 0.2);
+      }
+
+      .howto-section {
+        background: #1A1816;
+      }
+
+      .howto-steps {
+        background: rgba(26, 24, 22, 0.9);
+      }
+
+      .howto-step {
+        background: rgba(37, 35, 32, 0.8);
+        border-color: rgba(196, 148, 74, 0.2);
+      }
+
+      .quote {
+        background: linear-gradient(180deg, #0D0D0C 0%, #1A1816 100%);
+      }
+
+      .quote::before {
+        opacity: 0.03;
+      }
+
+      .access {
+        background: linear-gradient(180deg, #1A1816 0%, #0D0D0C 100%);
+      }
+
+      .access-info {
+        background: rgba(26, 24, 22, 0.9);
+      }
+
+      .info-table th {
+        color: #8A857D;
+        border-color: rgba(196, 148, 74, 0.15);
+      }
+
+      .info-table td {
+        color: #E8E4DC;
+        border-color: rgba(196, 148, 74, 0.15);
+      }
+
+      footer {
+        background: #0A0A09;
+      }
+
+      /* ボタン */
+      .btn {
+        background: linear-gradient(145deg, #C4944A, #A67B3D);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border-color: #C4944A;
+        color: #C4944A;
+      }
+
+      /* モーダル */
+      .modal {
+        background: rgba(26, 24, 22, 0.98);
+      }
+
+      .modal-close {
+        color: #8A857D;
+      }
+
+      .modal-close:hover {
+        color: #E8E4DC;
+      }
+
+      /* ローディング */
+      .loader-overlay {
+        background: #0D0D0C;
+      }
+    }
+    </style>
+</head>
+
+<body>
+  <!-- 即座にトップへスクロール（ハッシュ対策） -->
+  <script>
+    if(window.location.hash){history.replaceState(null,'',window.location.pathname);}
+    window.scrollTo(0,0);
+  </script>
+  
+  <!-- LOADING SCREEN -->
+  <div id="loading" class="loading" aria-hidden="true">
+    <div class="loading-content">
+      <div class="loading-logo">美</div>
+      <div class="loading-text">まる美</div>
+    </div>
+  </div>
+
+  <!-- スキップリンク (アクセシビリティ) -->
+  <a href="#main" class="skip-link">メインコンテンツへスキップ</a>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <div class="header-top">
+        <a href="#" class="logo">
+          <div class="logo-symbol">
+            <div class="logo-circle">美</div>
+            <span class="logo-badge">まるび</span>
+          </div>
+          <div class="logo-text">
+            <span class="logo-kicker">茹でたて</span>
+            <span class="logo-title">そば・うどん まる美</span>
+            <span class="logo-sub">自家製麺</span>
+          </div>
+        </a>
+      </div>
+      <nav class="header-nav" role="navigation" aria-label="メインナビゲーション">
+        <a href="#menu"><span>メニュー紹介</span></a>
+        <a href="#howto"><span>初めての方へ</span></a>
+        <a href="#access"><span>店舗情報</span></a>
+        <span class="nav-sep">・</span>
+        <a href="en.html" class="lang-link"><span>EN</span></a>
+      </nav>
+    </div>
+        </header>
+
+  <main id="main" role="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-visual">
+        <img src="image/marubi-entrance-noren.jpg.png" alt="そば・うどん まる美 店舗外観" loading="eager">
+        <div class="hero-location">
+          <span>東京・大田区・矢口渡</span>
+        </div>
+        <div class="hero-catch">
+          <h1>気楽に食べられる。<br>誰でも。今日も。</h1>
+          <p>矢口渡駅より徒歩2分</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTRO + HOWTO 統合 -->
+    <section class="intro">
+      <div class="intro-inner">
+        <div class="intro-head">
+          <p class="intro-lead">
+            茹でたての自家製麺を、<br>
+            昭和の価格で。
+          </p>
+          <div class="intro-kake">
+            <div class="intro-kake-main">
+              <figure class="intro-kake-img">
+                <img src="image/kake.png" alt="かけそば">
+                <div class="intro-kake-steam">
+                  <span></span><span></span><span></span>
+                </div>
+        </figure>
+              <div class="intro-kake-content">
+                <div class="intro-kake-label">— signature —</div>
+                <h3 class="intro-kake-name">かけ</h3>
+                <p class="intro-kake-price">
+                  <span class="num">250</span><span class="yen">円</span>
+                </p>
+                <div class="intro-kake-divider"></div>
+                <p class="intro-kake-copy">
+                  <strong>自家製麺</strong>。出汁も、1から。<br>
+                  <strong>茹でたて</strong>を、この価格で。
+                </p>
+              </div>
+            </div>
+          </div>
+          <p class="intro-text">
+            食券を買って、好みを伝えるだけ。<br>
+            そば、うどん。温かいの、冷たいの。
+          </p>
+          <div class="intro-btn">
+            <button class="btn" onclick="openMenu()"><span>お品書きを見る</span></button>
+          </div>
+        </div>
+
+        <!-- どれも美味しい（メニュー） -->
+        <div id="menu" class="intro-menu">
+          <header class="section-header">
+            <p class="section-en">MENU</p>
+            <h2 class="section-title">どれも美味しい</h2>
+            <p class="section-subtitle">そば・うどん、どちらも同価格でお選びいただけます</p>
+          </header>
+
+          <div class="menu-grid">
+            <article class="menu-card">
+              <div class="menu-card-img">
+                <img src="image/marubi-menu-shungiku-tempura-soba.jpg.png" alt="春菊天そば" loading="lazy">
+              </div>
+              <div class="menu-card-body">
+                <div class="menu-card-head">
+                  <h3 class="menu-card-name">春菊天</h3>
+                  <span class="menu-card-price">350円</span>
+                </div>
+                <p class="menu-card-desc">迷ったらこれ。ほろ苦さがつゆに合う。</p>
+              </div>
+            </article>
+
+            <article class="menu-card">
+              <div class="menu-card-img">
+                <img src="image/niku2.png" alt="肉そば" loading="lazy">
+            </div>
+              <div class="menu-card-body">
+                <div class="menu-card-head">
+                  <h3 class="menu-card-name">肉</h3>
+                  <span class="menu-card-price">400円</span>
+                </div>
+                <p class="menu-card-desc">甘辛い肉と出汁。安心の一杯。</p>
+              </div>
+            </article>
+
+            <article class="menu-card">
+              <div class="menu-card-img">
+                <img src="image/syasusoba3.png" alt="シャウそば" loading="lazy">
+            </div>
+              <div class="menu-card-body">
+                <div class="menu-card-head">
+                  <h3 class="menu-card-name">シャウそば</h3>
+                  <span class="menu-card-price">400円</span>
+                </div>
+                <p class="menu-card-desc">ソーセージの旨みが出汁に溶け出す。</p>
+              </div>
+            </article>
+
+            <article class="menu-card">
+              <div class="menu-card-img">
+                <img src="image/marubi-geso-ten-soba.jpg.png" alt="ゲソ天そば" loading="lazy">
+              </div>
+              <div class="menu-card-body">
+                <div class="menu-card-head">
+                  <h3 class="menu-card-name">ゲソ天</h3>
+                  <span class="menu-card-price">350円</span>
+                </div>
+                <p class="menu-card-desc">歯ごたえと旨みが出汁に染みる。</p>
+              </div>
+            </article>
+            </div>
+            
+        </div>
+
+        <div class="intro-cta">
+          <button class="btn" onclick="openMenu()"><span>お品書きを見る</span></button>
+        </div>
+      </div>
+        </section>
+
+
+    <!-- 初めての方へ -->
+    <section id="howto" class="section howto-wrapper">
+      <div class="section-inner">
+        <div class="intro-howto-title">
+          <span>初めての方へ</span>
+            </div>
+
+        <div class="howto-section">
+          <!-- 左：大きな写真（券売機） -->
+          <div class="howto-visual">
+            <div class="howto-visual-main">
+              <img src="image/kenbaikineko.png" alt="券売機" loading="lazy">
+            </div>
+            <div class="howto-visual-overlay">
+              <h3 class="howto-visual-title">現金をご用意ください</h3>
+            </div>
+            </div>
+
+          <!-- 右：3ステップ -->
+          <div class="howto-steps">
+            <div class="howto-step">
+              <div class="howto-step-img">
+                <span class="howto-step-num">1</span>
+                <img src="image/marubi-ticket-machine.jpg.png" alt="券売機" loading="lazy">
+              </div>
+              <div class="howto-step-content">
+                <h4 class="howto-step-title">食券を買う</h4>
+                <p class="howto-step-desc">入口の券売機で食券を購入してください</p>
+              </div>
+            </div>
+
+            <div class="howto-step">
+              <div class="howto-step-img">
+                <span class="howto-step-num">2</span>
+                <img src="image/kaunnta.png" alt="カウンター" loading="lazy">
+              </div>
+              <div class="howto-step-content">
+                <h4 class="howto-step-title">好みを伝える</h4>
+                <p class="howto-step-desc">そば・うどん、温かいの・冷たいのを選べます</p>
+              </div>
+            </div>
+
+            <div class="howto-step">
+              <div class="howto-step-img">
+                <span class="howto-step-num">3</span>
+                <img src="image/tokukaramitakaunnta.png" alt="カウンター" loading="lazy">
+              </div>
+              <div class="howto-step-content">
+                <h4 class="howto-step-title">食べ終わったら</h4>
+                <p class="howto-step-desc">食器はカウンターへ戻してください</p>
+              </div>
+            </div>
+          </div>
+        </div>
+            </div>
+        </section>
+
+    <!-- QUOTE -->
+    <section class="quote">
+      <div class="quote-img">
+        <img src="image/marubi-noodle-lift-soba.jpg.png" alt="茹でたての麺" loading="lazy">
+      </div>
+      <div class="quote-content">
+        <div class="quote-inner">
+          <h2 class="quote-title">自家製麺</h2>
+          <p class="quote-text">
+            茹でたて。<br>
+            自分の店の分だけ、<br>
+            毎日作る。
+          </p>
+        </div>
+      </div>
+      <div class="quote-img">
+        <img src="image/marubi-fresh-noodles-box.jpg.png" alt="自家製麺" loading="lazy">
+            </div>
+        </section>
+
+
+    <!-- ACCESS -->
+    <section id="access" class="access">
+      <div class="access-inner">
+        <header class="section-header">
+          <p class="section-en">ACCESS</p>
+          <h2 class="section-title">店舗情報</h2>
+        </header>
+
+        <div class="access-grid">
+          <div class="access-photo">
+            <img src="image/marubi-exterior-hero.jpg.png" alt="まる美 店舗外観" loading="lazy">
+            <img src="image/tokukaramitakaunnta.png" alt="店内の様子" loading="lazy" class="access-photo-interior">
+          </div>
+
+          <div class="access-info">
+            <h2 class="access-name">そば・うどん まる美</h2>
+            
+            <div class="access-row">
+              <span class="access-label">住所</span>
+              <span class="access-value">
+                東京都大田区多摩川1-2-23
+                <small>東急多摩川線 矢口渡駅 徒歩2分</small>
+              </span>
+            </div>
+            
+            <div class="access-row">
+              <span class="access-label">営業時間</span>
+              <span class="access-value">
+                <a href="https://www.instagram.com/marubi_yudetate/" target="_blank" rel="noopener">Instagramで確認</a>
+              </span>
+            </div>
+            
+            <div class="access-row">
+              <span class="access-label">定休日</span>
+              <span class="access-value">不定休</span>
+            </div>
+            
+            <div class="access-row">
+              <span class="access-label">お支払い</span>
+              <span class="access-value">現金のみ</span>
+            </div>
+            
+            <div class="access-row access-row-seat">
+              <span class="access-label">座席</span>
+              <span class="access-value">
+                10席（カウンターのみ）
+                <small>L字カウンター・全席イスあり</small>
+              </span>
+            </div>
+            
+
+            <div class="access-map">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3245.5!2d139.6891!3d35.5686!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z44Gd44Gw44O744GG44Gp44KTIOOBvuOCi-e-jg!5e0!3m2!1sja!2sjp!4v1600000000000"
+                width="100%" 
+                height="250" 
+                style="border:0; border-radius: 8px;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                title="そば・うどん まる美 地図">
+              </iframe>
+            </div>
+
+            <div class="access-cta">
+              <a href="https://www.google.com/maps/dir/?api=1&destination=東京都大田区多摩川1-2-23" class="btn btn-fill" target="_blank" rel="noopener"><span>ルート案内</span></a>
+              <a href="https://www.instagram.com/marubi_yudetate/" class="btn" target="_blank" rel="noopener"><span>Instagram</span></a>
+            </div>
+          </div>
+        </div>
+            </div>
+        </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">
+      <div class="logo-symbol">
+        <div class="logo-circle">美</div>
+        <span class="logo-badge">まるび</span>
+      </div>
+      <p class="footer-name">そば・うどん まる美</p>
+    </div>
+    <p class="footer-message">今日も変わらず、やっています。</p>
+    
+    <!-- SNSシェアボタン -->
+    <div class="share-buttons">
+      <span class="share-label">このお店をシェア</span>
+      <div class="share-icons">
+        <a href="https://twitter.com/intent/tweet?text=そば・うどん まる美｜大田区・矢口渡の茹でたて自家製麺&url=https://marubi.example.com" target="_blank" rel="noopener" class="share-btn share-x" aria-label="Xでシェア">
+          𝕏
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://marubi.example.com" target="_blank" rel="noopener" class="share-btn share-fb" aria-label="Facebookでシェア">
+          f
+        </a>
+        <a href="https://social-plugins.line.me/lineit/share?url=https://marubi.example.com" target="_blank" rel="noopener" class="share-btn share-line" aria-label="LINEでシェア">
+          LINE
+        </a>
+      </div>
+    </div>
+    
+    <p class="footer-copy">&copy; 2026 そば・うどん まる美</p>
+  </footer>
+
+  <!-- MOBILE CTA -->
+  <div class="mobile-cta">
+    <a href="https://www.google.com/maps/dir/?api=1&destination=東京都大田区多摩川1-2-23" class="btn btn-fill" target="_blank"><span>ルート案内</span></a>
+    <button class="btn" onclick="openMenu()"><span>お品書き</span></button>
+    </div>
+
+  <!-- MENU MODAL -->
+  <dialog id="menu-modal">
+    <div class="modal-head">
+      <h2 class="modal-title">お品書き</h2>
+      <button class="modal-close" onclick="closeMenu()" aria-label="メニューを閉じる">×</button>
+    </div>
+    <div class="modal-body">
+      <p class="menu-modal-note">そば・うどん どちらでも同価格</p>
+
+      <div class="menu-modal-section">
+        <h3 class="menu-modal-category">そば・うどん</h3>
+        <div class="menu-modal-item"><span>かけ</span><span>250円</span></div>
+        <div class="menu-modal-item"><span>たぬき</span><span>300円</span></div>
+        <div class="menu-modal-item"><span>きつね</span><span>300円</span></div>
+        <div class="menu-modal-item"><span>わかめ</span><span>300円</span></div>
+        <div class="menu-modal-item"><span>月見</span><span>300円</span></div>
+        <div class="menu-modal-item"><span>もり</span><span>300円</span></div>
+        <div class="menu-modal-item"><span>かき揚げ天</span><span>350円</span></div>
+        <div class="menu-modal-item"><span>ちくわ天</span><span>350円</span></div>
+        <div class="menu-modal-item"><span>春菊天</span><span>350円</span></div>
+        <div class="menu-modal-item"><span>紅生姜天</span><span>350円</span></div>
+        <div class="menu-modal-item"><span>コロッケ</span><span>350円</span></div>
+        <div class="menu-modal-item"><span>ゲソ天</span><span>350円</span></div>
+        <div class="menu-modal-item"><span>ざる</span><span>350円</span></div>
+        <div class="menu-modal-item"><span>いか天</span><span>400円</span></div>
+        <div class="menu-modal-item"><span>肉</span><span>400円</span></div>
+        <div class="menu-modal-item"><span>シャウ</span><span>400円</span></div>
+        <div class="menu-modal-item"><span>カレー</span><span>400円</span></div>
+        <p class="menu-modal-item-note">大盛 +100円</p>
+      </div>
+
+      <div class="menu-modal-section">
+        <h3 class="menu-modal-category">トッピング</h3>
+        <div class="menu-modal-item"><span>たぬき・きつね・わかめ・生卵</span><span>各50円</span></div>
+        <div class="menu-modal-item"><span>かき揚げ・ちくわ天・春菊天</span><span>各100円</span></div>
+        <div class="menu-modal-item"><span>紅生姜天・コロッケ・ゲソ天</span><span>各150円</span></div>
+        <div class="menu-modal-item"><span>いか天・肉・シャウ</span><span>各150円</span></div>
+      </div>
+
+      <div class="menu-modal-section">
+        <h3 class="menu-modal-category">ご飯もの</h3>
+        <div class="menu-modal-item"><span>半ライス</span><span>150円</span></div>
+        <div class="menu-modal-item"><span>ライス</span><span>200円</span></div>
+        <div class="menu-modal-item"><span>ミニカレーライス</span><span>250円</span></div>
+        <div class="menu-modal-item"><span>カレーライス</span><span>400円</span></div>
+      </div>
+
+      <div class="menu-modal-section">
+        <h3 class="menu-modal-category">定食</h3>
+        <p style="font-size: 13px; color: var(--nezumi); margin-bottom: 12px;">たぬき・きつね・わかめ そば又はうどん、ライス、小鉢</p>
+        <div class="menu-modal-item"><span>コロッケ定食</span><span>550円</span></div>
+        <div class="menu-modal-item"><span>アジフライ定食</span><span>550円</span></div>
+      </div>
+    </div>
+  </dialog>
+
+
+  <script>
+    // Menu modal
+    const menuModal = document.getElementById('menu-modal');
+    function openMenu() { menuModal.showModal(); }
+    function closeMenu() { menuModal.close(); }
+    menuModal.addEventListener('click', e => { if (e.target === menuModal) closeMenu(); });
+
+    // ページ読み込み時にURLのハッシュを消してトップに戻る
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname);
+    }
+    // 確実にトップに戻す（複数回試行）
+    window.scrollTo(0, 0);
+    setTimeout(() => window.scrollTo(0, 0), 0);
+    setTimeout(() => window.scrollTo(0, 0), 50);
+    setTimeout(() => window.scrollTo(0, 0), 100);
+
+    // ナビゲーションリンクのスムーズスクロール（URLを変えない）
+    document.querySelectorAll('.header-nav a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const href = link.getAttribute('href');
+        const target = document.querySelector(href);
+        if (target) {
+          // 店舗情報はセクション全体が見えるように中央寄りにスクロール
+          if (href === '#access') {
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+
+    // Loading screen
+    window.addEventListener('load', () => {
+      const loading = document.getElementById('loading');
+      setTimeout(() => {
+        loading.classList.add('hidden');
+      }, 500);
+    });
+
+    // Service Worker登録（PWA対応）
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered:', registration.scope);
+          })
+          .catch((error) => {
+            console.log('SW registration failed:', error);
+          });
+      });
+    }
+
+    // Header scroll effect
+    const header = document.getElementById('header');
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+      header.classList.toggle('scrolled', currentScroll > 50);
+      lastScroll = currentScroll;
+    });
+  </script>
+</body>
+</html>

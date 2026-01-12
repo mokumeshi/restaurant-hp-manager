@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ページが見つかりません | そば・うどん まる美</title>
+  <link rel="icon" href="image/marubi-entrance-noren.jpg.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Zen Kaku Gothic New", sans-serif;
+      background: linear-gradient(180deg, #FAF8F5 0%, #F5F2ED 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      color: #1A1816;
+    }
+
+    .error-container {
+      text-align: center;
+      max-width: 500px;
+    }
+
+    .error-icon {
+      font-size: 80px;
+      margin-bottom: 24px;
+      opacity: 0.8;
+    }
+
+    .error-code {
+      font-family: "Shippori Mincho B1", serif;
+      font-size: 72px;
+      font-weight: 600;
+      color: #C4944A;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .error-title {
+      font-family: "Shippori Mincho B1", serif;
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 16px;
+      color: #1A1816;
+    }
+
+    .error-message {
+      font-size: 16px;
+      color: #7A756D;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 40px;
+      background: linear-gradient(145deg, #2F5D3A, #3A7249);
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(47, 93, 58, 0.25);
+    }
+
+    .home-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(47, 93, 58, 0.35);
+    }
+
+    .decoration {
+      margin-top: 60px;
+      font-size: 14px;
+      color: #B5B0A8;
+      font-family: "Shippori Mincho B1", serif;
+    }
+
+    /* ダークモード */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: linear-gradient(180deg, #1A1816 0%, #0D0D0C 100%);
+        color: #E8E4DC;
+      }
+
+      .error-title {
+        color: #E8E4DC;
+      }
+
+      .error-message {
+        color: #8A857D;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="error-container">
+    <div class="error-icon">🍜</div>
+    <div class="error-code">404</div>
+    <h1 class="error-title">お探しのページが見つかりません</h1>
+    <p class="error-message">
+      申し訳ございません。<br>
+      お探しのページは移動または削除された可能性があります。<br>
+      トップページからお探しください。
+    </p>
+    <a href="/" class="home-link">
+      🏠 トップページへ戻る
+    </a>
+  </div>
+  <p class="decoration">— そば・うどん まる美 —</p>
+</body>
+</html>
