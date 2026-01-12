@@ -1,0 +1,14 @@
+# robots.txt for そば・うどん まる美
+# https://marubi.example.com
+
+User-agent: *
+Allow: /
+
+# サイトマップの場所
+Sitemap: https://marubi.example.com/sitemap.xml
+
+# 画像フォルダはクロール許可
+Allow: /image/
+
+# 不要なファイルはブロック
+Disallow: /*.txt$

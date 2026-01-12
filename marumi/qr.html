@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QRコード | そば・うどん まる美</title>
+  <link rel="icon" href="image/marubi-entrance-noren.jpg.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Zen Kaku Gothic New", sans-serif;
+      background: #FAF8F5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 600px;
+    }
+
+    .title {
+      font-family: "Shippori Mincho B1", serif;
+      font-size: 28px;
+      color: #1A1816;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #7A756D;
+      margin-bottom: 40px;
+    }
+
+    .qr-card {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      margin-bottom: 32px;
+    }
+
+    .qr-image {
+      width: 280px;
+      height: 280px;
+      margin: 0 auto 24px;
+      display: block;
+    }
+
+    .shop-name {
+      font-family: "Shippori Mincho B1", serif;
+      font-size: 24px;
+      color: #2F5D3A;
+      margin-bottom: 8px;
+    }
+
+    .shop-url {
+      font-size: 14px;
+      color: #7A756D;
+      word-break: break-all;
+    }
+
+    .instructions {
+      background: #F5F2ED;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: left;
+    }
+
+    .instructions h3 {
+      font-size: 16px;
+      color: #1A1816;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .instructions ul {
+      list-style: none;
+      font-size: 14px;
+      color: #4A4640;
+      line-height: 2;
+    }
+
+    .instructions li::before {
+      content: "✓ ";
+      color: #2F5D3A;
+    }
+
+    .print-btn {
+      margin-top: 32px;
+      padding: 16px 48px;
+      background: linear-gradient(145deg, #2F5D3A, #3A7249);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .print-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(47, 93, 58, 0.3);
+    }
+
+    .back-link {
+      margin-top: 24px;
+      color: #7A756D;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back-link:hover {
+      color: #C4944A;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+      .print-btn,
+      .back-link,
+      .instructions {
+        display: none;
+      }
+      .qr-card {
+        box-shadow: none;
+        border: 2px solid #E0E0E0;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #1A1816;
+      }
+      .title {
+        color: #E8E4DC;
+      }
+      .qr-card {
+        background: #252320;
+      }
+      .shop-name {
+        color: #7CB77C;
+      }
+      .instructions {
+        background: #1E1C1A;
+      }
+      .instructions h3 {
+        color: #E8E4DC;
+      }
+      .instructions ul {
+        color: #B8B4AC;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">お店のQRコード</h1>
+    <p class="subtitle">印刷してお店に貼ってください</p>
+
+    <div class="qr-card">
+      <!-- QRコードはGoogle Charts APIで生成 -->
+      <img 
+        class="qr-image" 
+        src="https://chart.googleapis.com/chart?chs=280x280&cht=qr&chl=https://marubi.example.com&choe=UTF-8"
+        alt="まる美のQRコード"
+      />
+      <p class="shop-name">そば・うどん まる美</p>
+      <p class="shop-url">https://marubi.example.com</p>
+    </div>
+
+    <div class="instructions">
+      <h3>📋 使い方</h3>
+      <ul>
+        <li>このページを印刷してお店の入口やレジ付近に貼る</li>
+        <li>お客さんがスマホでスキャンするとHPにアクセス</li>
+        <li>A4サイズで印刷がおすすめ</li>
+        <li>ラミネート加工すると長持ち</li>
+      </ul>
+    </div>
+
+    <button class="print-btn" onclick="window.print()">🖨️ 印刷する</button>
+    
+    <a href="/" class="back-link">← トップページへ戻る</a>
+  </div>
+</body>
+</html>
