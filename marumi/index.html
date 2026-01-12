@@ -577,11 +577,26 @@
         height: 70vh;
         min-height: 450px;
       }
+      .hero-visual img {
+        /* スマホでは暖簾と営業中看板が見えるように */
+        object-position: 60% 50%;
+      }
       .hero-location { top: var(--space-md); left: var(--space-md); }
       .hero-location span { padding: 10px 16px; font-size: 10px; }
       .hero-catch { bottom: var(--space-lg); left: var(--space-md); right: var(--space-md); }
       .hero-catch h1 { font-size: clamp(24px, 6vw, 36px); }
       .hero-catch p { font-size: 16px; }
+    }
+
+    @media (max-width: 500px) {
+      .hero-visual {
+        height: 60vh;
+        min-height: 350px;
+      }
+      .hero-visual img {
+        /* 小さいスマホでは暖簾中心に */
+        object-position: 45% 50%;
+      }
     }
 
     /* ================================================================
@@ -3013,3 +3028,4 @@
   </script>
 </body>
 </html>
+
