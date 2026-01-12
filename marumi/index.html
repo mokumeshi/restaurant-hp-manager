@@ -983,6 +983,54 @@
       }
     }
 
+    /* スマホ用（500px以下） */
+    @media (max-width: 500px) {
+      .intro-kake {
+        margin: var(--space-lg) 0;
+        padding: var(--space-md) 0;
+      }
+      .intro-kake-main {
+        border-radius: 6px;
+      }
+      .intro-kake-img {
+        height: 250px;
+      }
+      .intro-kake-content {
+        padding: var(--space-lg) var(--space-md);
+      }
+      .intro-kake-content::before,
+      .intro-kake-content::after {
+        display: none;
+      }
+      .intro-kake-label {
+        font-size: 10px;
+        margin-bottom: var(--space-sm);
+      }
+      .intro-kake-name {
+        font-size: 56px;
+      }
+      .intro-kake-price {
+        margin-bottom: var(--space-md);
+      }
+      .intro-kake-price .num {
+        font-size: 48px;
+      }
+      .intro-kake-price .yen {
+        font-size: 18px;
+      }
+      .intro-kake-divider {
+        margin-bottom: var(--space-md);
+      }
+      .intro-kake-copy {
+        font-size: 16px;
+        line-height: 1.9;
+        letter-spacing: 0.08em;
+      }
+      .intro-kake-copy strong {
+        font-size: 18px;
+      }
+    }
+
     .intro-btn {
       margin-top: var(--space-lg);
     }
@@ -1552,12 +1600,20 @@
     }
 
     @media (max-width: 600px) {
-      .howto-step { grid-template-columns: 120px 1fr; gap: var(--space-sm); }
+      .howto-step { grid-template-columns: 100px 1fr; gap: var(--space-sm); }
       .howto-step-img { aspect-ratio: 1; }
       .howto-step-content { padding: var(--space-sm); }
-      .howto-step-title { font-size: 20px; }
-      .howto-step-desc { font-size: 14px; }
-      .howto-step-num { width: 32px; height: 32px; font-size: 14px; top: 6px; left: 6px; }
+      .howto-step-title { font-size: 18px; white-space: nowrap; }
+      .howto-step-desc { font-size: 13px; line-height: 1.6; }
+      .howto-step-num { width: 28px; height: 28px; font-size: 12px; top: 4px; left: 4px; }
+    }
+
+    /* 小さいスマホ用（400px以下） */
+    @media (max-width: 400px) {
+      .howto-step { grid-template-columns: 80px 1fr; gap: 8px; }
+      .howto-step-title { font-size: 16px; }
+      .howto-step-desc { font-size: 12px; }
+      .howto-step-num { width: 24px; height: 24px; font-size: 11px; }
     }
 
     /* ================================================================
@@ -2003,6 +2059,20 @@
 
       .access-label {
         width: 100%;
+      }
+
+      .intro-text {
+        font-size: 14px;
+        line-height: 2;
+      }
+
+      .intro-kake-copy {
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .intro-kake-copy strong {
+        font-size: 16px;
       }
     }
 
