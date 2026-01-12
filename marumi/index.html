@@ -948,10 +948,8 @@
         height: 360px;
       }
       .intro-kake-img::after {
-        background: linear-gradient(180deg, 
-          transparent 60%,
-          rgba(28,26,23,0.6) 100%
-        );
+        /* スマホでは黒いオーバーレイを消す */
+        display: none;
       }
       .intro-kake-content {
         padding: var(--space-xl);
@@ -1615,20 +1613,32 @@
     }
 
     @media (max-width: 600px) {
-      .howto-step { grid-template-columns: 100px 1fr; gap: var(--space-sm); }
-      .howto-step-img { aspect-ratio: 1; }
-      .howto-step-content { padding: var(--space-sm); }
-      .howto-step-title { font-size: 18px; white-space: nowrap; }
-      .howto-step-desc { font-size: 13px; line-height: 1.6; }
-      .howto-step-num { width: 28px; height: 28px; font-size: 12px; top: 4px; left: 4px; }
-    }
-
-    /* 小さいスマホ用（400px以下） */
-    @media (max-width: 400px) {
-      .howto-step { grid-template-columns: 80px 1fr; gap: 8px; }
-      .howto-step-title { font-size: 16px; }
-      .howto-step-desc { font-size: 12px; }
-      .howto-step-num { width: 24px; height: 24px; font-size: 11px; }
+      /* スマホでは縦並びに変更 */
+      .howto-step { 
+        grid-template-columns: 1fr; 
+        gap: 0;
+      }
+      .howto-step-img { 
+        aspect-ratio: 16/9;
+        height: 140px;
+      }
+      .howto-step-content { 
+        padding: var(--space-md); 
+      }
+      .howto-step-title { 
+        font-size: 18px; 
+      }
+      .howto-step-desc { 
+        font-size: 14px; 
+        line-height: 1.7; 
+      }
+      .howto-step-num { 
+        width: 32px; 
+        height: 32px; 
+        font-size: 14px; 
+        top: 8px; 
+        left: 8px; 
+      }
     }
 
     /* ================================================================
@@ -2052,7 +2062,11 @@
       }
 
       .howto-step {
-        grid-template-columns: 100px 1fr;
+        grid-template-columns: 1fr;
+      }
+
+      .howto-step-img {
+        height: 120px;
       }
 
       .howto-step-title {
