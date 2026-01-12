@@ -732,12 +732,11 @@
       transition: transform 1.2s var(--ease);
     }
 
-    /* スマホでは料理全体が見えるように */
+    /* スマホでは料理がキレイに見えるように */
     @media (max-width: 768px) {
       .intro-kake-img img {
-        object-fit: contain;
+        object-fit: cover;
         object-position: center center;
-        background: #1A1816;
       }
     }
 
@@ -962,12 +961,9 @@
         min-height: auto;
       }
       .intro-kake-img {
-        height: auto;
-        min-height: 280px;
-        aspect-ratio: 4/3;
+        height: 320px;
       }
       .intro-kake-img::after {
-        /* スマホでは黒いオーバーレイを消す */
         display: none;
       }
       .intro-kake-content {
@@ -1025,9 +1021,7 @@
         border-radius: 6px;
       }
       .intro-kake-img {
-        height: auto;
-        min-height: 240px;
-        aspect-ratio: 4/3;
+        height: 280px;
       }
       .intro-kake-content {
         padding: var(--space-lg) var(--space-md);
@@ -2445,156 +2439,162 @@
        DARK MODE - ダークモード（システム設定連動）
        ================================================================ */
     @media (prefers-color-scheme: dark) {
-      :root {
-        --kinari: #1A1816;
-        --kinu: #1E1C1A;
-        --suna: #252320;
-        --shiro: #E8E4DC;
-        --sumi: #E8E4DC;
-        --hai: #B8B4AC;
-        --nezumi: #8A857D;
-        --ro: #F5F2ED;
-      }
-
       body {
         background-color: #0D0D0C;
+        color: #E8E4DC;
       }
 
       .header {
-        background: rgba(13, 13, 12, 0.95);
+        background: rgba(13, 13, 12, 0.98);
         border-bottom-color: rgba(196, 148, 74, 0.2);
       }
 
       .logo-circle {
         background: linear-gradient(145deg, #1E3D1E, #2F5D3A);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
       }
 
-      .nav-link {
-        color: #B8B4AC;
+      .logo-title, .logo-kicker, .logo-sub {
+        color: #E8E4DC;
       }
 
-      .nav-link:hover {
-        color: #C4944A;
-      }
-
-      .hero-content {
-        background: linear-gradient(to top, rgba(13, 13, 12, 0.95), transparent);
-      }
-
+      /* イントロセクション */
       .intro {
-        background: linear-gradient(180deg, #0D0D0C 0%, #1A1816 100%);
-      }
-
-      .intro-kake {
-        background: linear-gradient(135deg, #1A1816 0%, #0D0D0C 100%);
-      }
-
-      .intro-kake-card {
-        background: linear-gradient(145deg, #1E1C1A, #252320);
-        border-color: rgba(196, 148, 74, 0.3);
-      }
-
-      .intro-kake-img {
-        background: #1A1816;
-      }
-
-      .intro-kake-img img {
-        background: #1A1816;
-      }
-
-      .section {
         background: #0D0D0C;
       }
 
-      .menu-section {
-        background: linear-gradient(180deg, #1A1816 0%, #0D0D0C 100%);
+      .intro-lead {
+        color: #E8E4DC;
       }
 
-      .menu-card {
-        background: linear-gradient(145deg, #1E1C1A, #252320);
-        border-color: rgba(196, 148, 74, 0.2);
+      .intro-text {
+        color: #B8B4AC;
       }
 
-      .howto-section {
+      /* かけセクション - 黒背景のまま */
+      .intro-kake-main {
         background: #1A1816;
       }
 
-      .howto-steps {
-        background: rgba(26, 24, 22, 0.9);
+      .intro-kake-content {
+        background: #1A1816;
+      }
+
+      /* メニューセクション */
+      .menu-section, .section {
+        background: #0D0D0C;
+      }
+
+      .section-title {
+        color: #E8E4DC;
+      }
+
+      .section-subtitle {
+        color: #B8B4AC;
+      }
+
+      .menu-card {
+        background: #1E1C1A;
+        border-color: rgba(196, 148, 74, 0.15);
+      }
+
+      .menu-card-name {
+        color: #E8E4DC;
+      }
+
+      .menu-card-desc {
+        color: #8A857D;
+      }
+
+      /* 初めての方へ */
+      .howto-wrapper {
+        background: #0D0D0C;
+      }
+
+      .howto-section {
+        background: #0D0D0C;
       }
 
       .howto-step {
-        background: rgba(37, 35, 32, 0.8);
-        border-color: rgba(196, 148, 74, 0.2);
+        background: #1E1C1A;
       }
 
+      .howto-step-title {
+        color: #E8E4DC;
+      }
+
+      .howto-step-desc {
+        color: #B8B4AC;
+      }
+
+      /* 引用 */
       .quote {
-        background: linear-gradient(180deg, #0D0D0C 0%, #1A1816 100%);
+        background: #0D0D0C;
       }
 
-      .quote::before {
-        opacity: 0.03;
+      .quote-title, .quote-text {
+        color: #E8E4DC;
       }
 
+      /* アクセス */
       .access {
-        background: linear-gradient(180deg, #1A1816 0%, #0D0D0C 100%);
+        background: #1A1816;
       }
 
       .access-info {
-        background: rgba(26, 24, 22, 0.9);
+        background: #1E1C1A;
       }
 
-            .info-table th {
-        color: #8A857D;
-        border-color: rgba(196, 148, 74, 0.15);
-            }
-
-            .info-table td {
+      .access-name {
         color: #E8E4DC;
-        border-color: rgba(196, 148, 74, 0.15);
       }
 
+      .access-label {
+        color: #8A857D;
+      }
+
+      .access-value {
+        color: #E8E4DC;
+      }
+
+      /* フッター */
       footer {
         background: #0A0A09;
       }
 
-      /* ボタン */
+      /* ボタン - すべて金色で統一 */
       .btn {
-        background: transparent;
-        border-color: #C4944A;
-        color: #C4944A;
-      }
-
-      .btn:hover {
-        background: #C4944A;
-        color: #1A1816;
-      }
-
-      .btn-fill {
-        background: linear-gradient(145deg, #C4944A, #A67B3D) !important;
+        background: #C4944A !important;
         border-color: #C4944A !important;
         color: #1A1816 !important;
       }
 
-      .btn-fill:hover {
-        background: linear-gradient(145deg, #D4A45A, #B68B4D) !important;
+      .btn:hover {
+        background: #D4A45A !important;
       }
 
-      .access-cta .btn-fill {
-        background: linear-gradient(145deg, #C4944A, #A67B3D) !important;
+      .mobile-cta {
+        background: rgba(13, 13, 12, 0.98);
+      }
+
+      .mobile-cta .btn {
+        background: #C4944A !important;
+        border-color: #C4944A !important;
         color: #1A1816 !important;
       }
 
-      .mobile-cta .btn-fill {
-        background: linear-gradient(145deg, #C4944A, #A67B3D) !important;
-        color: #1A1816 !important;
+      /* モーダル */
+      dialog {
+        background: #1A1816;
+        color: #E8E4DC;
       }
 
-      .btn-outline {
-        background: transparent;
-        border-color: #C4944A;
-        color: #C4944A;
+      .modal-close {
+        color: #8A857D;
+      }
+
+      .menu-modal-item {
+        border-color: rgba(196, 148, 74, 0.15);
+        color: #E8E4DC;
       }
 
       /* モーダル */
