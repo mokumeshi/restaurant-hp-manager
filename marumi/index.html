@@ -747,7 +747,7 @@
       pointer-events: none;
     }
 
-    /* 右端へのフェード */
+    /* 右端へのフェード（PCのみ） */
     .intro-kake-img::after {
       content: '';
       position: absolute;
@@ -758,6 +758,14 @@
       );
       pointer-events: none;
       z-index: 2;
+    }
+
+    /* スマホでは黒いオーバーレイを完全に消す */
+    @media (max-width: 768px) {
+      .intro-kake-img::after {
+        display: none !important;
+        background: none !important;
+      }
     }
 
     /* 湯気アニメーション */
