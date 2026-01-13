@@ -2881,7 +2881,7 @@ html {
         </div>
       </div>
       <div class="access-map reveal">
-        <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=天丼のとんち亭+四日市市&zoom=17" allowfullscreen="" loading="lazy" style="border:0;"></iframe>
+        <iframe src="https://maps.google.com/maps?q=三重県四日市市日永西2丁目19-10&t=m&z=17&output=embed" allowfullscreen="" loading="lazy" style="border:0;"></iframe>
       </div>
     </div>
     <div class="access-images reveal">
@@ -3115,7 +3115,7 @@ html {
         <img src="./image/tensyu.png" alt="天丼のとんち亭 店主" style="width:100%; border-radius:8px;" />
       </div>
     </div>
-    <button class="expand-btn" id="storyExpandBtn" onclick="toggleStory()" style="margin-top:32px;">
+    <button type="button" class="expand-btn" id="storyExpandBtn" style="margin-top:32px;">
       <span>続きを読む</span>
       <i data-lucide="chevron-down" class="expand-btn-icon" style="width:16px;height:16px;"></i>
     </button>
@@ -3459,35 +3459,28 @@ html {
     lucide.createIcons();
   }
 
-    // Story Expand Button Event Listener
-    const storyExpandBtn = document.getElementById('storyExpandBtn');
-    if (storyExpandBtn) {
-      storyExpandBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const content = document.getElementById('storyMore');
-        const btnText = this.querySelector('span');
-        
-        content.classList.toggle('expanded');
-        this.classList.toggle('expanded');
-        
-        if (content.classList.contains('expanded')) {
-          btnText.textContent = '閉じる';
-        } else {
-          btnText.textContent = '続きを読む';
-        }
-        lucide.createIcons();
-      });
-      
-      // タッチイベントも追加
-      storyExpandBtn.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        this.click();
-      }, { passive: false });
-    }
-
   }); // DOMContentLoaded 終了
+
+  // Story Expand Button - グローバルスコープで定義（iOS対応）
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('#storyExpandBtn');
+    if (btn) {
+      const content = document.getElementById('storyMore');
+      const btnText = btn.querySelector('span');
+      
+      content.classList.toggle('expanded');
+      btn.classList.toggle('expanded');
+      
+      if (content.classList.contains('expanded')) {
+        btnText.textContent = '閉じる';
+      } else {
+        btnText.textContent = '続きを読む';
+      }
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    }
+  });
 
   // Operating Status
   function updateStatus() {
