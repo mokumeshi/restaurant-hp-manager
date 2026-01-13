@@ -3242,7 +3242,6 @@ html {
 </div>
 
 <script>
-  // リロード時にページトップに戻る
   // リロード時にページトップに戻る＆URLのハッシュを消す
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
@@ -3259,40 +3258,63 @@ html {
     window.scrollTo(0, 0);
   }, 0);
 
-  lucide.createIcons();
-
-  // Mobile Nav Toggle
-  const menuBtn = document.querySelector('.menu-btn');
-  const mobileNav = document.getElementById('mobileNav');
-  const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-  const mobileNavClose = document.getElementById('mobileNavClose');
-  const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a');
-
-  function openMobileNav() {
-    mobileNav.classList.add('open');
-    mobileNavOverlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
+  // DOMが読み込まれたら実行
+  document.addEventListener('DOMContentLoaded', function() {
     lucide.createIcons();
-  }
 
-  function closeMobileNav() {
-    mobileNav.classList.remove('open');
-    mobileNavOverlay.classList.remove('open');
-    document.body.style.overflow = '';
-  }
+    // Mobile Nav Toggle
+    const menuBtn = document.querySelector('.menu-btn');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+    const mobileNavClose = document.getElementById('mobileNavClose');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a');
 
-  if (menuBtn) {
-    menuBtn.addEventListener('click', openMobileNav);
-  }
-  if (mobileNavClose) {
-    mobileNavClose.addEventListener('click', closeMobileNav);
-  }
-  if (mobileNavOverlay) {
-    mobileNavOverlay.addEventListener('click', closeMobileNav);
-  }
-  mobileNavLinks.forEach(link => {
-    link.addEventListener('click', closeMobileNav);
-  });
+    function openMobileNav() {
+      mobileNav.classList.add('open');
+      mobileNavOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      lucide.createIcons();
+    }
+
+    function closeMobileNav() {
+      mobileNav.classList.remove('open');
+      mobileNavOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    if (menuBtn) {
+      menuBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openMobileNav();
+      });
+    }
+    if (mobileNavClose) {
+      mobileNavClose.addEventListener('click', function(e) {
+        e.preventDefault();
+        closeMobileNav();
+      });
+    }
+    if (mobileNavOverlay) {
+      mobileNavOverlay.addEventListener('click', closeMobileNav);
+    }
+    mobileNavLinks.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        // メニューを閉じる
+        closeMobileNav();
+        
+        // 少し待ってからスクロール（メニュー閉じるアニメーション後）
+        setTimeout(function() {
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 300);
+      });
+    });
 
   // Menu Tabs
   const menuTabs = document.querySelectorAll('.menu-tab');
@@ -3427,6 +3449,8 @@ html {
     lucide.createIcons();
   }
 
+  }); // DOMContentLoaded 終了
+
   // Operating Status
   function updateStatus() {
     const now = new Date();
@@ -3480,3 +3504,4 @@ html {
 
 </body>
 </html>
+
