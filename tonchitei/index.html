@@ -2314,18 +2314,23 @@ html {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 12px 24px;
+      padding: 14px 28px;
       background: transparent;
-      border: 1px solid rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.7);
-      font-size: 13px;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
       font-weight: 500;
       letter-spacing: 0.08em;
       cursor: pointer;
       transition: all 0.3s ease;
       margin-top: 24px;
+      position: relative;
+      z-index: 50;
+      -webkit-tap-highlight-color: rgba(212, 175, 55, 0.3);
+      touch-action: manipulation;
     }
-    .expand-btn:hover {
+    .expand-btn:hover,
+    .expand-btn:active {
       border-color: var(--gold);
       color: var(--gold);
     }
@@ -2876,7 +2881,7 @@ html {
         </div>
       </div>
       <div class="access-map reveal">
-        <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=三重県四日市市日永西2丁目19-10&zoom=16" allowfullscreen="" loading="lazy" style="border:0;"></iframe>
+        <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=天丼のとんち亭+四日市市&zoom=17" allowfullscreen="" loading="lazy" style="border:0;"></iframe>
       </div>
     </div>
     <div class="access-images reveal">
@@ -2898,7 +2903,7 @@ html {
       </figure>
     </div>
     <div class="access-cta reveal">
-      <a href="https://www.google.com/maps/dir/?api=1&destination=三重県四日市市日永西2丁目19-10" target="_blank" rel="noopener" class="btn btn-dark">
+      <a href="https://www.google.com/maps/dir/?api=1&destination=天丼のとんち亭+四日市市日永西" target="_blank" rel="noopener" class="btn btn-dark">
         <i data-lucide="navigation" style="width:16px;height:16px;"></i>
         GET DIRECTIONS
       </a>
@@ -3239,7 +3244,7 @@ html {
       <i data-lucide="phone" style="width:16px;height:16px;"></i>
       CALL
     </a>
-    <a href="https://www.google.com/maps/dir/?api=1&destination=三重県四日市市日永西2丁目19-10" target="_blank" rel="noopener" class="mobile-cta-map">
+    <a href="https://www.google.com/maps/dir/?api=1&destination=天丼のとんち亭+四日市市日永西" target="_blank" rel="noopener" class="mobile-cta-map">
       <i data-lucide="navigation" style="width:16px;height:16px;"></i>
       DIRECTIONS
     </a>
@@ -3453,6 +3458,34 @@ html {
     }
     lucide.createIcons();
   }
+
+    // Story Expand Button Event Listener
+    const storyExpandBtn = document.getElementById('storyExpandBtn');
+    if (storyExpandBtn) {
+      storyExpandBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const content = document.getElementById('storyMore');
+        const btnText = this.querySelector('span');
+        
+        content.classList.toggle('expanded');
+        this.classList.toggle('expanded');
+        
+        if (content.classList.contains('expanded')) {
+          btnText.textContent = '閉じる';
+        } else {
+          btnText.textContent = '続きを読む';
+        }
+        lucide.createIcons();
+      });
+      
+      // タッチイベントも追加
+      storyExpandBtn.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        this.click();
+      }, { passive: false });
+    }
 
   }); // DOMContentLoaded 終了
 
