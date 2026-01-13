@@ -1078,6 +1078,7 @@ html {
       position: relative;
     }
     .video-thumbnail {
+      display: block;
       position: relative;
       cursor: pointer;
       overflow: hidden;
@@ -1122,6 +1123,10 @@ html {
       bottom: 24px;
       left: 24px;
       color: var(--white);
+      writing-mode: horizontal-tb;
+      text-orientation: mixed;
+      white-space: nowrap;
+      z-index: 10;
     }
     @media (max-width: 600px) {
       .video-caption { bottom: 16px; left: 16px; }
@@ -3078,7 +3083,7 @@ html {
 </section>
 
 <!-- STORY -->
-<section class="story">
+<section class="story" id="story">
   <div class="story-inner reveal">
     <div class="story-label">OUR STORY</div>
     <h2 class="story-title">
@@ -3504,4 +3509,3 @@ html {
 
 </body>
 </html>
-
