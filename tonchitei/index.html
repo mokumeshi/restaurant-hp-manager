@@ -3482,6 +3482,27 @@ html {
     }
   });
 
+  // Testimonials Toggle Button - グローバルスコープで定義
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('#testimonialsToggle');
+    if (btn) {
+      const content = document.getElementById('testimonialsContent');
+      const btnText = btn.querySelector('.testimonials-toggle-content span');
+      
+      btn.classList.toggle('active');
+      content.classList.toggle('show');
+      
+      if (content.classList.contains('show')) {
+        btnText.textContent = 'お客さまの声を閉じる';
+      } else {
+        btnText.textContent = 'お客さまの声を見る';
+      }
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    }
+  });
+
   // Operating Status
   function updateStatus() {
     const now = new Date();
@@ -3535,4 +3556,3 @@ html {
 
 </body>
 </html>
-<!-- update -->
