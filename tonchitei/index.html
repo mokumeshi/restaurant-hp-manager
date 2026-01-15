@@ -118,6 +118,16 @@ html {
       min-width: 320px;
     }
     body.loading { overflow: hidden; }
+    
+    /* 全デバイス・全言語対応の安全対策 */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    p, h1, h2, h3, h4, span, a {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
     img { 
       max-width: 100%; 
       height: auto; 
@@ -523,6 +533,56 @@ html {
       .header-cta-icon { padding: 12px 14px; }
     }
 
+    /* Language Switch */
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(201, 162, 39, 0.5);
+      border-radius: 25px;
+      padding: 3px;
+      gap: 2px;
+    }
+    .lang-switch-btn {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 20px;
+      background: transparent;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .lang-switch-btn:hover {
+      color: rgba(255,255,255,0.8);
+    }
+    .lang-switch-btn.active {
+      background: var(--gold);
+      color: var(--black);
+    }
+    .mobile-nav-lang {
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .lang-switch-mobile {
+      border-radius: 30px;
+      padding: 4px;
+    }
+    .lang-switch-mobile .lang-switch-btn {
+      padding: 14px 28px;
+      font-size: 14px;
+      border-radius: 26px;
+      white-space: nowrap;
+    }
+
     .menu-btn {
       display: none;
       background: none;
@@ -683,6 +743,7 @@ html {
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       padding: 18px 36px;
       font-size: 12px;
@@ -690,6 +751,11 @@ html {
       letter-spacing: 0.12em;
       text-decoration: none;
       transition: all 0.4s;
+      text-align: center;
+      min-width: 0;
+    }
+    .btn span {
+      white-space: nowrap;
     }
     .btn-gold {
       background: var(--gold);
@@ -888,7 +954,7 @@ html {
       .story { padding: 60px 20px; }
     }
     .story-inner {
-      max-width: 640px;
+      max-width: 800px;
       margin: 0 auto;
       text-align: center;
     }
@@ -925,6 +991,102 @@ html {
     .story-text p:last-child {
       margin-bottom: 0;
     }
+    .story-quote {
+      position: relative;
+      padding: 24px 0;
+    }
+    .story-quote blockquote {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 16px;
+      line-height: 2.2;
+      color: rgba(255,255,255,0.9);
+      font-style: normal;
+      position: relative;
+      padding-left: 24px;
+      border-left: 2px solid var(--gold);
+    }
+    .story-quote blockquote em {
+      color: var(--gold);
+      font-style: normal;
+      font-weight: 500;
+    }
+    @media (max-width: 600px) {
+      .story-quote blockquote {
+        font-size: 14px;
+        line-height: 2;
+        padding-left: 16px;
+      }
+    }
+    
+    /* Story Headline */
+    .story-headline {
+      font-family: 'Shippori Mincho', serif;
+      font-size: clamp(24px, 6vw, 32px);
+      font-weight: 500;
+      color: var(--white);
+      text-align: center;
+      line-height: 1.6;
+      margin-top: 24px;
+    }
+    
+    /* Story Body */
+    .story-body {
+      margin-top: 48px;
+    }
+    .story-photo {
+      max-width: 240px;
+      margin: 0 auto 40px;
+    }
+    .story-photo img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .story-message {
+      text-align: left;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    @media (max-width: 600px) {
+      .story-message {
+        text-align: center;
+      }
+    }
+    .story-voice {
+      font-size: 15px;
+      line-height: 2.2;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 28px;
+    }
+    .story-voice-small {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 12px;
+    }
+    .story-voice-quote {
+      font-family: 'Shippori Mincho', serif;
+      font-size: clamp(22px, 5vw, 28px);
+      font-weight: 500;
+      color: var(--gold);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .story-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+      margin: 40px auto;
+    }
+    .story-voice-promise {
+      color: rgba(255,255,255,0.95);
+      font-weight: 500;
+    }
+    @media (max-width: 600px) {
+      .story-voice {
+        font-size: 14px;
+        line-height: 2;
+      }
+    }
+    
     .story-signature {
       margin-top: 40px;
     }
@@ -1614,6 +1776,14 @@ html {
       cursor: pointer;
       transition: all 0.3s;
     }
+    @media (max-width: 500px) {
+      .testimonials-toggle {
+        padding: 20px 20px;
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
     .testimonials-toggle:hover {
       background: rgba(255,255,255,0.08);
       border-color: var(--gold);
@@ -1624,6 +1794,20 @@ html {
       gap: 12px;
       font-size: 16px;
       font-weight: 500;
+    }
+    .testimonials-toggle-content span {
+      white-space: nowrap;
+    }
+    @media (max-width: 500px) {
+      .testimonials-toggle-content {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px 12px;
+      }
+      .testimonials-toggle-content span[data-i18n="testimonials.showEn"] {
+        margin-left: 0 !important;
+        font-size: 11px;
+      }
     }
     .testimonials-toggle-icon {
       transition: transform 0.3s;
@@ -2159,6 +2343,12 @@ html {
       font-weight: 600;
       text-decoration: none;
       letter-spacing: 0.05em;
+      white-space: nowrap;
+      min-width: 0;
+    }
+    .mobile-cta a span {
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .mobile-cta-tel {
       background: var(--gold);
@@ -2504,6 +2694,14 @@ html {
         <a href="#faq">FAQ</a>
       </nav>
       <div class="header-cta-group">
+        <div class="lang-switch" id="langSwitch">
+          <button type="button" class="lang-switch-btn" data-lang="ja">
+            <span>JP</span>
+          </button>
+          <button type="button" class="lang-switch-btn" data-lang="en">
+            <span>EN</span>
+          </button>
+        </div>
         <a href="https://www.instagram.com/tonchitei2512" target="_blank" rel="noopener" class="header-cta header-cta-icon" aria-label="Instagram">
           <i data-lucide="instagram" style="width:18px;height:18px;"></i>
         </a>
@@ -2530,6 +2728,16 @@ html {
     <a href="#menu">MENU</a>
     <a href="#access">ACCESS</a>
     <a href="#faq">FAQ</a>
+  </div>
+  <div class="mobile-nav-lang">
+    <div class="lang-switch lang-switch-mobile" id="langSwitchMobile">
+      <button type="button" class="lang-switch-btn" data-lang="ja">
+        <span>日本語</span>
+      </button>
+      <button type="button" class="lang-switch-btn" data-lang="en">
+        <span>English</span>
+      </button>
+    </div>
   </div>
   <div class="mobile-nav-contact">
     <a href="tel:0593473556" class="mobile-nav-tel">
@@ -2560,23 +2768,23 @@ html {
       <span class="hero-status-text" id="statusText">営業時間を確認中...</span>
     </div>
     <div class="hero-text-group">
-      <p class="hero-kicker animate-fade-up" style="animation-delay: 0.3s;">
+      <p class="hero-kicker animate-fade-up" style="animation-delay: 0.3s;" data-i18n="hero.location">
         — 四日市・日永 —
       </p>
-      <h1 class="hero-title animate-fade-up" style="animation-delay: 0.6s;">
+      <h1 class="hero-title animate-fade-up" style="animation-delay: 0.6s;" data-i18n="hero.title">
         一品ずつ、<br>揚げたてを。
       </h1>
-      <p class="hero-title-en animate-fade-up" style="animation-delay: 0.9s;">
+      <p class="hero-title-en animate-fade-up" style="animation-delay: 0.9s;" data-i18n="hero.subtitle">
         One by one. Freshly fried. Right before you.
       </p>
-      <p class="hero-desc animate-fade-up" style="animation-delay: 1.2s;">
+      <p class="hero-desc animate-fade-up" style="animation-delay: 1.2s;" data-i18n="hero.desc">
         コの字カウンターで、揚がった瞬間をお届けする。<br>
         それが、とんち亭のスタイルです。
       </p>
     </div>
     <div class="hero-cta animate-fade-up" style="animation-delay: 1.5s;">
       <a href="#menu" class="btn btn-gold">
-        <span>メニューを見る</span>
+        <span data-i18n="hero.cta">お品書きを見る</span>
         <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
       </a>
     </div>
@@ -2595,14 +2803,14 @@ html {
     <div class="signature-grid">
       <div class="signature-photo reveal">
         <img src="./zyoutendondekitate.png" alt="揚げたての天丼" />
-        <div class="signature-badge">看板</div>
+        <div class="signature-badge" data-i18n="signature.badge">看板</div>
       </div>
       <div class="signature-content reveal reveal-delay-1">
         <p class="signature-kicker">— SIGNATURE DISH —</p>
-        <h2 class="signature-title">
+        <h2 class="signature-title" data-i18n="signature.title">
           これが、とんち亭の<br>天丼です。
         </h2>
-        <p class="signature-text">
+        <p class="signature-text" data-i18n="signature.text">
           サクッと軽い衣。ぷりっとした海老。<br>
           揚げたてに、秘伝のタレをサッとかけて。<br><br>
           <em style="color:var(--gold);">「おいしい」の一言が、いちばん嬉しい。</em>
@@ -2610,10 +2818,10 @@ html {
         <div class="signature-price">
           <span class="signature-price-label">上天丼 / Jou Tendon</span>
           <span class="signature-price-value">¥800</span>
-          <span class="signature-price-note">税込・ランチ価格</span>
+          <span class="signature-price-note" data-i18n="signature.priceNote">税込・ランチ価格</span>
         </div>
         <a href="#menu" class="btn btn-gold" style="margin-top:40px;">
-          <span>メニューを見る</span>
+          <span data-i18n="hero.cta">お品書きを見る</span>
           <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
         </a>
       </div>
@@ -2627,8 +2835,8 @@ html {
     <div class="menu-header reveal">
       <div class="section-label">MENU</div>
       <h2 class="section-title" style="color:var(--white);">
-        品書き
-        <span class="section-title-en" style="color:rgba(255,255,255,0.35);">Our Selection</span>
+        <span data-i18n="menu.title">お品書き</span>
+        <span class="section-title-en" style="color:rgba(255,255,255,0.35);" data-i18n="menu.subtitle">Our Selection</span>
       </h2>
     </div>
 
@@ -2650,17 +2858,17 @@ html {
 
     <!-- Menu Tabs -->
     <div class="menu-tabs reveal">
-      <button class="menu-tab active" data-tab="tendon">天丼</button>
-      <button class="menu-tab" data-tab="night">夜の一品</button>
-      <button class="menu-tab" data-tab="drinks">ドリンク</button>
+      <button class="menu-tab active" data-tab="tendon" data-i18n="menu.tabTendon">天丼</button>
+      <button class="menu-tab" data-tab="night" data-i18n="menu.tabNight">夜の一品</button>
+      <button class="menu-tab" data-tab="drinks" data-i18n="menu.tabDrinks">ドリンク</button>
     </div>
 
     <!-- Lunch Tendon -->
     <div class="menu-panel active" data-panel="tendon">
     <div class="menu-category reveal">
       <div class="menu-category-header">
-        <h3 class="menu-category-title">ランチ天丼</h3>
-        <span class="menu-category-title-en">Lunch Tempura Rice Bowl</span>
+        <h3 class="menu-category-title" data-i18n="menu.lunchTitle">ランチ天丼</h3>
+        <span class="menu-category-title-en" data-i18n="menu.lunchTitleEn">Lunch Tempura Rice Bowl</span>
             </div>
       <div class="menu-cards">
         <div class="menu-card">
@@ -2812,8 +3020,8 @@ html {
     <div class="access-header reveal">
       <div class="section-label">ACCESS</div>
       <h2 class="section-title">
-        店舗情報
-        <span class="section-title-en">Location & Hours</span>
+        <span data-i18n="access.title">店舗情報</span>
+        <span class="section-title-en" data-i18n="access.subtitle">Location & Hours</span>
       </h2>
               </div>
     <div class="access-grid">
@@ -2905,7 +3113,7 @@ html {
     <div class="access-cta reveal">
       <a href="https://www.google.com/maps/dir/?api=1&destination=天丼のとんち亭+四日市市日永西" target="_blank" rel="noopener" class="btn btn-dark">
         <i data-lucide="navigation" style="width:16px;height:16px;"></i>
-        GET DIRECTIONS
+        <span data-i18n="cta.getDirections">道案内を見る</span>
       </a>
       <a href="https://www.instagram.com/tonchitei2512" target="_blank" rel="noopener" class="btn btn-outline" style="border-color:rgba(0,0,0,0.2); color:var(--text);">
         <i data-lucide="instagram" style="width:16px;height:16px;"></i>
@@ -2918,11 +3126,11 @@ html {
 <!-- TESTIMONIALS - ボタンで開閉 -->
 <section class="testimonials-compact">
   <div class="wrap">
-    <button class="testimonials-toggle" id="testimonialsToggle" onclick="toggleTestimonialsSection()">
+    <button type="button" class="testimonials-toggle" id="testimonialsToggle">
       <div class="testimonials-toggle-content">
         <i data-lucide="message-circle" style="width:20px;height:20px;color:var(--gold);"></i>
-        <span>お客さまの声を見る</span>
-        <span style="font-size:12px;opacity:0.5;margin-left:8px;">Customer Reviews</span>
+        <span data-i18n="testimonials.show">お客さまの声を見る</span>
+        <span style="font-size:12px;opacity:0.5;margin-left:8px;" data-i18n="testimonials.showEn">Customer Reviews</span>
       </div>
       <i data-lucide="chevron-down" class="testimonials-toggle-icon" style="width:18px;height:18px;"></i>
     </button>
@@ -2990,8 +3198,8 @@ html {
     <div class="faq-header reveal">
       <div class="section-label">FAQ</div>
       <h2 class="section-title">
-        よくある質問
-        <span class="section-title-en">Frequently Asked Questions</span>
+        <span data-i18n="faq.title">よくある質問</span>
+        <span class="section-title-en" data-i18n="faq.subtitle">Frequently Asked Questions</span>
       </h2>
               </div>
     <div class="faq-list">
@@ -3091,37 +3299,59 @@ html {
 <section class="story" id="story">
   <div class="story-inner reveal">
     <div class="story-label">OUR STORY</div>
-    <h2 class="story-title">
-      「安くて旨い」を、<br>
-      ちゃんと続ける。
+    
+    <!-- 25年の重み -->
+    <h2 class="story-headline" data-i18n="story.headline">
+      25年、愛され続けた味。
     </h2>
-    <div class="story-text">
-      <p>
-        小さな店でも、手を抜かない。<br>
-        その積み重ねが、とんち亭らしさです。
-      </p>
-    </div>
-    <!-- 続きを読む -->
-    <div class="expandable-content" id="storyMore">
-      <div class="story-text" style="margin-top:24px;">
-        <p>
-          カウンター越しに揚げた「いちばん旨い瞬間」を、まっすぐ届ける。<br>
-          派手なことはできません。<br>
-          でも、毎日来てくれるお客さんに、毎日ちゃんと旨いものを出す。<br>
-          それだけを、ずっと続けてきました。
+    
+    <div class="story-body">
+      <div class="story-photo">
+        <img src="./tensyu.png" alt="天丼のとんち亭 二代目店主" />
+      </div>
+      
+      <div class="story-message">
+        <!-- 地元の愛 -->
+        <p class="story-voice" data-i18n="story.voice1">
+          前の大将が25年、<br>
+          地元の人たちに愛されながら守ってきたお店。
+        </p>
+        
+        <!-- 出会いと決意 -->
+        <p class="story-voice" data-i18n="story.voice2">
+          本当に、たまたま出会ったんです。<br>
+          大将の天丼を食べて、<br>
+          「このお店は残したいな」って。
+        </p>
+        
+        <div class="story-divider"></div>
+        
+        <!-- 託された夢 -->
+        <p class="story-voice-small" data-i18n="story.voice3">
+          引退するとき、大将がぼそっと言ったんです。
+        </p>
+        <p class="story-voice-quote" data-i18n="story.voice4">
+          「世界にとんち亭を広げてくれ」
+        </p>
+        <p class="story-voice" data-i18n="story.voice5">
+          うぉー、と思いました。
+        </p>
+        
+        <div class="story-divider"></div>
+        
+        <!-- 変わらない味への約束 -->
+        <p class="story-voice story-voice-promise" data-i18n="story.voice6">
+          大将の天丼を、そのまま届けていく。<br>
+          変わらない味を、届け続ける。<br>
+          それが自分の役目だと思っています。
         </p>
       </div>
-      <div class="story-photo" style="margin-top:32px; max-width:360px; margin-left:auto; margin-right:auto;">
-        <img src="./tensyu.png" alt="天丼のとんち亭 店主" style="width:100%; border-radius:8px;" />
-      </div>
     </div>
-    <button type="button" class="expand-btn" id="storyExpandBtn" style="margin-top:32px;">
-      <span>続きを読む</span>
-      <i data-lucide="chevron-down" class="expand-btn-icon" style="width:16px;height:16px;"></i>
-    </button>
-    <div class="story-signature" style="margin-top:32px;">
-      <div class="story-signature-text">— 天丼のとんち亭</div>
+    
+    <div class="story-signature">
+      <span>— 二代目店主</span>
     </div>
+    
   </div>
 </section>
 
@@ -3164,7 +3394,7 @@ html {
     <div class="instagram-cta reveal">
       <a href="https://www.instagram.com/tonchitei2512" target="_blank" rel="noopener" class="btn btn-outline" style="border-color:rgba(0,0,0,0.2); color:var(--text);">
         <i data-lucide="instagram" style="width:18px;height:18px;"></i>
-        VIEW MORE ON INSTAGRAM
+        <span data-i18n="instagram.viewMore">Instagramで見る</span>
       </a>
     </div>
   </div>
@@ -3242,11 +3472,11 @@ html {
   <div class="mobile-cta-inner">
     <a href="tel:0593473556" class="mobile-cta-tel">
       <i data-lucide="phone" style="width:16px;height:16px;"></i>
-      CALL
+      <span data-i18n="cta.call">電話する</span>
     </a>
     <a href="https://www.google.com/maps/dir/?api=1&destination=天丼のとんち亭+四日市市日永西" target="_blank" rel="noopener" class="mobile-cta-map">
       <i data-lucide="navigation" style="width:16px;height:16px;"></i>
-      DIRECTIONS
+      <span data-i18n="cta.directions">道案内</span>
     </a>
   </div>
 </div>
@@ -3486,6 +3716,9 @@ html {
   document.addEventListener('click', function(e) {
     const btn = e.target.closest('#testimonialsToggle');
     if (btn) {
+      e.preventDefault();
+      e.stopPropagation();
+      
       const content = document.getElementById('testimonialsContent');
       const btnText = btn.querySelector('.testimonials-toggle-content span');
       
@@ -3499,6 +3732,33 @@ html {
       }
       if (typeof lucide !== 'undefined') {
         lucide.createIcons();
+      }
+    }
+  });
+
+  // Smooth Scroll without changing URL
+  document.addEventListener('click', function(e) {
+    const link = e.target.closest('a[href^="#"]');
+    if (link) {
+      const targetId = link.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
+      
+      if (targetElement) {
+        e.preventDefault();
+        
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+        
+        // Close mobile nav if open
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        if (mobileNav && mobileNav.classList.contains('open')) {
+          mobileNav.classList.remove('open');
+          mobileNavOverlay.classList.remove('open');
+          document.body.style.overflow = '';
+        }
       }
     }
   });
@@ -3552,6 +3812,165 @@ html {
   }
   updateStatus();
   setInterval(updateStatus, 60000);
+
+  // ===== LANGUAGE TOGGLE SYSTEM =====
+  const translations = {
+    ja: {
+      'hero.location': '— 四日市・日永 —',
+      'hero.title': '一品ずつ、<br>揚げたてを。',
+      'hero.subtitle': 'One by one. Freshly fried. Right before you.',
+      'hero.desc': 'コの字カウンターで、揚がった瞬間をお届けする。<br>それが、とんち亭のスタイルです。',
+      'hero.cta': 'お品書きを見る',
+      'signature.title': 'これが、とんち亭の<br>天丼です。',
+      'signature.text': 'サクッと軽い衣。ぷりっとした海老。<br>揚げたてに、秘伝のタレをサッとかけて。<br><br><em style="color:var(--gold);">「おいしい」の一言が、いちばん嬉しい。</em>',
+      'signature.priceNote': '税込・ランチ価格',
+      'story.headline': '25年、愛され続けた味。',
+      'story.voice1': '前の大将が25年、<br>地元の人たちに愛されながら守ってきたお店。',
+      'story.voice2': '本当に、たまたま出会ったんです。<br>大将の天丼を食べて、<br>「このお店は残したいな」って。',
+      'story.voice3': '引退するとき、大将がぼそっと言ったんです。',
+      'story.voice4': '「世界にとんち亭を広げてくれ」',
+      'story.voice5': 'うぉー、と思いました。',
+      'story.voice6': '大将の天丼を、そのまま届けていく。<br>変わらない味を、届け続ける。<br>それが自分の役目だと思っています。',
+      'menu.title': 'お品書き',
+      'menu.subtitle': 'Our Selection',
+      'menu.lunch': 'ランチ天丼',
+      'menu.dinner': '夜の一品',
+      'menu.drinks': 'ドリンク',
+      'menu.jou': '上天丼',
+      'menu.tori': '鳥天丼',
+      'menu.sakana': '魚天丼',
+      'menu.ebianago': 'えび穴子天丼',
+      'access.title': '店舗情報',
+      'access.subtitle': 'Location & Hours',
+      'access.hours': '営業時間',
+      'access.lunch': '昼',
+      'access.dinner': '夜',
+      'access.closed': '月曜・木曜は夜休み',
+      'access.address': '住所',
+      'access.parking': '駐車場18台完備',
+      'faq.title': 'よくある質問',
+      'faq.subtitle': 'Frequently Asked Questions',
+      'testimonials.show': 'お客さまの声を見る',
+      'testimonials.showEn': 'Customer Reviews',
+      'testimonials.hide': 'お客さまの声を閉じる',
+      'signature.badge': '看板',
+      'menu.tabTendon': '天丼',
+      'menu.tabNight': '夜の一品',
+      'menu.tabDrinks': 'ドリンク',
+      'menu.lunchTitle': 'ランチ天丼',
+      'menu.lunchTitleEn': 'Lunch Tempura Rice Bowl',
+      'instagram.viewMore': 'Instagramで見る',
+      'cta.call': '電話する',
+      'cta.directions': '道案内',
+      'cta.getDirections': '道案内を見る',
+      'footer.copyright': '© 2025 天丼のとんち亭'
+    },
+    en: {
+      'hero.location': '— Yokkaichi, Hinaga —',
+      'hero.title': 'One by one.<br>Freshly fried.',
+      'hero.subtitle': '揚げたてを、目の前で。',
+      'hero.desc': 'At our U-shaped counter, we serve each piece of tempura<br>the moment it\'s fried. That\'s the Tonchitei way.',
+      'hero.cta': 'View Menu',
+      'signature.title': 'This is Tonchitei\'s<br>Tendon.',
+      'signature.text': 'Light, crispy batter. Plump, fresh shrimp.<br>Freshly fried, drizzled with our secret sauce.<br><br><em style="color:var(--gold);">"Delicious" — that one word makes it all worth it.</em>',
+      'signature.priceNote': 'Tax included / Lunch price',
+      'story.headline': '25 years of love.',
+      'story.voice1': 'For 25 years, the previous master<br>kept this shop alive, loved by the local community.',
+      'story.voice2': 'I happened to find it by pure chance.<br>I tasted his tendon and thought,<br>"I want to keep this place alive."',
+      'story.voice3': 'When he retired, the master quietly said:',
+      'story.voice4': '"Spread Tonchitei to the world."',
+      'story.voice5': 'I was like... wow.',
+      'story.voice6': 'I will keep serving his tendon, unchanged.<br>Delivering the same taste, always.<br>That\'s my mission.',
+      'menu.title': 'Menu',
+      'menu.subtitle': 'お品書き',
+      'menu.lunch': 'Lunch Tempura Bowl',
+      'menu.dinner': 'Evening Dishes',
+      'menu.drinks': 'Drinks',
+      'menu.jou': 'Premium Tendon',
+      'menu.tori': 'Chicken Tendon',
+      'menu.sakana': 'Fish Tendon',
+      'menu.ebianago': 'Shrimp & Conger Eel Tendon',
+      'access.title': 'Location',
+      'access.subtitle': '店舗情報',
+      'access.hours': 'Hours',
+      'access.lunch': 'Lunch',
+      'access.dinner': 'Dinner',
+      'access.closed': 'No dinner on Mon & Thu',
+      'access.address': 'Address',
+      'access.parking': '18 parking spaces available',
+      'faq.title': 'FAQ',
+      'faq.subtitle': 'よくある質問',
+      'testimonials.show': 'Customer Reviews',
+      'testimonials.showEn': 'お客さまの声',
+      'testimonials.hide': 'Close Reviews',
+      'signature.badge': 'Signature',
+      'menu.tabTendon': 'Tendon',
+      'menu.tabNight': 'Evening',
+      'menu.tabDrinks': 'Drinks',
+      'menu.lunchTitle': 'Lunch Tempura Bowl',
+      'menu.lunchTitleEn': 'ランチ天丼',
+      'instagram.viewMore': 'VIEW MORE ON INSTAGRAM',
+      'cta.call': 'CALL',
+      'cta.directions': 'DIRECTIONS',
+      'cta.getDirections': 'GET DIRECTIONS',
+      'footer.copyright': '© 2025 Tonchitei'
+    }
+  };
+
+  let currentLang = localStorage.getItem('tonchitei-lang') || 'ja';
+
+  function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('tonchitei-lang', lang);
+    
+    // Update all translatable elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (translations[lang] && translations[lang][key]) {
+        el.innerHTML = translations[lang][key];
+      }
+    });
+    
+    // Update toggle button states
+    document.querySelectorAll('.lang-switch-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    
+    // Update HTML lang attribute
+    document.documentElement.lang = lang === 'ja' ? 'ja' : 'en';
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Re-initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  }
+
+  // Language switch click handler
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('.lang-switch-btn');
+    if (btn) {
+      e.preventDefault();
+      const newLang = btn.getAttribute('data-lang');
+      if (newLang && newLang !== currentLang) {
+        setLanguage(newLang);
+      }
+      
+      // Close mobile nav if open
+      const mobileNav = document.getElementById('mobileNav');
+      const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+      if (mobileNav && mobileNav.classList.contains('open')) {
+        mobileNav.classList.remove('open');
+        mobileNavOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+  });
+
+  // Initialize language on page load
+  setLanguage(currentLang);
 </script>
 
 </body>
